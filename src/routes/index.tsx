@@ -810,6 +810,7 @@ function LandingPage() {
       <Servicos />
       <Diferenciais />
       <VideoSection />
+      <Depoimentos />
       <Processo />
       <Contato />
       <Footer />
