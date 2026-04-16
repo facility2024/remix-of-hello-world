@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CubeLoader } from "@/components/ui/cube-loader";
@@ -472,17 +472,25 @@ const testimonials = [
 function Depoimentos() {
   const [positions, setPositions] = useState(["front", "middle", "back"]);
 
-  const handleShuffle = () => {
-    const newPositions = [...positions];
-    newPositions.unshift(newPositions.pop()!);
-    setPositions(newPositions);
-  };
+  const handleShuffle = useCallback(() => {
+    setPositions((prev) => {
+      const next = [...prev];
+      next.unshift(next.pop()!);
+      return next;
+    });
+  }, []);
+
+  // Auto-slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(handleShuffle, 3000);
+    return () => clearInterval(interval);
+  }, [handleShuffle]);
 
   return (
-    <section className="py-24 lg:py-32 bg-slate-900 overflow-hidden">
+    <section className="py-16 lg:py-24 bg-slate-900 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Depoimentos
             </span>
@@ -490,13 +498,13 @@ function Depoimentos() {
               O que nossos clientes dizem
             </h2>
             <p className="mt-4 text-slate-400">
-              Arraste o card para ver mais depoimentos.
+              Arraste o card ou aguarde a troca automática.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid place-content-center px-8 py-8">
-          <div className="relative -ml-[100px] h-[450px] w-[350px] md:-ml-[175px]">
+        <div className="flex justify-center px-4 py-8">
+          <div className="relative h-[400px] w-[min(300px,80vw)] sm:h-[450px] sm:w-[350px]">
             {testimonials.map((t, index) => (
               <TestimonialCard
                 key={t.id}
