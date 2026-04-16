@@ -34,7 +34,7 @@ import {
   Star,
 } from "lucide-react";
 
-/* Route definition moved to end of file after LandingPage is defined */
+/* Landing page components below, Route at bottom */
 
 /* ─────────── HEADER ─────────── */
 function Header() {
