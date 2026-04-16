@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 
 export function CubeLoader({
   duration = 4000,
@@ -8,20 +8,24 @@ export function CubeLoader({
   onComplete?: () => void;
 }) {
   const [progress, setProgress] = useState(0);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
-    const start = Date.now();
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - start;
-      const p = Math.min(elapsed / duration, 1);
+    const start = performance.now();
+    let raf: number;
+    function tick() {
+      const p = Math.min((performance.now() - start) / duration, 1);
       setProgress(p);
       if (p >= 1) {
-        clearInterval(interval);
-        onComplete?.();
+        onCompleteRef.current?.();
+      } else {
+        raf = requestAnimationFrame(tick);
       }
-    }, 50);
-    return () => clearInterval(interval);
-  }, [duration, onComplete]);
+    }
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [duration]);
 
   // Stable random stars
   const stars = useMemo(
