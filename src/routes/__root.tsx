@@ -39,6 +39,8 @@ export const Route = createRootRoute({
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Facility" },
       { name: "twitter:description", content: "A premium, responsive institutional landing page for Facility Software Brasil, showcasing their high-end technology and marketing services." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/C3m9qC4JI7d4LBRG8QCRDGqpqhV2/social-images/social-1776367861776-F.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/C3m9qC4JI7d4LBRG8QCRDGqpqhV2/social-images/social-1776367861776-F.webp" },
     ],
     links: [
       {
