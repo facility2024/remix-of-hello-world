@@ -6,6 +6,11 @@ import { CubeLoader } from "@/components/ui/cube-loader";
 import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
+import slide1 from "@/assets/slide-1.png";
+import slide2 from "@/assets/slide-2.png";
+import slide3 from "@/assets/slide-3.png";
+import slide4 from "@/assets/slide-4.png";
+import slide5 from "@/assets/slide-5.png";
 import {
   Megaphone,
   Globe,
@@ -223,31 +228,31 @@ const showcaseItems: CardStackItem[] = [
     id: 1,
     title: "App de Academias e Saúde",
     description: "Plataforma completa com treinos funcionais e análise nutricional inteligente",
-    imageSrc: "/images/slide-1.png",
+    imageSrc: slide1,
   },
   {
     id: 2,
     title: "Sistema para Agricultura Inteligente",
     description: "Tecnologia de ponta para o agronegócio com gestão eficiente e sustentável",
-    imageSrc: "/images/slide-2.png",
+    imageSrc: slide2,
   },
   {
     id: 3,
     title: "Aplicativo de Busca de Ofertas",
     description: "Busca inteligente de ofertas e promoções com tecnologia avançada",
-    imageSrc: "/images/slide-3.png",
+    imageSrc: slide3,
   },
   {
     id: 4,
     title: "Sistema de Notícias Inteligente",
     description: "Portal de notícias completo com transmissões ao vivo e categorias diversas",
-    imageSrc: "/images/slide-4.png",
+    imageSrc: slide4,
   },
   {
     id: 5,
     title: "Avaliação de Riscos Psicossociais",
     description: "Plataforma para identificar e gerenciar riscos psicossociais no trabalho conforme NR-01",
-    imageSrc: "/images/slide-5.png",
+    imageSrc: slide5,
   },
 ];
 
