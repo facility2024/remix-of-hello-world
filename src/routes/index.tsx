@@ -526,18 +526,21 @@ const testimonials = [
     testimonial:
       "A Facility transformou completamente nossa presença digital. O resultado superou todas as expectativas. Recomendo de olhos fechados.",
     author: "Juliana M. - Diretora de Marketing @ TechBR",
+    avatar: "https://s2.glbimg.com/_Ps5nilp1W4GKW990cqZ9a-ETKo=/940x523/e.glbimg.com/og/ed/f/original/2017/01/10/marissa_mayer_2011_interview.jpg",
   },
   {
     id: 2,
     testimonial:
       "Meu chefe acha que eu sei o que estou fazendo. Honestamente, foi a Facility que estruturou tudo pra gente.",
     author: "Carlos R. - Gerente de Produto @ StartupX",
+    avatar: "https://img.freepik.com/fotos-gratis/homem-sorridente-posando-para-cv-vista-frontal_23-2149927616.jpg",
   },
   {
     id: 3,
     testimonial:
       "Não acredito que conseguimos tanto em tão pouco tempo. O sistema que a Facility criou mudou nossa operação por completo.",
     author: "Amanda F. - CEO @ NovaSoluções",
+    avatar: "https://static.stealthelook.com.br/wp-content/uploads/2022/07/mulheres-negras-latino-americanas-e-caribenhas-que-voce-precisa-conhecer-negra-li-20220722201812.jpg",
   },
 ];
 
