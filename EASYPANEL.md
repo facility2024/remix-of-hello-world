@@ -9,22 +9,16 @@
 - **Health check path:** `/`
 
 ## Variáveis de ambiente
-```
-NODE_ENV=production
-HOST=0.0.0.0
-PORT=3000
-```
+Nenhuma obrigatória — Nginx serve estático na porta 3000.
 
 ## Como funciona
-1. Build em Node 22 (mais estável que Bun no EasyPanel)
-2. `npm run build` gera `dist/` (cliente + servidor SSR)
-3. Servidor SSR do TanStack Start é iniciado com `node dist/server/index.mjs`
-4. Layout, animações, Spline, Framer Motion — tudo preservado
+1. Build em Node 22 com `npm run build` → gera `dist/client` (HTML/CSS/JS)
+2. Stage final usa **Nginx Alpine** servindo os arquivos estáticos na porta 3000
+3. SPA fallback configurado (`try_files ... /index.html`) — rotas client-side funcionam ao recarregar
+4. Todo o layout, Framer Motion, Spline 3D, Tailwind v4 e ChatBot são client-side e continuam funcionando 100%
+5. Gzip + cache longo nos assets hashados (`/assets/*`)
 
-## Se aparecer erro do entry do servidor
-O TanStack pode gerar `dist/server/index.js` ou `dist/server/index.mjs`. Se o
-container falhar com "Cannot find module", confira o nome real:
-```
-docker run --rm -it <image> ls dist/server
-```
-e ajuste o `CMD` no Dockerfile.
+## Se aparecer "Service is not reachable"
+- Confirme **Port = 3000** no EasyPanel (não 80)
+- Veja os logs do container: `docker logs <container>` — deve mostrar Nginx iniciando
+- Confirme que `dist/client/index.html` foi gerado no build
