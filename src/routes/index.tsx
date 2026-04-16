@@ -34,26 +34,7 @@ import {
   Star,
 } from "lucide-react";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        name: "description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
-      },
-      { property: "og:title", content: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        property: "og:description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
-      },
-      { property: "og:type", content: "website" },
-    ],
-  }),
-  component: LandingPage,
-});
+/* Landing page components below, Route at bottom */
 
 /* ─────────── HEADER ─────────── */
 function Header() {
@@ -759,3 +740,24 @@ function LandingPage() {
     </div>
   );
 }
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
+      {
+        name: "description",
+        content:
+          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
+      },
+      { property: "og:title", content: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
+      {
+        property: "og:description",
+        content:
+          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
+      },
+      { property: "og:type", content: "website" },
+    ],
+  }),
+  component: LandingPage,
+});
