@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ChatBot } from "@/components/ChatBot";
-import { CubeLoader } from "@/components/ui/cube-loader";
+
 import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
@@ -976,12 +976,6 @@ function Footer() {
 
 /* ─────────── PAGE ─────────── */
 function LandingPage() {
-  const [loading, setLoading] = useState(true);
-  const handleComplete = useCallback(() => setLoading(false), []);
-
-  if (loading) {
-    return <CubeLoader duration={4000} onComplete={handleComplete} />;
-  }
 
   return (
     <div className="min-h-screen overflow-x-hidden">
