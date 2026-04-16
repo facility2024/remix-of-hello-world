@@ -470,7 +470,7 @@ const testimonials = [
 ];
 
 function Depoimentos() {
-  const [positions, setPositions] = React.useState(["front", "middle", "back"]);
+  const [positions, setPositions] = useState(["front", "middle", "back"]);
 
   const handleShuffle = () => {
     const newPositions = [...positions];
