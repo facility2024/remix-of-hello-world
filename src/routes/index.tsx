@@ -947,6 +947,7 @@ function LandingPage() {
       <QuemSomos />
       <Servicos />
       <Diferenciais />
+      <LogoCarousel />
       <VideoSection />
       <Depoimentos />
       <Processo />
