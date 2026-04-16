@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ChatBot } from "@/components/ChatBot";
 import { CubeLoader } from "@/components/ui/cube-loader";
 import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
@@ -997,6 +998,7 @@ function LandingPage() {
       <Processo />
       <Contato />
       <Footer />
+      <ChatBot />
     </div>
   );
 }
