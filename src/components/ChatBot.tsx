@@ -40,10 +40,21 @@ export function ChatBot() {
   }, [messages, typing]);
 
   type BotPayload = { type: "text"; text: string } | { type: "wa-button" };
-  const sendBot = async (msgs: BotPayload[], delay = 1200) => {
+
+  // Simula digitação humana: pausa "pensando" + tempo proporcional ao tamanho do texto
+  const humanDelay = (m: BotPayload) => {
+    if (m.type === "wa-button") return 1400 + Math.random() * 600;
+    const len = m.text.length;
+    const thinking = 900 + Math.random() * 700; // tempo lendo/pensando
+    const typing = Math.min(6500, len * 45 + Math.random() * 400); // ~45ms por caractere
+    return thinking + typing;
+  };
+
+  const sendBot = async (msgs: BotPayload[]) => {
     for (const m of msgs) {
+      await new Promise((r) => setTimeout(r, 500 + Math.random() * 400));
       setTyping(true);
-      await new Promise((r) => setTimeout(r, delay));
+      await new Promise((r) => setTimeout(r, humanDelay(m)));
       setTyping(false);
       setMessages((prev) => [...prev, { ...m, id: uid(), from: "bot" } as Msg]);
     }
@@ -54,7 +65,7 @@ export function ChatBot() {
     setShowBubble(false);
     if (messages.length === 0) {
       setStep("awaitFirst");
-      await sendBot([{ type: "text", text: "Olá! Posso ajudar? 😊" }], 600);
+      await sendBot([{ type: "text", text: "Olá! Posso ajudar? 😊" }]);
     }
   };
 
