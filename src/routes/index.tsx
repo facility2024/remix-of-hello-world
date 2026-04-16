@@ -252,9 +252,18 @@ const showcaseItems: CardStackItem[] = [
 ];
 
 function ShowcaseCarousel() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
-    <section className="py-12 lg:py-16 bg-foreground/[0.03]">
-      <div className="mx-auto w-full max-w-6xl px-4">
+    <section className="py-8 lg:py-16 bg-foreground/[0.03]">
+      <div className="mx-auto w-full max-w-6xl px-2 sm:px-4">
         <CardStack
           items={showcaseItems}
           initialIndex={0}
@@ -262,9 +271,12 @@ function ShowcaseCarousel() {
           intervalMs={3000}
           pauseOnHover
           showDots
-          cardWidth={480}
-          cardHeight={280}
-          className="[&>div:first-child]:!h-[260px] sm:[&>div:first-child]:!h-[340px]"
+          cardWidth={isMobile ? 300 : 480}
+          cardHeight={isMobile ? 200 : 280}
+          maxVisible={isMobile ? 3 : 7}
+          overlap={isMobile ? 0.55 : 0.48}
+          spreadDeg={isMobile ? 30 : 48}
+          depthPx={isMobile ? 80 : 140}
         />
       </div>
     </section>
