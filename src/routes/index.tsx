@@ -20,6 +20,7 @@ import logoVivo from "@/assets/logo-vivo.png";
 import logoClaro from "@/assets/logo-claro.png";
 import logoOi from "@/assets/logo-oi.png";
 import logoFacility from "@/assets/logo-facility.png";
+import logoEhs from "@/assets/logo-ehs.png";
 import {
   Megaphone,
   Globe,
@@ -496,6 +497,7 @@ const clientLogos = [
   { src: logoVivo, alt: "Vivo" },
   { src: logoClaro, alt: "Claro" },
   { src: logoOi, alt: "Oi" },
+  { src: logoEhs, alt: "EHS Universidade" },
 ];
 
 function LogoCarousel() {
@@ -546,7 +548,7 @@ function LogoCarousel() {
           {logos.map((logo, i) => (
             <div
               key={i}
-              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center rounded-2xl bg-white/90 p-3 shadow-sm grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
             >
               <img
                 src={logo.src}
@@ -579,7 +581,7 @@ function LogoCarousel() {
           {logos.map((logo, i) => (
             <div
               key={i}
-              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center rounded-2xl bg-white/90 p-3 shadow-sm grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
             >
               <img
                 src={logo.src}
