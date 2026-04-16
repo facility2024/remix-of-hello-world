@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CubeLoader } from "@/components/ui/cube-loader";
+import { SplineHero } from "@/components/ui/spline";
 import {
   Megaphone,
   Globe,
@@ -736,6 +737,7 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
+      <SplineHero />
       <Header />
       <Hero />
       <QuemSomos />
