@@ -222,8 +222,10 @@ function Hero() {
 
             {/* Central glow */}
             <div className="absolute inset-0 m-auto h-48 w-48 rounded-full bg-primary/15 blur-3xl" />
-            <div className="absolute inset-0 m-auto h-32 w-32 rounded-full border-2 border-primary/20" />
             <div className="absolute inset-0 m-auto h-52 w-52 rounded-full border border-primary/10" />
+            <div className="absolute inset-0 m-auto h-32 w-32 rounded-full border-2 border-primary/20 flex items-center justify-center overflow-hidden">
+              <img src={logoFacility} alt="Facility" className="h-20 w-20 object-contain" draggable={false} />
+            </div>
           </div>
         </motion.div>
       </div>
