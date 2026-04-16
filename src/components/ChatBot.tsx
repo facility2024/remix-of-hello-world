@@ -130,6 +130,8 @@ export function ChatBot() {
               )}
             </AnimatePresence>
             <motion.button
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={openChat}
