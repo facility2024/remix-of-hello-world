@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ChatBot } from "@/components/ChatBot";
@@ -600,17 +600,42 @@ function LogoCarousel() {
 
 /* ─────────── VÍDEO ─────────── */
 function VideoSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section className="py-24 lg:py-32 bg-muted/30">
       <div className="mx-auto max-w-4xl px-6">
         <ScrollReveal direction="up" delay={0.1}>
-          <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-foreground/5 shadow-xl aspect-video flex items-center justify-center group cursor-pointer">
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform group-hover:scale-110">
-                <Play size={32} className="ml-1" />
-              </div>
-              <p className="text-sm font-medium text-muted-foreground">Clique para assistir</p>
-            </div>
+          <div
+            ref={containerRef}
+            className="relative overflow-hidden rounded-2xl border border-border/60 bg-foreground/5 shadow-xl aspect-video"
+          >
+            {inView && (
+              <iframe
+                src="https://iframe.mediadelivery.net/embed/504378/deb891a1-455d-467f-97a1-877411b9febe?autoplay=true&muted=true&preload=true"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowFullScreen
+              />
+            )}
           </div>
         </ScrollReveal>
       </div>
