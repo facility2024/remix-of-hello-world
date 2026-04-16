@@ -10,9 +10,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "start": "bun run dist/server/index.js",
+    "start": "node scripts/easypanel-server.mjs",
     "easypanel:build": "bun install --frozen-lockfile && bun run build",
-    "easypanel:start": "bun run dist/server/index.js"
+    "easypanel:start": "node scripts/easypanel-server.mjs"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

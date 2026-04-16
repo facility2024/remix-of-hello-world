@@ -9,16 +9,16 @@
 - **Health check path:** `/`
 
 ## Variáveis de ambiente
-Nenhuma obrigatória — Nginx serve estático na porta 3000.
+Nenhuma obrigatória — o servidor Node sobe na porta `3000` por padrão.
 
 ## Como funciona
-1. Build em Node 22 com `npm run build` → gera `dist/client` (HTML/CSS/JS)
-2. Stage final usa **Nginx Alpine** servindo os arquivos estáticos na porta 3000
-3. SPA fallback configurado (`try_files ... /index.html`) — rotas client-side funcionam ao recarregar
-4. Todo o layout, Framer Motion, Spline 3D, Tailwind v4 e ChatBot são client-side e continuam funcionando 100%
-5. Gzip + cache longo nos assets hashados (`/assets/*`)
+1. Build em Node 22 com `npm run build` → gera `dist/client` e `dist/server`
+2. Stage final usa **Node 22 Alpine** com `scripts/easypanel-server.mjs`
+3. O servidor entrega os arquivos estáticos de `dist/client` e usa o render do app para as rotas
+4. Todo o layout, Framer Motion, Spline 3D, Tailwind v4 e ChatBot continuam funcionando
+5. Assets hashados em `/assets/*` recebem cache longo automaticamente
 
 ## Se aparecer "Service is not reachable"
 - Confirme **Port = 3000** no EasyPanel (não 80)
-- Veja os logs do container: `docker logs <container>` — deve mostrar Nginx iniciando
-- Confirme que `dist/client/index.html` foi gerado no build
+- Veja os logs do container: `docker logs <container>` — deve mostrar `Facility app listening on http://0.0.0.0:3000`
+- Confirme que o build gerou `dist/client` e `dist/server`
