@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CubeLoader } from "@/components/ui/cube-loader";
 import { SplineHero } from "@/components/ui/spline";
+import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import {
   Megaphone,
   Globe,
