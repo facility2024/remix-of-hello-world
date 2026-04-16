@@ -9,6 +9,7 @@ interface TestimonialCardProps {
   position: string;
   id: number;
   author: string;
+  avatar?: string;
 }
 
 export function TestimonialCard({
@@ -17,6 +18,7 @@ export function TestimonialCard({
   position,
   id,
   author,
+  avatar,
 }: TestimonialCardProps) {
   const dragRef = React.useRef(0);
   const isFront = position === "front";
@@ -64,7 +66,7 @@ export function TestimonialCard({
       }`}
     >
       <img
-        src={`https://i.pravatar.cc/128?img=${id}`}
+        src={avatar || `https://i.pravatar.cc/128?img=${id}`}
         alt={`Avatar de ${author}`}
         className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-700 bg-slate-200 object-cover"
       />
