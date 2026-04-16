@@ -490,6 +490,9 @@ const clientLogos = [
   { src: logoSimba, alt: "Simba Safari" },
   { src: logoCem, alt: "Lojas CEM" },
   { src: logoInova, alt: "Rede Inova Drogarias" },
+  { src: logoVivo, alt: "Vivo" },
+  { src: logoClaro, alt: "Claro" },
+  { src: logoOi, alt: "Oi" },
 ];
 
 function LogoCarousel() {
