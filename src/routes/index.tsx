@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { CubeLoader } from "@/components/ui/cube-loader";
 import {
   Megaphone,
   Globe,
@@ -726,6 +727,13 @@ function Footer() {
 
 /* ─────────── PAGE ─────────── */
 function LandingPage() {
+  const [loading, setLoading] = useState(true);
+  const handleComplete = useCallback(() => setLoading(false), []);
+
+  if (loading) {
+    return <CubeLoader duration={4000} onComplete={handleComplete} />;
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Header />
