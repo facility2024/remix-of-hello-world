@@ -43,7 +43,7 @@ export function SplineHero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative w-full overflow-hidden"
-      style={{ background: "#000000", minHeight: "clamp(400px, 70vh, 700px)" }}
+      style={{ background: "#000000", minHeight: "clamp(300px, 50vh, 700px)" }}
     >
       {/* Spotlight effect */}
       <motion.div
