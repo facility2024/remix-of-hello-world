@@ -43,7 +43,7 @@ export function SplineHero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative w-full overflow-hidden"
-      style={{ background: "#000000", minHeight: "clamp(400px, 70vh, 700px)" }}
+      style={{ background: "#000000", minHeight: "clamp(300px, 50vh, 700px)" }}
     >
       {/* Spotlight effect */}
       <motion.div
@@ -79,7 +79,7 @@ export function SplineHero() {
         {/* Right 3D scene */}
         <motion.div
           className="relative flex flex-1 items-center justify-center"
-          style={{ minHeight: "clamp(350px, 50vh, 500px)" }}
+          style={{ minHeight: "clamp(250px, 35vh, 500px)" }}
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
