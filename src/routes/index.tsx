@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CubeLoader } from "@/components/ui/cube-loader";
 import { SplineHero } from "@/components/ui/spline";
+import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import {
   Megaphone,
   Globe,
@@ -446,6 +447,71 @@ function VideoSection() {
   );
 }
 
+/* ─────────── DEPOIMENTOS ─────────── */
+const testimonials = [
+  {
+    id: 1,
+    testimonial:
+      "A Facility transformou completamente nossa presença digital. O resultado superou todas as expectativas. Recomendo de olhos fechados.",
+    author: "Juliana M. - Diretora de Marketing @ TechBR",
+  },
+  {
+    id: 2,
+    testimonial:
+      "Meu chefe acha que eu sei o que estou fazendo. Honestamente, foi a Facility que estruturou tudo pra gente.",
+    author: "Carlos R. - Gerente de Produto @ StartupX",
+  },
+  {
+    id: 3,
+    testimonial:
+      "Não acredito que conseguimos tanto em tão pouco tempo. O sistema que a Facility criou mudou nossa operação por completo.",
+    author: "Amanda F. - CEO @ NovaSoluções",
+  },
+];
+
+function Depoimentos() {
+  const [positions, setPositions] = useState(["front", "middle", "back"]);
+
+  const handleShuffle = () => {
+    const newPositions = [...positions];
+    newPositions.unshift(newPositions.pop()!);
+    setPositions(newPositions);
+  };
+
+  return (
+    <section className="py-24 lg:py-32 bg-slate-900 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6">
+        <ScrollReveal>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+              Depoimentos
+            </span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              O que nossos clientes dizem
+            </h2>
+            <p className="mt-4 text-slate-400">
+              Arraste o card para ver mais depoimentos.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid place-content-center px-8 py-8">
+          <div className="relative -ml-[100px] h-[450px] w-[350px] md:-ml-[175px]">
+            {testimonials.map((t, index) => (
+              <TestimonialCard
+                key={t.id}
+                {...t}
+                handleShuffle={handleShuffle}
+                position={positions[index]}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── PROCESSO ─────────── */
 const steps = [
   {
@@ -744,6 +810,7 @@ function LandingPage() {
       <Servicos />
       <Diferenciais />
       <VideoSection />
+      <Depoimentos />
       <Processo />
       <Contato />
       <Footer />
