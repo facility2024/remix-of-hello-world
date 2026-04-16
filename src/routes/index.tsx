@@ -11,6 +11,11 @@ import slide2 from "@/assets/slide-2.png";
 import slide3 from "@/assets/slide-3.png";
 import slide4 from "@/assets/slide-4.png";
 import slide5 from "@/assets/slide-5.png";
+import logoMoncoc from "@/assets/logo-moncoc.png";
+import logoSindicond from "@/assets/logo-sindicond.png";
+import logoSimba from "@/assets/logo-simba.png";
+import logoCem from "@/assets/logo-cem.png";
+import logoInova from "@/assets/logo-inova.png";
 import {
   Megaphone,
   Globe,
@@ -475,37 +480,86 @@ function Diferenciais() {
   );
 }
 
+/* ─────────── LOGO CAROUSEL ─────────── */
+const clientLogos = [
+  { src: logoMoncoc, alt: "Moncoc" },
+  { src: logoSindicond, alt: "Sindicond" },
+  { src: logoSimba, alt: "Simba Safari" },
+  { src: logoCem, alt: "Lojas CEM" },
+  { src: logoInova, alt: "Rede Inova Drogarias" },
+];
+
+function LogoCarousel() {
+  // Duplicate logos for seamless infinite scroll
+  const logos = [...clientLogos, ...clientLogos, ...clientLogos];
+
+  return (
+    <section className="relative py-20 lg:py-28 overflow-hidden">
+      {/* Purple blur glow effect */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-purple-600/20 blur-[120px]" />
+        <div className="absolute top-1/3 right-0 h-[300px] w-[300px] rounded-full bg-purple-500/15 blur-[100px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl px-6 text-center mb-12">
+        <ScrollReveal>
+          <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+            Apresentação
+          </span>
+          <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            Conheça nossa apresentação
+          </h2>
+          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+            Assista ao vídeo e entenda como a Facility Software Brasil pode estruturar sua presença
+            digital, sua operação e suas soluções tecnológicas.
+          </p>
+        </ScrollReveal>
+      </div>
+
+      {/* Infinite scrolling logo strip — right to left */}
+      <div className="relative w-full overflow-hidden">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+
+        <motion.div
+          className="flex items-center gap-16 w-max"
+          animate={{ x: ["0%", "-33.33%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 25,
+              ease: "linear",
+            },
+          }}
+        >
+          {logos.map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="max-h-full max-w-full object-contain"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── VÍDEO ─────────── */
 function VideoSection() {
   return (
     <section className="py-24 lg:py-32 bg-muted/30">
       <div className="mx-auto max-w-4xl px-6">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
-              Apresentação
-            </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-              Conheça nossa apresentação
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Assista ao vídeo e entenda como a Facility Software Brasil pode estruturar sua presença
-              digital, sua operação e suas soluções tecnológicas.
-            </p>
-          </div>
-        </ScrollReveal>
-
         <ScrollReveal direction="up" delay={0.1}>
           <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-foreground/5 shadow-xl aspect-video flex items-center justify-center group cursor-pointer">
-            {/* ═══════ SUBSTITUIR AQUI O LINK DO VÍDEO ═══════
-                 Para incorporar um vídeo do YouTube, substitua o conteúdo abaixo por:
-                 <iframe
-                   src="https://www.youtube.com/embed/SEU_VIDEO_ID"
-                   className="absolute inset-0 w-full h-full"
-                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                   allowFullScreen
-                 />
-                 ═══════════════════════════════════════════════ */}
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform group-hover:scale-110">
                 <Play size={32} className="ml-1" />
@@ -893,6 +947,7 @@ function LandingPage() {
       <QuemSomos />
       <Servicos />
       <Diferenciais />
+      <LogoCarousel />
       <VideoSection />
       <Depoimentos />
       <Processo />
