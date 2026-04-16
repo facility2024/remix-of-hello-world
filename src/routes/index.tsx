@@ -555,6 +555,39 @@ function LogoCarousel() {
           ))}
         </motion.div>
       </div>
+
+      {/* Second strip — left to right */}
+      <div className="relative w-full overflow-hidden mt-8">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+
+        <motion.div
+          className="flex items-center gap-16 w-max"
+          animate={{ x: ["-33.33%", "0%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 25,
+              ease: "linear",
+            },
+          }}
+        >
+          {logos.map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 h-16 w-32 sm:h-20 sm:w-40 flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="max-h-full max-w-full object-contain"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }
