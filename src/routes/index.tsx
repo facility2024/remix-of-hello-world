@@ -869,6 +869,7 @@ function LandingPage() {
       <SplineHero />
       <Header />
       <Hero />
+      <ShowcaseCarousel />
       <QuemSomos />
       <Servicos />
       <Diferenciais />
