@@ -5,6 +5,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { CubeLoader } from "@/components/ui/cube-loader";
 import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
+import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 import {
   Megaphone,
   Globe,
