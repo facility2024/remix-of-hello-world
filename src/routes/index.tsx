@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { CubeLoader } from "@/components/ui/cube-loader";
 import {
   Megaphone,
   Globe,
