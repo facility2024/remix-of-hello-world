@@ -217,6 +217,60 @@ function Hero() {
   );
 }
 
+/* ─────────── CARD STACK SHOWCASE ─────────── */
+const showcaseItems: CardStackItem[] = [
+  {
+    id: 1,
+    title: "Marketing Digital",
+    description: "Estratégias que posicionam sua marca e geram resultados reais",
+    imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+  },
+  {
+    id: 2,
+    title: "Desenvolvimento Web",
+    description: "Sites e sistemas modernos, responsivos e de alta performance",
+    imageSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+  },
+  {
+    id: 3,
+    title: "Aplicativos Mobile",
+    description: "Apps PWA com tecnologia de ponta e experiência nativa",
+    imageSrc: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+  },
+  {
+    id: 4,
+    title: "Automação com IA",
+    description: "Chatbots e automações inteligentes para escalar seu negócio",
+    imageSrc: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+  },
+  {
+    id: 5,
+    title: "Identidade Visual",
+    description: "Design profissional que transmite credibilidade e confiança",
+    imageSrc: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+  },
+];
+
+function ShowcaseCarousel() {
+  return (
+    <section className="py-12 lg:py-16 bg-foreground/[0.03]">
+      <div className="mx-auto w-full max-w-6xl px-4">
+        <CardStack
+          items={showcaseItems}
+          initialIndex={0}
+          autoAdvance
+          intervalMs={3000}
+          pauseOnHover
+          showDots
+          cardWidth={480}
+          cardHeight={280}
+          className="[&>div:first-child]:!h-[260px] sm:[&>div:first-child]:!h-[340px]"
+        />
+      </div>
+    </section>
+  );
+}
+
 /* ─────────── QUEM SOMOS ─────────── */
 function QuemSomos() {
   const stats = [
