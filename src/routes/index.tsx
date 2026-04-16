@@ -16,6 +16,9 @@ import logoSindicond from "@/assets/logo-sindicond.png";
 import logoSimba from "@/assets/logo-simba.png";
 import logoCem from "@/assets/logo-cem.png";
 import logoInova from "@/assets/logo-inova.png";
+import logoVivo from "@/assets/logo-vivo.png";
+import logoClaro from "@/assets/logo-claro.png";
+import logoOi from "@/assets/logo-oi.png";
 import {
   Megaphone,
   Globe,
