@@ -221,33 +221,33 @@ function Hero() {
 const showcaseItems: CardStackItem[] = [
   {
     id: 1,
-    title: "Marketing Digital",
-    description: "Estratégias que posicionam sua marca e geram resultados reais",
-    imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    title: "App de Academias e Saúde",
+    description: "Plataforma completa com treinos funcionais e análise nutricional inteligente",
+    imageSrc: "/images/slide-1.png",
   },
   {
     id: 2,
-    title: "Desenvolvimento Web",
-    description: "Sites e sistemas modernos, responsivos e de alta performance",
-    imageSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    title: "Sistema para Agricultura Inteligente",
+    description: "Tecnologia de ponta para o agronegócio com gestão eficiente e sustentável",
+    imageSrc: "/images/slide-2.png",
   },
   {
     id: 3,
-    title: "Aplicativos Mobile",
-    description: "Apps PWA com tecnologia de ponta e experiência nativa",
-    imageSrc: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+    title: "Aplicativo de Busca de Ofertas",
+    description: "Busca inteligente de ofertas e promoções com tecnologia avançada",
+    imageSrc: "/images/slide-3.png",
   },
   {
     id: 4,
-    title: "Automação com IA",
-    description: "Chatbots e automações inteligentes para escalar seu negócio",
-    imageSrc: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+    title: "Sistema de Notícias Inteligente",
+    description: "Portal de notícias completo com transmissões ao vivo e categorias diversas",
+    imageSrc: "/images/slide-4.png",
   },
   {
     id: 5,
-    title: "Identidade Visual",
-    description: "Design profissional que transmite credibilidade e confiança",
-    imageSrc: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+    title: "Avaliação de Riscos Psicossociais",
+    description: "Plataforma para identificar e gerenciar riscos psicossociais no trabalho conforme NR-01",
+    imageSrc: "/images/slide-5.png",
   },
 ];
 
