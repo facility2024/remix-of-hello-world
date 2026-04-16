@@ -39,7 +39,8 @@ export function ChatBot() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
 
-  const sendBot = async (msgs: Omit<Msg, "id" | "from">[], delay = 1200) => {
+  type BotPayload = { type: "text"; text: string } | { type: "wa-button" };
+  const sendBot = async (msgs: BotPayload[], delay = 1200) => {
     for (const m of msgs) {
       setTyping(true);
       await new Promise((r) => setTimeout(r, delay));
