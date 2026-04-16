@@ -29,14 +29,16 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Facility" },
+      { name: "description", content: "A premium, responsive institutional landing page for Facility Software Brasil, showcasing their high-end technology and marketing services." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Facility" },
+      { property: "og:description", content: "A premium, responsive institutional landing page for Facility Software Brasil, showcasing their high-end technology and marketing services." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Facility" },
+      { name: "twitter:description", content: "A premium, responsive institutional landing page for Facility Software Brasil, showcasing their high-end technology and marketing services." },
     ],
     links: [
       {
