@@ -65,7 +65,7 @@ export function SplineHero() {
           className="flex flex-1 flex-col justify-center py-16 md:py-0 md:pr-12"
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
             3D Interativo
@@ -82,7 +82,7 @@ export function SplineHero() {
           style={{ minHeight: "clamp(250px, 35vh, 500px)" }}
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
         >
           <div className="h-full w-full" style={{ minHeight: "inherit", transform: "scale(1.3)", transformOrigin: "center center" }}>
             <SplineScene
