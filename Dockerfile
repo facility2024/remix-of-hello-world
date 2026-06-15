@@ -2,11 +2,13 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+ARG DEPLOY_MARKER=facility-easypanel-health-2026-06-15
+
 COPY package.json package-lock.json* bun.lock* ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN npm run build
+RUN echo "Deploy marker: ${DEPLOY_MARKER}" && npm run build && test -d dist/client && test -f dist/server/index.js
 
 ## Stage 2 — Serve with Node
 FROM node:22-alpine AS runner

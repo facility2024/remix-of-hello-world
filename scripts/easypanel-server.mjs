@@ -4,12 +4,11 @@ import { readFile } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import worker from "../dist/server/index.js";
-
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const projectRoot = resolve(__dirname, "..");
 const clientRoot = resolve(projectRoot, "dist/client");
 const port = Number(process.env.PORT || 3000);
+let workerPromise;
 
 const MIME_TYPES = {
   ".avif": "image/avif",
@@ -99,6 +98,22 @@ function serveStaticFile(filePath, req, res) {
   createReadStream(filePath).pipe(res);
 }
 
+function serveClientIndex(req, res) {
+  const indexFile = join(clientRoot, "index.html");
+
+  if (existsSync(indexFile)) {
+    serveStaticFile(indexFile, req, res);
+    return true;
+  }
+
+  return false;
+}
+
+async function getWorker() {
+  workerPromise ||= import("../dist/server/index.js").then((module) => module.default || module);
+  return workerPromise;
+}
+
 async function readBody(req) {
   const chunks = [];
   for await (const chunk of req) {
@@ -142,6 +157,7 @@ const server = createServer(async (req, res) => {
     }
 
     const body = await readBody(req);
+    const worker = await getWorker();
     const response = await worker.fetch(toWebRequest(req, body));
 
     res.statusCode = response.status;
@@ -162,6 +178,12 @@ const server = createServer(async (req, res) => {
     res.end(Buffer.from(arrayBuffer));
   } catch (error) {
     console.error("EasyPanel server error", error);
+    const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
+
+    if (!isStaticAsset(pathname) && serveClientIndex(req, res)) {
+      return;
+    }
+
     res.statusCode = 500;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.end("Internal Server Error");
