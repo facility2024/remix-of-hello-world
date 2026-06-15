@@ -8,7 +8,7 @@ COPY package.json package-lock.json* bun.lock* ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN echo "Deploy marker: ${DEPLOY_MARKER}" && npm run build && test -d dist/client && test -f dist/server/index.js
+RUN echo "Deploy marker: ${DEPLOY_MARKER}" && npm run build && test -d dist/client && test -f dist/server/server.js
 
 ## Stage 2 — Serve with Node
 FROM node:22-alpine AS runner
