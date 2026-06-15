@@ -1,9 +1,9 @@
 "use client";
 
-import { lazy, Suspense, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, type ComponentType } from "react";
 import { motion } from "framer-motion";
 
-const Spline = lazy(() => import("@splinetool/react-spline"));
+type SplineComponent = ComponentType<{ scene: string; className?: string }>;
 
 function SplineScene({
   scene,
@@ -12,16 +12,32 @@ function SplineScene({
   scene: string;
   className?: string;
 }) {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex h-full w-full items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/80" />
-        </div>
+  const [Spline, setSpline] = useState<SplineComponent | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    import("@splinetool/react-spline").then((module) => {
+      if (mounted) {
+        setSpline(() => module.default as SplineComponent);
       }
-    >
-      <Spline scene={scene} className={className} />
-    </Suspense>
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (!Spline) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/80" />
+      </div>
+    );
+  }
+
+  return (
+    <Spline scene={scene} className={className} />
   );
 }
 
