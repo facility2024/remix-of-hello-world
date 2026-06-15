@@ -164,26 +164,16 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    const body = await readBody(req);
-    const worker = await getWorker();
-    const response = await worker.fetch(toWebRequest(req, body));
-
-    res.statusCode = response.status;
-    setResponseHeaders(res, response.headers);
-
-    if (req.method === "HEAD") {
-      res.end();
+    // SPA fallback: serve the prerendered client index.html for all unmatched routes.
+    // The dist/server bundle is a Cloudflare Worker and cannot run under plain Node
+    // without the ASSETS binding, so we skip it and let the client router handle routing.
+    if (serveClientIndex(req, res)) {
       return;
     }
 
-    if (!response.body) {
-      const text = await response.text();
-      res.end(text);
-      return;
-    }
-
-    const arrayBuffer = await response.arrayBuffer();
-    res.end(Buffer.from(arrayBuffer));
+    res.statusCode = 404;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.end("Not Found");
   } catch (error) {
     console.error("EasyPanel server error", error);
     const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
