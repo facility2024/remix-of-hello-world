@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -110,7 +110,15 @@ function serveClientIndex(req, res) {
 }
 
 async function getWorker() {
-  workerPromise ||= import("../dist/server/index.js").then((module) => module.default || module);
+  const serverEntryPath = [resolve(projectRoot, "dist/server/server.js"), resolve(projectRoot, "dist/server/index.js")].find(
+    (candidatePath) => existsSync(candidatePath),
+  );
+
+  if (!serverEntryPath) {
+    throw new Error("Build do servidor não encontrado em dist/server/server.js ou dist/server/index.js");
+  }
+
+  workerPromise ||= import(pathToFileURL(serverEntryPath).href).then((module) => module.default || module);
   return workerPromise;
 }
 
