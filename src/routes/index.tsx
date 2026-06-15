@@ -992,7 +992,7 @@ function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-background/10 pt-6 text-center text-xs text-background/40">
-          colcoa aqui desde de 2008 © 2026 Facility Software Brasil. Todos os direitos reservados.
+          Desde 2008 · © 2026 Facility Software Brasil. Todos os direitos reservados.
         </div>
       </div>
     </footer>
