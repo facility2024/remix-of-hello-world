@@ -2,7 +2,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG DEPLOY_MARKER=facility-easypanel-health-2026-06-15
+ARG DEPLOY_MARKER=facility-spa-fallback-2026-06-15
 
 COPY package.json package-lock.json* bun.lock* ./
 RUN npm install --legacy-peer-deps
