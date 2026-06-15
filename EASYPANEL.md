@@ -6,7 +6,7 @@
 ## Configuração
 - **Port:** `3000`
 - **Build context:** raiz do projeto
-- **Health check path:** `/`
+- **Health check path:** `/health`
 
 ## Variáveis de ambiente
 Nenhuma obrigatória — o servidor Node sobe na porta `3000` por padrão.
@@ -21,4 +21,5 @@ Nenhuma obrigatória — o servidor Node sobe na porta `3000` por padrão.
 ## Se aparecer "Service is not reachable"
 - Confirme **Port = 3000** no EasyPanel (não 80)
 - Veja os logs do container: `docker logs <container>` — deve mostrar `Facility app listening on http://0.0.0.0:3000`
+- Configure o health check do EasyPanel para `/health`; essa rota responde `ok` imediatamente
 - Confirme que o build gerou `dist/client` e `dist/server`

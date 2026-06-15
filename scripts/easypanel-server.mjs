@@ -110,6 +110,15 @@ async function readBody(req) {
 const server = createServer(async (req, res) => {
   try {
     const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
+
+    if (pathname === "/health" || pathname === "/healthz") {
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Cache-Control", "no-store");
+      res.end("ok");
+      return;
+    }
+
     const filePath = getSafeFilePath(pathname);
 
     if (filePath && existsSync(filePath) && statSync(filePath).isFile()) {
