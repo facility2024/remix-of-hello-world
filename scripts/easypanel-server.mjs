@@ -2,13 +2,12 @@ import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const projectRoot = resolve(__dirname, "..");
-const clientRoot = resolve(projectRoot, "dist/client");
+const clientRootCandidates = [resolve(projectRoot, "dist/client"), resolve(projectRoot, "dist/public"), resolve(projectRoot, "dist")];
 const port = Number(process.env.PORT || 3000);
-let workerPromise;
 
 const MIME_TYPES = {
   ".avif": "image/avif",
@@ -30,33 +29,12 @@ const MIME_TYPES = {
   ".xml": "application/xml; charset=utf-8",
 };
 
-function toWebRequest(req, bodyBuffer) {
-  const url = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`);
-  const headers = new Headers();
-
-  for (const [key, value] of Object.entries(req.headers)) {
-    if (Array.isArray(value)) {
-      for (const item of value) headers.append(key, item);
-    } else if (value !== undefined) {
-      headers.set(key, value);
-    }
-  }
-
-  const method = req.method || "GET";
-  const init = {
-    method,
-    headers,
-  };
-
-  if (method !== "GET" && method !== "HEAD") {
-    init.body = bodyBuffer;
-    init.duplex = "half";
-  }
-
-  return new Request(url, init);
+function getClientRoot() {
+  return clientRootCandidates.find((candidate) => existsSync(join(candidate, "index.html"))) || clientRootCandidates[0];
 }
 
 function getSafeFilePath(pathname) {
+  const clientRoot = getClientRoot();
   const decodedPath = decodeURIComponent(pathname);
   const normalizedPath = normalize(decodedPath).replace(/^([.][.][/\\])+/, "");
   const filePath = resolve(join(clientRoot, normalizedPath.replace(/^[/\\]+/, "")));
@@ -70,12 +48,6 @@ function getSafeFilePath(pathname) {
 
 function isStaticAsset(pathname) {
   return pathname !== "/" && extname(pathname) !== "";
-}
-
-function setResponseHeaders(res, headers) {
-  headers.forEach((value, key) => {
-    res.setHeader(key, value);
-  });
 }
 
 function serveStaticFile(filePath, req, res) {
@@ -99,6 +71,7 @@ function serveStaticFile(filePath, req, res) {
 }
 
 function serveClientIndex(req, res) {
+  const clientRoot = getClientRoot();
   const indexFile = join(clientRoot, "index.html");
 
   if (existsSync(indexFile)) {
@@ -107,27 +80,6 @@ function serveClientIndex(req, res) {
   }
 
   return false;
-}
-
-async function getWorker() {
-  const serverEntryPath = [resolve(projectRoot, "dist/server/server.js"), resolve(projectRoot, "dist/server/index.js")].find(
-    (candidatePath) => existsSync(candidatePath),
-  );
-
-  if (!serverEntryPath) {
-    throw new Error("Build do servidor não encontrado em dist/server/server.js ou dist/server/index.js");
-  }
-
-  workerPromise ||= import(pathToFileURL(serverEntryPath).href).then((module) => module.default || module);
-  return workerPromise;
-}
-
-async function readBody(req) {
-  const chunks = [];
-  for await (const chunk of req) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
-  }
-  return chunks.length ? Buffer.concat(chunks) : undefined;
 }
 
 const server = createServer(async (req, res) => {
@@ -164,16 +116,13 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    // SPA fallback: serve the prerendered client index.html for all unmatched routes.
-    // The dist/server bundle is a Cloudflare Worker and cannot run under plain Node
-    // without the ASSETS binding, so we skip it and let the client router handle routing.
     if (serveClientIndex(req, res)) {
       return;
     }
 
-    res.statusCode = 404;
+    res.statusCode = 500;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.end("Not Found");
+    res.end(`Build estático não encontrado. Caminhos verificados: ${clientRootCandidates.join(", ")}`);
   } catch (error) {
     console.error("EasyPanel server error", error);
     const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
@@ -189,9 +138,11 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(port, "0.0.0.0", async () => {
+  const clientRoot = getClientRoot();
   const faviconPath = join(clientRoot, "favicon.ico");
   const hasClientBuild = existsSync(clientRoot);
+  const hasIndex = existsSync(join(clientRoot, "index.html"));
   const hasFavicon = existsSync(faviconPath) ? (await readFile(faviconPath)).length > 0 : false;
   console.log(`Facility app listening on http://0.0.0.0:${port}`);
-  console.log(`dist/client disponível: ${hasClientBuild} | favicon: ${hasFavicon}`);
+  console.log(`client root: ${clientRoot} | disponível: ${hasClientBuild} | index.html: ${hasIndex} | favicon: ${hasFavicon}`);
 });
