@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -1004,7 +1004,9 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <SplineHero />
+      <ClientOnly fallback={<div className="w-full bg-foreground" style={{ minHeight: "clamp(300px, 50vh, 700px)" }} />}>
+        <SplineHero />
+      </ClientOnly>
       <Header />
       <Hero />
       <ShowcaseCarousel />
