@@ -66,7 +66,7 @@ function serveStaticFile(filePath, req, res) {
 }
 
 function serveClientIndex(req, res) {
-  const indexFile = join(clientRoot, "_shell.html");
+  const indexFile = join(clientRoot, "index.html");
 
   if (existsSync(indexFile)) {
     serveStaticFile(indexFile, req, res);
