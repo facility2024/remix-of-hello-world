@@ -10,7 +10,6 @@ export default defineConfig({
   tanstackStart: {
     spa: {
       enabled: true,
-      maskPath: "/__spa_shell__",
     },
   },
 });
