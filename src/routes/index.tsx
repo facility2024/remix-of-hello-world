@@ -1025,6 +1025,7 @@ function LandingPage() {
 }
 
 export const Route = createFileRoute("/")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
