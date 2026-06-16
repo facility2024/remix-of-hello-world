@@ -116,7 +116,7 @@ const server = createServer(async (req, res) => {
 
     res.statusCode = 500;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.end("Build estático não encontrado em dist/client/_shell.html");
+    res.end("Build estático não encontrado em dist/client/index.html");
   } catch (error) {
     console.error("EasyPanel server error", error);
     const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
@@ -133,10 +133,10 @@ const server = createServer(async (req, res) => {
 
 server.listen(port, "0.0.0.0", async () => {
   const faviconPath = join(clientRoot, "favicon.ico");
-  const shellPath = join(clientRoot, "_shell.html");
+  const indexFile = join(clientRoot, "index.html");
   const hasClientBuild = existsSync(clientRoot);
-  const hasShell = existsSync(shellPath);
+  const hasIndex = existsSync(indexFile);
   const hasFavicon = existsSync(faviconPath) ? (await readFile(faviconPath)).length > 0 : false;
   console.log(`Facility app listening on http://0.0.0.0:${port}`);
-  console.log(`dist/client: ${hasClientBuild} | dist/client/_shell.html: ${hasShell} | favicon: ${hasFavicon}`);
+  console.log(`dist/client: ${hasClientBuild} | dist/client/index.html: ${hasIndex} | favicon: ${hasFavicon}`);
 });
