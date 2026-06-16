@@ -2,13 +2,13 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG DEPLOY_MARKER=facility-spa-shell-2026-06-15
+ARG DEPLOY_MARKER=facility-static-shell-2026-06-16
 
 COPY package.json package-lock.json* bun.lock* ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN echo "Deploy marker: ${DEPLOY_MARKER}" && npm run build && test -d dist/client && test -f dist/client/_shell.html
+RUN echo "Deploy marker: ${DEPLOY_MARKER}" && npm run build && test -f dist/client/index.html
 
 ## Stage 2 — Serve with Node
 FROM node:22-alpine AS runner
