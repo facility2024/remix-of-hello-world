@@ -1,47 +1,18 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import portraitAsset from "@/assets/facility-portrait.png.asset.json";
 
 export function SplineHero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  }, []);
-
   return (
     <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
       className="relative w-full overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse at center, #2a2a2c 0%, #1a1a1c 45%, #111113 100%)",
         minHeight: "clamp(300px, 50vh, 700px)",
       }}
-
     >
-      {/* Spotlight effect */}
-      <motion.div
-        className="pointer-events-none absolute z-10 rounded-full"
-        animate={{ x: mousePos.x - 200, y: mousePos.y - 200 }}
-        transition={{ type: "spring", damping: 25, stiffness: 150 }}
-        style={{
-          width: 400,
-          height: 400,
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)",
-        }}
-      />
-
       {/* Content */}
       <div className="relative z-20 mx-auto flex h-full min-h-[inherit] max-w-7xl flex-col items-center px-6 md:flex-row md:px-12">
         {/* Left text */}
@@ -75,7 +46,6 @@ export function SplineHero() {
             style={{ filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.6))" }}
             loading="eager"
           />
-
         </motion.div>
       </div>
 
