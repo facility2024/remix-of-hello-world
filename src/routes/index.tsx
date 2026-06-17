@@ -1025,10 +1025,11 @@ function Footer() {
 /* ─────────── EQUIPE FACILITY ─────────── */
 function EquipeFacility() {
   const team = [
-    { name: "Marcos", role: "Comercial", img: equipeMarcos },
-    { name: "Leandro Alves", role: "Diretor", img: equipeLeandro },
-    { name: "Pedro Ferreira", role: "Tecnologia", img: equipePedro },
+    { name: "Otavio", role: "CEO & Desenvolvedor", img: portraitAsset.url },
+    { name: "Leandro Alves", role: "Desenvolvedor", img: equipeLeandro },
+    { name: "Pedro Ferreira", role: "Gestor de Tráfego", img: equipePedro },
   ];
+
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-6 text-center">
