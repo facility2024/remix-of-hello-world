@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send } from "lucide-react";
-import chatAvatar from "@/assets/chatbot-avatar.png";
-import waAvatar from "@/assets/whatsapp-avatar.png";
+import chatAvatarAsset from "@/assets/chatbot-avatar.png.asset.json";
+import waAvatarAsset from "@/assets/whatsapp-avatar.png.asset.json";
+const chatAvatar = chatAvatarAsset.url;
+const waAvatar = waAvatarAsset.url;
+
 
 type Msg =
   | { id: string; from: "bot"; type: "text"; text: string }
