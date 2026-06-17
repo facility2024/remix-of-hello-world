@@ -170,7 +170,7 @@ function Hero() {
             <span className="text-primary">soluções digitais</span> de alto impacto
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Mais de 18 anos criando soluções em marketing, software, automações, sistemas e
+            Mais de 16 anos criando soluções em marketing, software, automações, sistemas e
             aplicativos para empresas que desejam crescer com estratégia, tecnologia e performance.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
@@ -320,7 +320,7 @@ function ShowcaseCarousel() {
 /* ─────────── QUEM SOMOS ─────────── */
 function QuemSomos() {
   const stats = [
-    { icon: Clock, label: "+18 anos", desc: "de mercado" },
+    { icon: Clock, label: "+16 anos", desc: "de mercado" },
     { icon: Layers, label: "Sob medida", desc: "Projetos personalizados" },
     { icon: Users, label: "Consultivo", desc: "Atendimento estratégico" },
     { icon: Rocket, label: "Escalável", desc: "Soluções que crescem" },
@@ -339,7 +339,7 @@ function QuemSomos() {
             </h2>
             <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                A Facility Software Brasil é uma agência e software house com mais de 18 anos de
+                A Facility Software Brasil é uma agência e software house com mais de 16 anos de
                 atuação no mercado, entregando soluções em marketing, tecnologia, desenvolvimento de
                 sistemas, automações inteligentes, aplicativos e presença digital para empresas de
                 diversos segmentos.
@@ -1047,13 +1047,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Mais de 18 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
+          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
       },
       { property: "og:title", content: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
       {
         property: "og:description",
         content:
-          "Mais de 18 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
+          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
       },
       { property: "og:type", content: "website" },
     ],
