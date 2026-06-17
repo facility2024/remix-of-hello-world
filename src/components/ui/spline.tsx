@@ -1,45 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback, type ComponentType } from "react";
+import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-
-type SplineComponent = ComponentType<{ scene: string; className?: string }>;
-
-function SplineScene({
-  scene,
-  className = "",
-}: {
-  scene: string;
-  className?: string;
-}) {
-  const [Spline, setSpline] = useState<SplineComponent | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-
-    import("@splinetool/react-spline").then((module) => {
-      if (mounted) {
-        setSpline(() => module.default as SplineComponent);
-      }
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  if (!Spline) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/80" />
-      </div>
-    );
-  }
-
-  return (
-    <Spline scene={scene} className={className} />
-  );
-}
+import portraitAsset from "@/assets/facility-portrait.png.asset.json";
 
 export function SplineHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,32 +47,32 @@ export function SplineHero() {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
-            3D Interativo
+            Agência Facility
           </h2>
           <p className="mt-4 max-w-md text-base leading-relaxed text-gray-400 md:text-lg">
-            Dê vida à sua interface com belas cenas 3D. Crie experiências
-            imersivas que capturam a atenção e aprimoram seu design.
+            Presença de marca com identidade forte. Estratégia, design e
+            performance para elevar o seu negócio ao próximo nível.
           </p>
         </motion.div>
 
-        {/* Right 3D scene */}
+        {/* Right portrait image */}
         <motion.div
           className="relative flex flex-1 items-center justify-center"
           style={{ minHeight: "clamp(250px, 35vh, 500px)" }}
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+          transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
         >
-          <div className="h-full w-full" style={{ minHeight: "inherit", transform: "scale(1.3)", transformOrigin: "center center" }}>
-            <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="h-full w-full"
-            />
-          </div>
+          <img
+            src={portraitAsset.url}
+            alt="Retrato Agência Facility"
+            className="h-full max-h-[600px] w-auto object-contain"
+            loading="eager"
+          />
         </motion.div>
       </div>
 
-      {/* Bottom gradient fade to white (page bg) */}
+      {/* Bottom gradient fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24"
         style={{
@@ -121,4 +84,4 @@ export function SplineHero() {
   );
 }
 
-export default SplineScene;
+export default SplineHero;
