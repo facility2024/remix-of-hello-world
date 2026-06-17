@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send } from "lucide-react";
 import chatAvatarAsset from "@/assets/chatbot-avatar.png.asset.json";
 import waAvatarAsset from "@/assets/whatsapp-avatar.png.asset.json";
+import suporteAvatarAsset from "@/assets/suporte-avatar.jpg.asset.json";
 const chatAvatar = chatAvatarAsset.url;
 const waAvatar = waAvatarAsset.url;
+const suporteAvatar = suporteAvatarAsset.url;
 
 
 type Msg =
@@ -14,9 +16,13 @@ type Msg =
 
 type Step = "greet" | "awaitFirst" | "awaitName" | "done";
 
-const WA_NUMBER = "5511982969676";
+const WA_NUMBER = "5519988697308";
+const WA_SUPORTE_NUMBER = "5511982969676";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
   "Olá! Vim pelo site da Facility Software Brasil e gostaria de falar com um atendente.",
+)}`;
+const WA_SUPORTE_LINK = `https://wa.me/${WA_SUPORTE_NUMBER}?text=${encodeURIComponent(
+  "Olá! Vim pelo site da Facility Software Brasil e gostaria de falar com o suporte.",
 )}`;
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -178,23 +184,40 @@ export function ChatBot() {
               {messages.map((m) => {
                 if (m.from === "bot" && m.type === "wa-button") {
                   return (
-                    <a
-                      key={m.id}
-                      href={WA_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 rounded-2xl bg-green-500 p-3 text-white shadow-lg transition hover:bg-green-600"
-                    >
-                      <img
-                        src={waAvatar}
-                        alt="Atendente WhatsApp"
-                        className="h-10 w-10 rounded-full border-2 border-white object-cover"
-                      />
-                      <div className="flex-1">
-                        <p className="text-sm font-bold">Falar com atendente</p>
-                        <p className="text-xs opacity-90">Abrir WhatsApp</p>
-                      </div>
-                    </a>
+                    <div key={m.id} className="space-y-2">
+                      <a
+                        href={WA_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 rounded-2xl bg-green-500 p-3 text-white shadow-lg transition hover:bg-green-600"
+                      >
+                        <img
+                          src={waAvatar}
+                          alt="Atendente WhatsApp"
+                          className="h-10 w-10 rounded-full border-2 border-white object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="text-sm font-bold">Falar com atendente</p>
+                          <p className="text-xs opacity-90">Abrir WhatsApp</p>
+                        </div>
+                      </a>
+                      <a
+                        href={WA_SUPORTE_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 rounded-2xl bg-green-500 p-3 text-white shadow-lg transition hover:bg-green-600"
+                      >
+                        <img
+                          src={suporteAvatar}
+                          alt="Suporte WhatsApp"
+                          className="h-10 w-10 rounded-full border-2 border-white object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="text-sm font-bold">Falar com suporte</p>
+                          <p className="text-xs opacity-90">Abrir WhatsApp</p>
+                        </div>
+                      </a>
+                    </div>
                   );
                 }
                 return (
