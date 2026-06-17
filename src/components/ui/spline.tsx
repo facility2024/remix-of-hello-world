@@ -71,7 +71,7 @@ export function SplineHero() {
           <img
             src={portraitAsset.url}
             alt="Retrato Agência Facility"
-            className="h-full max-h-[600px] w-auto object-contain mix-blend-lighten"
+            className="h-full max-h-[600px] w-auto object-contain"
             style={{ filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.6))" }}
             loading="eager"
           />
