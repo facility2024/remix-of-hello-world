@@ -22,7 +22,12 @@ export function SplineHero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative w-full overflow-hidden"
-      style={{ background: "#000000", minHeight: "clamp(300px, 50vh, 700px)" }}
+      style={{
+        background:
+          "radial-gradient(ellipse at center, #2a2a2c 0%, #1a1a1c 45%, #111113 100%)",
+        minHeight: "clamp(300px, 50vh, 700px)",
+      }}
+
     >
       {/* Spotlight effect */}
       <motion.div
@@ -67,8 +72,10 @@ export function SplineHero() {
             src={portraitAsset.url}
             alt="Retrato Agência Facility"
             className="h-full max-h-[600px] w-auto object-contain"
+            style={{ filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.6))" }}
             loading="eager"
           />
+
         </motion.div>
       </div>
 
