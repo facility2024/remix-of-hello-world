@@ -1047,10 +1047,11 @@ function EquipeFacility() {
           Conheça quem está por trás dos projetos que entregamos todos os dias.
         </p>
 
-        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8 place-items-center">
+        <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-6 place-items-center">
           {team.map((p) => (
             <div key={p.name} className="flex flex-col items-center">
-              <div className="h-44 w-44 md:h-52 md:w-52 rounded-full overflow-hidden ring-4 ring-primary/20 shadow-xl">
+              <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
+
                 <img
                   src={p.img}
                   alt={p.name}
