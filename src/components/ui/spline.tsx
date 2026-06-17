@@ -1,13 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import portraitAsset from "@/assets/facility-portrait.png.asset.json";
 
 export function SplineHero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+
   return (
-    <div
+    <motion.div
+      ref={ref}
       className="relative w-full overflow-hidden"
       style={{
+        opacity,
         background:
           "radial-gradient(ellipse at center, #2a2a2c 0%, #1a1a1c 45%, #111113 100%)",
         minHeight: "clamp(300px, 50vh, 700px)",
