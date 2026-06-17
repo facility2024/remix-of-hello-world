@@ -37,6 +37,13 @@ const logoClaro = logoClaroAsset.url;
 const logoOi = logoOiAsset.url;
 const logoFacility = logoFacilityAsset.url;
 const logoEhs = logoEhsAsset.url;
+import equipeMarcosAsset from "@/assets/equipe-marcos.png.asset.json";
+import equipeLeandroAsset from "@/assets/equipe-leandro.png.asset.json";
+import equipePedroAsset from "@/assets/equipe-pedro.png.asset.json";
+const equipeMarcos = equipeMarcosAsset.url;
+const equipeLeandro = equipeLeandroAsset.url;
+const equipePedro = equipePedroAsset.url;
+
 
 import {
   Megaphone,
@@ -1015,6 +1022,48 @@ function Footer() {
   );
 }
 
+/* ─────────── EQUIPE FACILITY ─────────── */
+function EquipeFacility() {
+  const team = [
+    { name: "Marcos", role: "Comercial", img: equipeMarcos },
+    { name: "Leandro Alves", role: "Diretor", img: equipeLeandro },
+    { name: "Pedro Ferreira", role: "Tecnologia", img: equipePedro },
+  ];
+  return (
+    <section className="bg-background py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-6 text-center">
+        <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+          Equipe Facility
+        </span>
+        <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          Pessoas que fazem acontecer
+        </h2>
+        <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
+          Conheça quem está por trás dos projetos que entregamos todos os dias.
+        </p>
+
+        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8 place-items-center">
+          {team.map((p) => (
+            <div key={p.name} className="flex flex-col items-center">
+              <div className="h-44 w-44 md:h-52 md:w-52 rounded-full overflow-hidden ring-4 ring-primary/20 shadow-xl">
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
+              <p className="text-sm text-muted-foreground">{p.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 /* ─────────── PAGE ─────────── */
 function LandingPage() {
 
@@ -1023,8 +1072,10 @@ function LandingPage() {
       <ClientOnly fallback={<div className="w-full bg-foreground" style={{ minHeight: "clamp(300px, 50vh, 700px)" }} />}>
         <SplineHero />
       </ClientOnly>
+      <EquipeFacility />
       <Header />
       <Hero />
+
       <ShowcaseCarousel />
       <QuemSomos />
       <Servicos />
