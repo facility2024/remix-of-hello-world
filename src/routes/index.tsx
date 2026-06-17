@@ -1050,23 +1050,38 @@ function EquipeFacility() {
           Conheça quem está por trás dos projetos que entregamos todos os dias.
         </p>
 
-        <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-6 place-items-center">
-          {team.map((p) => (
-            <div key={p.name} className="flex flex-col items-center">
-              <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
-
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+        <div
+          className="mt-12 relative overflow-hidden"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          }}
+        >
+          <div className="flex w-max gap-10 animate-[equipe-marquee_28s_linear_infinite]">
+            {[...team, ...team].map((p, i) => (
+              <div key={`${p.name}-${i}`} className="flex flex-col items-center shrink-0 w-40">
+                <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
+                <p className="text-sm text-muted-foreground">{p.role}</p>
               </div>
-              <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
-              <p className="text-sm text-muted-foreground">{p.role}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+        <style>{`
+          @keyframes equipe-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
       </div>
     </section>
   );
