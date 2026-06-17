@@ -1030,8 +1030,10 @@ function LandingPage() {
       <ClientOnly fallback={<div className="w-full bg-foreground" style={{ minHeight: "clamp(300px, 50vh, 700px)" }} />}>
         <SplineHero />
       </ClientOnly>
+      <EquipeFacility />
       <Header />
       <Hero />
+
       <ShowcaseCarousel />
       <QuemSomos />
       <Servicos />
