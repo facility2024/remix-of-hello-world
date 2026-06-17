@@ -1033,7 +1033,7 @@ function EquipeFacility() {
     { name: "Marcos", role: "Comercial", img: equipeMarcos },
     { name: "Leandro Alves", role: "Desenvolvedor", img: equipeLeandro },
     { name: "Pedro Ferreira", role: "Gestor de Tráfego", img: equipePedro },
-    { name: "Hiury", role: "Desenvolvedor", img: equipeHiury },
+    
   ];
 
 
