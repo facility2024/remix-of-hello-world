@@ -1059,21 +1059,23 @@ function EquipeFacility() {
               "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           }}
         >
-          <div className="flex w-max gap-10 animate-[equipe-marquee_28s_linear_infinite]">
-            {[...team, ...team].map((p, i) => (
-              <div key={`${p.name}-${i}`} className="flex flex-col items-center shrink-0 w-40">
-                <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
+          <div className="flex w-max gap-10 animate-[equipe-marquee_28s_linear_infinite] mx-auto">
+            {Array.from({ length: 6 }).flatMap((_, r) =>
+              team.map((p, i) => (
+                <div key={`${p.name}-${r}-${i}`} className="flex flex-col items-center shrink-0 w-40">
+                  <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
+                  <p className="text-sm text-muted-foreground">{p.role}</p>
                 </div>
-                <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
-                <p className="text-sm text-muted-foreground">{p.role}</p>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
         <style>{`
