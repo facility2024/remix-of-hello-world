@@ -130,7 +130,7 @@ export function ChatBot() {
                   Olá! Posso ajudar com uma mãozinha? 💜
                   <button
                     onClick={() => setShowBubble(false)}
-                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 text-white shadow"
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-background shadow"
                     aria-label="Fechar"
                   >
                     <X className="h-3 w-3" />
