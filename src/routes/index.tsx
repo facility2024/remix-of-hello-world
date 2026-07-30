@@ -294,7 +294,7 @@ function QuemSomos() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Sobre nós
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Quem Somos
             </h2>
             <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
@@ -322,7 +322,7 @@ function QuemSomos() {
               {stats.map((s, i) => (
                 <div
                   key={i}
-                  className="group rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                  className="group rounded-3xl border border-border/40 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
                 >
                   <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <s.icon size={22} />
@@ -392,7 +392,7 @@ function Servicos() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Serviços
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Nossas Soluções
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -405,7 +405,7 @@ function Servicos() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s, i) => (
             <ScrollReveal key={i} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.05}>
-              <div className="group h-full rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
+              <div className="group h-full rounded-3xl border border-border/40 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                 <div className="mb-4 inline-flex rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <s.icon size={24} />
                 </div>
@@ -441,7 +441,7 @@ function Diferenciais() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Diferenciais
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Por que escolher a Facility Software Brasil?
             </h2>
           </div>
@@ -450,7 +450,7 @@ function Diferenciais() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {differentials.map((d, i) => (
             <ScrollReveal key={i} direction="up" delay={i * 0.06}>
-              <div className="group flex items-center gap-4 rounded-2xl border border-border/60 bg-card p-5 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+              <div className="group flex items-center gap-4 rounded-3xl border border-border/40 bg-card p-5 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                 <div className="shrink-0 rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <d.icon size={20} />
                 </div>
@@ -485,8 +485,8 @@ function LogoCarousel() {
     <section className="relative py-20 lg:py-28 overflow-hidden">
       {/* Purple blur glow effect */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-purple-600/20 blur-[120px]" />
-        <div className="absolute top-1/3 right-0 h-[300px] w-[300px] rounded-full bg-purple-500/15 blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-primary/15 blur-[120px]" />
+        <div className="absolute top-1/3 right-0 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[100px]" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-6 text-center mb-12">
@@ -494,7 +494,7 @@ function LogoCarousel() {
           <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
             Apresentação
           </span>
-          <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
             Conheça nossa apresentação
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
@@ -662,17 +662,17 @@ function Depoimentos() {
   }, [handleShuffle]);
 
   return (
-    <section className="py-16 lg:py-24 bg-slate-900 overflow-hidden">
+    <section className="py-16 lg:py-24 bg-card overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Depoimentos
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               O que nossos clientes dizem
             </h2>
-            <p className="mt-4 text-slate-400">
+            <p className="mt-4 text-muted-foreground">
               Arraste o card ou aguarde a troca automática.
             </p>
           </div>
@@ -728,7 +728,7 @@ function Processo() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Processo
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Como funciona nosso processo
             </h2>
           </div>
@@ -795,7 +795,7 @@ function Contato() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Contato
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Solicite uma apresentação
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -888,7 +888,7 @@ function Contato() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto"
+                  className="w-full rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto"
                 >
                   Enviar Solicitação
                 </button>
@@ -897,7 +897,7 @@ function Contato() {
           </ScrollReveal>
 
           <ScrollReveal direction="right" className="lg:col-span-2">
-            <div className="space-y-6 rounded-2xl border border-border/60 bg-card p-8">
+            <div className="space-y-6 rounded-3xl border border-border/40 bg-card p-8">
               <h3 className="font-bold text-foreground text-lg">Informações de contato</h3>
               <div className="flex items-start gap-3 text-sm">
                 <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
@@ -992,7 +992,7 @@ function EquipeFacility() {
         <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
           Equipe Facility
         </span>
-        <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+        <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl lg:text-5xl">
           Pessoas que fazem acontecer
         </h2>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
