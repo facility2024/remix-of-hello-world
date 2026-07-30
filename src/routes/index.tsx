@@ -1044,13 +1044,8 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <ClientOnly fallback={<div className="w-full bg-foreground" style={{ minHeight: "clamp(300px, 50vh, 700px)" }} />}>
-        <SplineHero />
-      </ClientOnly>
-      <EquipeFacility />
       <Header />
       <Hero />
-
       <ShowcaseCarousel />
       <QuemSomos />
       <Servicos />
@@ -1059,11 +1054,14 @@ function LandingPage() {
       <VideoSection />
       <Depoimentos />
       <Processo />
+      <EquipeFacility />
+      <CtaBand />
       <Contato />
       <Footer />
       <ChatBot />
     </div>
   );
+
 }
 
 export const Route = createFileRoute("/")({
