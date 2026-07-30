@@ -125,12 +125,12 @@ export function ChatBot() {
                   initial={{ opacity: 0, x: 20, scale: 0.8 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   exit={{ opacity: 0, x: 20, scale: 0.8 }}
-                  className="mb-2 max-w-[220px] rounded-2xl rounded-br-sm bg-white px-4 py-3 text-sm font-medium text-foreground shadow-xl"
+                  className="mb-2 max-w-[220px] rounded-2xl rounded-br-sm bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-xl ring-1 ring-border"
                 >
                   Olá! Posso ajudar com uma mãozinha? 💜
                   <button
                     onClick={() => setShowBubble(false)}
-                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 text-white shadow"
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-background shadow"
                     aria-label="Fechar"
                   >
                     <X className="h-3 w-3" />
@@ -228,8 +228,8 @@ export function ChatBot() {
                     <div
                       className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
                         m.from === "user"
-                          ? "rounded-br-sm bg-primary text-white"
-                          : "rounded-bl-sm bg-white text-foreground shadow-sm"
+                          ? "rounded-br-sm bg-primary text-primary-foreground"
+                          : "rounded-bl-sm bg-card text-card-foreground shadow-sm ring-1 ring-border"
                       }`}
                     >
                       {m.type === "text" && m.text}
@@ -239,7 +239,7 @@ export function ChatBot() {
               })}
               {typing && (
                 <div className="flex justify-start">
-                  <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-white px-4 py-3 shadow-sm">
+                  <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-card px-4 py-3 shadow-sm ring-1 ring-border">
                     {[0, 1, 2].map((i) => (
                       <motion.span
                         key={i}
@@ -271,7 +271,7 @@ export function ChatBot() {
               <button
                 type="submit"
                 disabled={!input.trim() || step === "done" || typing}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white transition hover:bg-primary/90 disabled:opacity-50"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
                 aria-label="Enviar"
               >
                 <Send className="h-4 w-4" />
