@@ -1,10 +1,9 @@
-import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ChatBot } from "@/components/ChatBot";
 
-import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 import slide1Asset from "@/assets/slide-1.png.asset.json";
