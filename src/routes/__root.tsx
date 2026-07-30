@@ -43,11 +43,18 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/C3m9qC4JI7d4LBRG8QCRDGqpqhV2/social-images/social-1777501791875-WhatsApp_Image_2026-04-29_at_19.21.08.webp" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
       },
     ],
+
   }),
   shellComponent: RootShell,
   component: RootComponent,

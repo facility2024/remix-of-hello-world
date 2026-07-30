@@ -1,10 +1,9 @@
-import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ChatBot } from "@/components/ChatBot";
 
-import { SplineHero } from "@/components/ui/spline";
 import { TestimonialCard } from "@/components/ui/testimonial-cards";
 import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 import slide1Asset from "@/assets/slide-1.png.asset.json";
@@ -95,10 +94,10 @@ function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a href="#" className="text-xl font-bold tracking-tight text-foreground">
-          <span className="text-primary">Facility</span> Software Brasil
+        <a href="#" className="font-heading text-2xl tracking-tight text-foreground">
+          <span className="italic text-primary">Facility</span> Software Brasil
         </a>
 
         {/* Desktop */}
@@ -114,7 +113,7 @@ function Header() {
           ))}
           <a
             href="#contato"
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+            className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:scale-[1.03]"
           >
             Solicitar Apresentação
           </a>
@@ -146,7 +145,7 @@ function Header() {
           <a
             href="#contato"
             onClick={() => setOpen(false)}
-            className="mt-2 block rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground"
+            className="mt-2 block rounded-full bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground"
           >
             Solicitar Apresentação
           </a>
@@ -156,111 +155,60 @@ function Header() {
   );
 }
 
-/* ─────────── HERO ─────────── */
+/* ─────────── HERO (BENTO) ─────────── */
 function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* BG decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute top-1/2 -left-20 h-80 w-80 rounded-full bg-primary/8 blur-2xl" />
-      </div>
-
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-16 lg:py-0 items-center">
-        {/* Text */}
+    <section className="px-4 pt-28 pb-6 md:px-8 lg:pt-32">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 md:grid-cols-12">
+        {/* Bloco principal */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative flex min-h-[440px] flex-col justify-end overflow-hidden rounded-3xl border border-border/30 bg-card p-8 md:col-span-8 md:p-14"
         >
-          <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-6">
-            Agência &amp; Software House
+          <span className="absolute left-8 top-8 text-xs font-medium uppercase italic tracking-[0.25em] text-primary md:left-14 md:top-12">
+            Desde 2008 · Agência &amp; Software House
           </span>
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Transformamos ideias em{" "}
-            <span className="text-primary">soluções digitais</span> de alto impacto
+          <h1 className="font-heading mt-16 text-5xl italic leading-[0.92] tracking-tight text-foreground sm:text-6xl md:text-8xl">
+            Engenharia <br />
+            <span className="text-primary">Criativa</span> de <br />
+            Softwares.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Mais de 16 anos criando soluções em marketing, software, automações, sistemas e
-            aplicativos para empresas que desejam crescer com estratégia, tecnologia e performance.
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
+            Mais de 16 anos criando marketing, software, automações, sistemas e aplicativos para
+            empresas que querem crescer com estratégia, tecnologia e performance.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a
-              href="#contato"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
-            >
-              Falar com Especialista <ArrowRight size={16} />
-            </a>
-            <a
-              href="#solucoes"
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-foreground/15 bg-background px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary"
-            >
-              Conhecer Soluções
-            </a>
-          </div>
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-[100px]" />
         </motion.div>
 
-        {/* Visual composition */}
+        {/* Bloco CTA ember */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="relative hidden lg:flex items-center justify-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
+          className="flex flex-col justify-between gap-10 rounded-3xl bg-primary p-8 text-primary-foreground md:col-span-4"
         >
-          <div className="relative w-full max-w-lg aspect-square">
-            {/* Floating cards */}
-            <motion.div
-              animate={{ y: [-8, 8, -8] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-8 left-8 rounded-2xl bg-card p-5 shadow-xl border border-border/50"
+          <div className="flex justify-end">
+            <ArrowRight size={44} strokeWidth={1.5} />
+          </div>
+          <div>
+            <p className="mb-6 text-xl font-medium leading-tight">
+              Pronto para escalar sua operação digital com precisão técnica e design de elite?
+            </p>
+            <a
+              href="#contato"
+              className="inline-flex rounded-full bg-background px-6 py-3 font-medium text-foreground transition-colors hover:bg-card"
             >
-              <Code2 className="text-primary mb-2" size={28} />
-              <p className="text-xs font-semibold text-foreground">Software</p>
-              <p className="text-xs text-muted-foreground">Sob medida</p>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [6, -6, 6] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/4 right-4 rounded-2xl bg-primary p-5 shadow-xl shadow-primary/30"
-            >
-              <BarChart3 className="text-primary-foreground mb-2" size={28} />
-              <p className="text-xs font-semibold text-primary-foreground">Performance</p>
-              <p className="text-xs text-primary-foreground/70">Digital</p>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [-5, 10, -5] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-16 left-12 rounded-2xl bg-card p-5 shadow-xl border border-border/50"
-            >
-              <Zap className="text-primary mb-2" size={28} />
-              <p className="text-xs font-semibold text-foreground">Automação</p>
-              <p className="text-xs text-muted-foreground">Inteligente</p>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [10, -5, 10] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-8 right-16 rounded-2xl bg-foreground p-5 shadow-xl"
-            >
-              <Megaphone className="text-background mb-2" size={28} />
-              <p className="text-xs font-semibold text-background">Marketing</p>
-              <p className="text-xs text-background/60">Estratégico</p>
-            </motion.div>
-
-            {/* Central glow */}
-            <div className="absolute inset-0 m-auto h-48 w-48 rounded-full bg-primary/15 blur-3xl" />
-            <div className="absolute inset-0 m-auto h-52 w-52 rounded-full border border-primary/10" />
-            <div className="absolute inset-0 m-auto h-32 w-32 rounded-full border-2 border-primary/20 flex items-center justify-center overflow-hidden">
-              <img src={logoFacility} alt="Facility" className="h-20 w-20 object-contain" draggable={false} />
-            </div>
+              Fale Conosco
+            </a>
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+
 
 /* ─────────── CARD STACK SHOWCASE ─────────── */
 const showcaseItems: CardStackItem[] = [
@@ -345,7 +293,7 @@ function QuemSomos() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Sobre nós
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Quem Somos
             </h2>
             <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
@@ -373,7 +321,7 @@ function QuemSomos() {
               {stats.map((s, i) => (
                 <div
                   key={i}
-                  className="group rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                  className="group rounded-3xl border border-border/40 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
                 >
                   <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <s.icon size={22} />
@@ -443,7 +391,7 @@ function Servicos() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Serviços
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Nossas Soluções
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -456,7 +404,7 @@ function Servicos() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s, i) => (
             <ScrollReveal key={i} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.05}>
-              <div className="group h-full rounded-2xl border border-border/60 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
+              <div className="group h-full rounded-3xl border border-border/40 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                 <div className="mb-4 inline-flex rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <s.icon size={24} />
                 </div>
@@ -492,7 +440,7 @@ function Diferenciais() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Diferenciais
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Por que escolher a Facility Software Brasil?
             </h2>
           </div>
@@ -501,7 +449,7 @@ function Diferenciais() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {differentials.map((d, i) => (
             <ScrollReveal key={i} direction="up" delay={i * 0.06}>
-              <div className="group flex items-center gap-4 rounded-2xl border border-border/60 bg-card p-5 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+              <div className="group flex items-center gap-4 rounded-3xl border border-border/40 bg-card p-5 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                 <div className="shrink-0 rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <d.icon size={20} />
                 </div>
@@ -536,8 +484,8 @@ function LogoCarousel() {
     <section className="relative py-20 lg:py-28 overflow-hidden">
       {/* Purple blur glow effect */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-purple-600/20 blur-[120px]" />
-        <div className="absolute top-1/3 right-0 h-[300px] w-[300px] rounded-full bg-purple-500/15 blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-primary/15 blur-[120px]" />
+        <div className="absolute top-1/3 right-0 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[100px]" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-6 text-center mb-12">
@@ -545,7 +493,7 @@ function LogoCarousel() {
           <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
             Apresentação
           </span>
-          <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
             Conheça nossa apresentação
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
@@ -713,17 +661,17 @@ function Depoimentos() {
   }, [handleShuffle]);
 
   return (
-    <section className="py-16 lg:py-24 bg-slate-900 overflow-hidden">
+    <section className="py-16 lg:py-24 bg-card overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Depoimentos
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               O que nossos clientes dizem
             </h2>
-            <p className="mt-4 text-slate-400">
+            <p className="mt-4 text-muted-foreground">
               Arraste o card ou aguarde a troca automática.
             </p>
           </div>
@@ -779,7 +727,7 @@ function Processo() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Processo
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Como funciona nosso processo
             </h2>
           </div>
@@ -846,7 +794,7 @@ function Contato() {
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Contato
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
               Solicite uma apresentação
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -939,7 +887,7 @@ function Contato() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto"
+                  className="w-full rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto"
                 >
                   Enviar Solicitação
                 </button>
@@ -948,7 +896,7 @@ function Contato() {
           </ScrollReveal>
 
           <ScrollReveal direction="right" className="lg:col-span-2">
-            <div className="space-y-6 rounded-2xl border border-border/60 bg-card p-8">
+            <div className="space-y-6 rounded-3xl border border-border/40 bg-card p-8">
               <h3 className="font-bold text-foreground text-lg">Informações de contato</h3>
               <div className="flex items-start gap-3 text-sm">
                 <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
@@ -1043,7 +991,7 @@ function EquipeFacility() {
         <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
           Equipe Facility
         </span>
-        <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+        <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl lg:text-5xl">
           Pessoas que fazem acontecer
         </h2>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
@@ -1090,18 +1038,37 @@ function EquipeFacility() {
 }
 
 
-/* ─────────── PAGE ─────────── */
+/* ─────────── CTA BAND ─────────── */
+function CtaBand() {
+  return (
+    <section className="px-4 py-10 md:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-3xl bg-primary p-10 text-center text-primary-foreground md:flex-row md:p-14 md:text-left">
+        <div className="space-y-2">
+          <h2 className="font-heading text-4xl italic leading-none md:text-6xl">
+            Vamos construir algo extraordinário?
+          </h2>
+          <p className="font-medium text-primary-foreground/70">
+            Entre em contato e inicie seu projeto hoje mesmo.
+          </p>
+        </div>
+        <a
+          href="#contato"
+          className="inline-block shrink-0 rounded-full bg-background px-10 py-5 text-lg font-medium text-foreground transition-transform hover:scale-105"
+        >
+          Iniciar Projeto
+        </a>
+      </div>
+    </section>
+  );
+}
+
+
 function LandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <ClientOnly fallback={<div className="w-full bg-foreground" style={{ minHeight: "clamp(300px, 50vh, 700px)" }} />}>
-        <SplineHero />
-      </ClientOnly>
-      <EquipeFacility />
       <Header />
       <Hero />
-
       <ShowcaseCarousel />
       <QuemSomos />
       <Servicos />
@@ -1110,11 +1077,14 @@ function LandingPage() {
       <VideoSection />
       <Depoimentos />
       <Processo />
+      <EquipeFacility />
+      <CtaBand />
       <Contato />
       <Footer />
       <ChatBot />
     </div>
   );
+
 }
 
 export const Route = createFileRoute("/")({
