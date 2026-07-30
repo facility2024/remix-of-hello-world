@@ -1039,7 +1039,31 @@ function EquipeFacility() {
 }
 
 
-/* ─────────── PAGE ─────────── */
+/* ─────────── CTA BAND ─────────── */
+function CtaBand() {
+  return (
+    <section className="px-4 py-10 md:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-3xl bg-primary p-10 text-center text-primary-foreground md:flex-row md:p-14 md:text-left">
+        <div className="space-y-2">
+          <h2 className="font-heading text-4xl italic leading-none md:text-6xl">
+            Vamos construir algo extraordinário?
+          </h2>
+          <p className="font-medium text-primary-foreground/70">
+            Entre em contato e inicie seu projeto hoje mesmo.
+          </p>
+        </div>
+        <a
+          href="#contato"
+          className="inline-block shrink-0 rounded-full bg-background px-10 py-5 text-lg font-medium text-foreground transition-transform hover:scale-105"
+        >
+          Iniciar Projeto
+        </a>
+      </div>
+    </section>
+  );
+}
+
+
 function LandingPage() {
 
   return (
