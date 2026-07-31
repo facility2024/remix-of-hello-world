@@ -1087,23 +1087,104 @@ function LandingPage() {
 
 }
 
+const SITE_URL = "https://agenciafacility.lovable.app";
+const SITE_TITLE = "Facility Software Brasil — Software House e Agência Digital";
+const SITE_DESC =
+  "Há 16 anos criando sistemas, aplicativos, automações e marketing de performance para empresas que querem escalar com tecnologia de alto padrão.";
+const SITE_IMAGE =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/C3m9qC4JI7d4LBRG8QCRDGqpqhV2/social-images/social-1777501791875-WhatsApp_Image_2026-04-29_at_19.21.08.webp";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        name: "description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
-      },
-      { property: "og:title", content: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        property: "og:description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESC },
+      { name: "keywords", content: "software house, agência digital, desenvolvimento de sistemas, aplicativos, automação, gestão de tráfego, marketing digital, Facility Software Brasil" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESC },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:site_name", content: "Facility Software Brasil" },
+      { property: "og:locale", content: "pt_BR" },
+      { property: "og:image", content: SITE_IMAGE },
+      { property: "og:image:alt", content: "Facility Software Brasil — soluções digitais" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESC },
+      { name: "twitter:image", content: SITE_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
+              name: "Facility Software Brasil",
+              alternateName: "Agência Facility",
+              url: `${SITE_URL}/`,
+              logo: `${SITE_URL}/assets/logo-facility.png`,
+              image: SITE_IMAGE,
+              description: SITE_DESC,
+              foundingDate: "2008",
+              areaServed: "BR",
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  contactType: "atendimento comercial",
+                  telephone: "+5519988697308",
+                  availableLanguage: ["Portuguese"],
+                },
+                {
+                  "@type": "ContactPoint",
+                  contactType: "suporte técnico",
+                  telephone: "+5511982969676",
+                  availableLanguage: ["Portuguese"],
+                },
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: `${SITE_URL}/`,
+              name: "Facility Software Brasil",
+              inLanguage: "pt-BR",
+              description: SITE_DESC,
+              publisher: { "@id": `${SITE_URL}/#organization` },
+            },
+            {
+              "@type": "ProfessionalService",
+              "@id": `${SITE_URL}/#service`,
+              name: "Facility Software Brasil",
+              url: `${SITE_URL}/`,
+              image: SITE_IMAGE,
+              priceRange: "$$",
+              areaServed: "Brasil",
+              parentOrganization: { "@id": `${SITE_URL}/#organization` },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Serviços",
+                itemListElement: [
+                  "Desenvolvimento de sistemas web",
+                  "Desenvolvimento de aplicativos",
+                  "Automação de processos",
+                  "Marketing digital e gestão de tráfego",
+                  "Criação de sites e landing pages",
+                ].map((s) => ({
+                  "@type": "Offer",
+                  itemOffered: { "@type": "Service", name: s },
+                })),
+              },
+            },
+          ],
+        }),
+      },
     ],
   }),
   component: LandingPage,
 });
+
