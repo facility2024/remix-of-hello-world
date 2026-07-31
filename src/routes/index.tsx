@@ -120,7 +120,13 @@ function Header() {
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground">
+        <button
+          onClick={() => setOpen(!open)}
+          className="lg:hidden text-foreground"
+          aria-label={open ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-expanded={open}
+        >
+
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
