@@ -43,8 +43,6 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance." },
     ],
 
-    ],
-
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
