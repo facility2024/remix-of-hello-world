@@ -823,10 +823,12 @@ function Contato() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-nome" className="text-sm font-medium text-foreground mb-1.5 block">
                       Nome *
                     </label>
                     <input
+                      id="contato-nome"
+                      name="nome"
                       value={form.nome}
                       onChange={(e) => setForm({ ...form, nome: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -837,10 +839,12 @@ function Contato() {
                     )}
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-email" className="text-sm font-medium text-foreground mb-1.5 block">
                       E-mail *
                     </label>
                     <input
+                      id="contato-email"
+                      name="email"
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -854,10 +858,12 @@ function Contato() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-whatsapp" className="text-sm font-medium text-foreground mb-1.5 block">
                       WhatsApp *
                     </label>
                     <input
+                      id="contato-whatsapp"
+                      name="whatsapp"
                       value={form.whatsapp}
                       onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -868,10 +874,12 @@ function Contato() {
                     )}
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-empresa" className="text-sm font-medium text-foreground mb-1.5 block">
                       Empresa
                     </label>
                     <input
+                      id="contato-empresa"
+                      name="empresa"
                       value={form.empresa}
                       onChange={(e) => setForm({ ...form, empresa: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -880,16 +888,19 @@ function Contato() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">
+                  <label htmlFor="contato-mensagem" className="text-sm font-medium text-foreground mb-1.5 block">
                     Mensagem
                   </label>
                   <textarea
+                    id="contato-mensagem"
+                    name="mensagem"
                     rows={4}
                     value={form.mensagem}
                     onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
                     className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                     placeholder="Descreva brevemente o que precisa..."
                   />
+
                 </div>
                 <button
                   type="submit"
