@@ -1031,7 +1031,7 @@ function EquipeFacility() {
                   <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
                     <img
                       src={p.img}
-                      alt={p.name}
+                      alt={`${p.name} — ${p.role} na Facility Software Brasil`}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
