@@ -165,7 +165,7 @@ export function ChatBot() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 bg-gradient-to-r from-primary to-primary/80 p-3 text-white">
-              <img src={chatAvatar} alt="Aluna" className="h-10 w-10 rounded-full border-2 border-white object-cover" />
+              <img src={chatAvatar} alt="Aluna, atendente virtual da Facility Software Brasil" className="h-10 w-10 rounded-full border-2 border-white object-cover" />
               <div className="flex-1">
                 <p className="text-sm font-bold">Aluna</p>
                 <p className="text-xs opacity-90">Atendente IA • online</p>
@@ -264,10 +264,12 @@ export function ChatBot() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                aria-label="Digite sua mensagem para a atendente"
                 placeholder={step === "done" ? "Conversa encerrada" : "Digite sua mensagem..."}
                 disabled={step === "done" || typing}
                 className="flex-1 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm outline-none focus:border-primary disabled:opacity-50"
               />
+
               <button
                 type="submit"
                 disabled={!input.trim() || step === "done" || typing}

@@ -120,7 +120,13 @@ function Header() {
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground">
+        <button
+          onClick={() => setOpen(!open)}
+          className="lg:hidden text-foreground"
+          aria-label={open ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-expanded={open}
+        >
+
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -465,15 +471,15 @@ function Diferenciais() {
 
 /* ─────────── LOGO CAROUSEL ─────────── */
 const clientLogos = [
-  { src: logoMoncoc, alt: "Moncoc" },
-  { src: logoSindicond, alt: "Sindicond" },
-  { src: logoSimba, alt: "Simba Safari" },
-  { src: logoCem, alt: "Lojas CEM" },
-  { src: logoInova, alt: "Rede Inova Drogarias" },
-  { src: logoVivo, alt: "Vivo" },
-  { src: logoClaro, alt: "Claro" },
-  { src: logoOi, alt: "Oi" },
-  { src: logoEhs, alt: "EHS Universidade" },
+  { src: logoMoncoc, alt: "Logo Moncoc - cliente Facility Software Brasil" },
+  { src: logoSindicond, alt: "Logo Sindicond - cliente Facility Software Brasil" },
+  { src: logoSimba, alt: "Logo Simba Safari - cliente Facility Software Brasil" },
+  { src: logoCem, alt: "Logo Lojas CEM - cliente Facility Software Brasil" },
+  { src: logoInova, alt: "Logo Rede Inova Drogarias - cliente Facility Software Brasil" },
+  { src: logoVivo, alt: "Logo Vivo - cliente Facility Software Brasil" },
+  { src: logoClaro, alt: "Logo Claro - cliente Facility Software Brasil" },
+  { src: logoOi, alt: "Logo Oi - cliente Facility Software Brasil" },
+  { src: logoEhs, alt: "Logo EHS Universidade - cliente Facility Software Brasil" },
 ];
 
 function LogoCarousel() {
@@ -817,10 +823,12 @@ function Contato() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-nome" className="text-sm font-medium text-foreground mb-1.5 block">
                       Nome *
                     </label>
                     <input
+                      id="contato-nome"
+                      name="nome"
                       value={form.nome}
                       onChange={(e) => setForm({ ...form, nome: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -831,10 +839,12 @@ function Contato() {
                     )}
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-email" className="text-sm font-medium text-foreground mb-1.5 block">
                       E-mail *
                     </label>
                     <input
+                      id="contato-email"
+                      name="email"
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -848,10 +858,12 @@ function Contato() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-whatsapp" className="text-sm font-medium text-foreground mb-1.5 block">
                       WhatsApp *
                     </label>
                     <input
+                      id="contato-whatsapp"
+                      name="whatsapp"
                       value={form.whatsapp}
                       onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -862,10 +874,12 @@ function Contato() {
                     )}
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label htmlFor="contato-empresa" className="text-sm font-medium text-foreground mb-1.5 block">
                       Empresa
                     </label>
                     <input
+                      id="contato-empresa"
+                      name="empresa"
                       value={form.empresa}
                       onChange={(e) => setForm({ ...form, empresa: e.target.value })}
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -874,16 +888,19 @@ function Contato() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">
+                  <label htmlFor="contato-mensagem" className="text-sm font-medium text-foreground mb-1.5 block">
                     Mensagem
                   </label>
                   <textarea
+                    id="contato-mensagem"
+                    name="mensagem"
                     rows={4}
                     value={form.mensagem}
                     onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
                     className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                     placeholder="Descreva brevemente o que precisa..."
                   />
+
                 </div>
                 <button
                   type="submit"
@@ -1014,7 +1031,7 @@ function EquipeFacility() {
                   <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
                     <img
                       src={p.img}
-                      alt={p.name}
+                      alt={`${p.name} — ${p.role} na Facility Software Brasil`}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
@@ -1087,23 +1104,104 @@ function LandingPage() {
 
 }
 
+const SITE_URL = "https://agenciafacility.lovable.app";
+const SITE_TITLE = "Facility Software Brasil — Software House e Agência Digital";
+const SITE_DESC =
+  "Há 16 anos criando sistemas, aplicativos, automações e marketing de performance para empresas que querem escalar com tecnologia de alto padrão.";
+const SITE_IMAGE =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/C3m9qC4JI7d4LBRG8QCRDGqpqhV2/social-images/social-1777501791875-WhatsApp_Image_2026-04-29_at_19.21.08.webp";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        name: "description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos. Agência e software house de alto padrão.",
-      },
-      { property: "og:title", content: "Facility Software Brasil — Soluções Digitais de Alto Impacto" },
-      {
-        property: "og:description",
-        content:
-          "Mais de 16 anos criando soluções em marketing, software, automações, sistemas e aplicativos.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESC },
+      { name: "keywords", content: "software house, agência digital, desenvolvimento de sistemas, aplicativos, automação, gestão de tráfego, marketing digital, Facility Software Brasil" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESC },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:site_name", content: "Facility Software Brasil" },
+      { property: "og:locale", content: "pt_BR" },
+      { property: "og:image", content: SITE_IMAGE },
+      { property: "og:image:alt", content: "Facility Software Brasil — soluções digitais" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESC },
+      { name: "twitter:image", content: SITE_IMAGE },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
+              name: "Facility Software Brasil",
+              alternateName: "Agência Facility",
+              url: `${SITE_URL}/`,
+              logo: `${SITE_URL}/assets/logo-facility.png`,
+              image: SITE_IMAGE,
+              description: SITE_DESC,
+              foundingDate: "2008",
+              areaServed: "BR",
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  contactType: "atendimento comercial",
+                  telephone: "+5519988697308",
+                  availableLanguage: ["Portuguese"],
+                },
+                {
+                  "@type": "ContactPoint",
+                  contactType: "suporte técnico",
+                  telephone: "+5511982969676",
+                  availableLanguage: ["Portuguese"],
+                },
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: `${SITE_URL}/`,
+              name: "Facility Software Brasil",
+              inLanguage: "pt-BR",
+              description: SITE_DESC,
+              publisher: { "@id": `${SITE_URL}/#organization` },
+            },
+            {
+              "@type": "ProfessionalService",
+              "@id": `${SITE_URL}/#service`,
+              name: "Facility Software Brasil",
+              url: `${SITE_URL}/`,
+              image: SITE_IMAGE,
+              priceRange: "$$",
+              areaServed: "Brasil",
+              parentOrganization: { "@id": `${SITE_URL}/#organization` },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Serviços",
+                itemListElement: [
+                  "Desenvolvimento de sistemas web",
+                  "Desenvolvimento de aplicativos",
+                  "Automação de processos",
+                  "Marketing digital e gestão de tráfego",
+                  "Criação de sites e landing pages",
+                ].map((s) => ({
+                  "@type": "Offer",
+                  itemOffered: { "@type": "Service", name: s },
+                })),
+              },
+            },
+          ],
+        }),
+      },
     ],
   }),
   component: LandingPage,
 });
+
