@@ -471,15 +471,15 @@ function Diferenciais() {
 
 /* ─────────── LOGO CAROUSEL ─────────── */
 const clientLogos = [
-  { src: logoMoncoc, alt: "Moncoc" },
-  { src: logoSindicond, alt: "Sindicond" },
-  { src: logoSimba, alt: "Simba Safari" },
-  { src: logoCem, alt: "Lojas CEM" },
-  { src: logoInova, alt: "Rede Inova Drogarias" },
-  { src: logoVivo, alt: "Vivo" },
-  { src: logoClaro, alt: "Claro" },
-  { src: logoOi, alt: "Oi" },
-  { src: logoEhs, alt: "EHS Universidade" },
+  { src: logoMoncoc, alt: "Logo Moncoc - cliente Facility Software Brasil" },
+  { src: logoSindicond, alt: "Logo Sindicond - cliente Facility Software Brasil" },
+  { src: logoSimba, alt: "Logo Simba Safari - cliente Facility Software Brasil" },
+  { src: logoCem, alt: "Logo Lojas CEM - cliente Facility Software Brasil" },
+  { src: logoInova, alt: "Logo Rede Inova Drogarias - cliente Facility Software Brasil" },
+  { src: logoVivo, alt: "Logo Vivo - cliente Facility Software Brasil" },
+  { src: logoClaro, alt: "Logo Claro - cliente Facility Software Brasil" },
+  { src: logoOi, alt: "Logo Oi - cliente Facility Software Brasil" },
+  { src: logoEhs, alt: "Logo EHS Universidade - cliente Facility Software Brasil" },
 ];
 
 function LogoCarousel() {
