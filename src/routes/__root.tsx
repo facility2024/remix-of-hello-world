@@ -41,6 +41,8 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Facility Software Brasil — Software House e Agência Digital" },
       { name: "twitter:description", content: "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/29461975-601b-4a52-b4f0-e96bb18aee93/id-preview-03778641--9ac76c0d-3b62-4379-a3ae-27114c9e7533.lovable.app-1785502859854.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/29461975-601b-4a52-b4f0-e96bb18aee93/id-preview-03778641--9ac76c0d-3b62-4379-a3ae-27114c9e7533.lovable.app-1785502859854.png" },
     ],
 
     links: [
