@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "58c03c10-0124-49c9-aa59-e9280a8b3b5e",
-  "project_id": "0bf37da5-d554-4163-9ab1-e30d8aac69c1",
-  "url": "/assets/equipe-pedro.png",
-  "r2_key": "a/v1/0bf37da5-d554-4163-9ab1-e30d8aac69c1/58c03c10-0124-49c9-aa59-e9280a8b3b5e/equipe-pedro.png",
-  "original_filename": "equipe-pedro.png",
-  "size": 976352,
   "content_type": "image/png",
-  "created_at": "2026-06-17T02:19:13Z"
+  "created_at": "2026-06-17T02:19:13Z",
+  "original_filename": "equipe-pedro.png",
+  "project_id": "9ac76c0d-3b62-4379-a3ae-27114c9e7533",
+  "r2_key": "a/v1/9ac76c0d-3b62-4379-a3ae-27114c9e7533/58c03c10-0124-49c9-aa59-e9280a8b3b5e/equipe-pedro.png",
+  "size": 976352,
+  "url": "/assets/equipe-pedro.png",
+  "version": 1
 }

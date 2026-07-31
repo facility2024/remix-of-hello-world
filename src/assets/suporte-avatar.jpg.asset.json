@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "37e259b9-3889-4f5c-9fb3-bf06ffe0b0b2",
-  "project_id": "0bf37da5-d554-4163-9ab1-e30d8aac69c1",
-  "url": "/assets/suporte-avatar.jpg",
-  "r2_key": "a/v1/0bf37da5-d554-4163-9ab1-e30d8aac69c1/37e259b9-3889-4f5c-9fb3-bf06ffe0b0b2/suporte-avatar.jpg",
-  "original_filename": "suporte-avatar.jpg",
-  "size": 136375,
   "content_type": "image/jpeg",
-  "created_at": "2026-06-17T02:33:38Z"
+  "created_at": "2026-06-17T02:33:38Z",
+  "original_filename": "suporte-avatar.jpg",
+  "project_id": "9ac76c0d-3b62-4379-a3ae-27114c9e7533",
+  "r2_key": "a/v1/9ac76c0d-3b62-4379-a3ae-27114c9e7533/37e259b9-3889-4f5c-9fb3-bf06ffe0b0b2/suporte-avatar.jpg",
+  "size": 136375,
+  "url": "/assets/suporte-avatar.jpg",
+  "version": 1
 }

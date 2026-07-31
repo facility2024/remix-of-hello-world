@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "d273af07-fd8a-40a2-bd83-5bf7cbae8e30",
-  "project_id": "0bf37da5-d554-4163-9ab1-e30d8aac69c1",
-  "url": "/assets/logo-moncoc.png",
-  "r2_key": "a/v1/0bf37da5-d554-4163-9ab1-e30d8aac69c1/d273af07-fd8a-40a2-bd83-5bf7cbae8e30/logo-moncoc.png",
-  "original_filename": "logo-moncoc.png",
-  "size": 7006,
   "content_type": "image/png",
-  "created_at": "2026-06-17T02:13:18Z"
+  "created_at": "2026-06-17T02:13:18Z",
+  "original_filename": "logo-moncoc.png",
+  "project_id": "9ac76c0d-3b62-4379-a3ae-27114c9e7533",
+  "r2_key": "a/v1/9ac76c0d-3b62-4379-a3ae-27114c9e7533/d273af07-fd8a-40a2-bd83-5bf7cbae8e30/logo-moncoc.png",
+  "size": 7006,
+  "url": "/assets/logo-moncoc.png",
+  "version": 1
 }

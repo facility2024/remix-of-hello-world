@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "dcd54daa-749c-4ece-9bee-24d0d177f31a",
-  "project_id": "0bf37da5-d554-4163-9ab1-e30d8aac69c1",
-  "url": "/assets/logo-sindicond.png",
-  "r2_key": "a/v1/0bf37da5-d554-4163-9ab1-e30d8aac69c1/dcd54daa-749c-4ece-9bee-24d0d177f31a/logo-sindicond.png",
-  "original_filename": "logo-sindicond.png",
-  "size": 93574,
   "content_type": "image/png",
-  "created_at": "2026-06-17T02:13:25Z"
+  "created_at": "2026-06-17T02:13:25Z",
+  "original_filename": "logo-sindicond.png",
+  "project_id": "9ac76c0d-3b62-4379-a3ae-27114c9e7533",
+  "r2_key": "a/v1/9ac76c0d-3b62-4379-a3ae-27114c9e7533/dcd54daa-749c-4ece-9bee-24d0d177f31a/logo-sindicond.png",
+  "size": 93574,
+  "url": "/assets/logo-sindicond.png",
+  "version": 1
 }
