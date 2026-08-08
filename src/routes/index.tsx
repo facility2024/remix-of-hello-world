@@ -46,8 +46,6 @@ const equipeLeandro = equipeLeandroAsset.url;
 const equipePedro = equipePedroAsset.url;
 const equipeHiury = equipeHiuryAsset.url;
 
-
-
 import {
   Megaphone,
   Globe,
@@ -126,7 +124,6 @@ function Header() {
           aria-label={open ? "Fechar menu de navegação" : "Abrir menu de navegação"}
           aria-expanded={open}
         >
-
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -193,18 +190,25 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
-          className="flex flex-col justify-between gap-10 rounded-3xl bg-primary p-8 text-primary-foreground md:col-span-4"
+          className="relative flex min-h-[320px] flex-col justify-between gap-10 overflow-hidden rounded-3xl bg-foreground p-6 text-white md:col-span-4 md:p-8"
         >
-          <div className="flex justify-end">
+          {/* Video as background */}
+          <div className="absolute inset-0 z-0">
+            <HeroCardVideo />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          </div>
+
+          {/* Foreground content */}
+          <div className="relative z-10 flex justify-end">
             <ArrowRight size={44} strokeWidth={1.5} />
           </div>
-          <div>
-            <p className="mb-6 text-xl font-medium leading-tight">
+          <div className="relative z-10">
+            <p className="mb-6 text-xl font-medium leading-tight text-white">
               Pronto para escalar sua operação digital com precisão técnica e design de elite?
             </p>
             <a
               href="#contato"
-              className="inline-flex rounded-full bg-background px-6 py-3 font-medium text-foreground transition-colors hover:bg-card"
+              className="inline-flex rounded-full bg-white px-6 py-3 font-medium text-black transition-colors hover:bg-white/90"
             >
               Fale Conosco
             </a>
@@ -214,7 +218,6 @@ function Hero() {
     </section>
   );
 }
-
 
 /* ─────────── CARD STACK SHOWCASE ─────────── */
 const showcaseItems: CardStackItem[] = [
@@ -245,7 +248,8 @@ const showcaseItems: CardStackItem[] = [
   {
     id: 5,
     title: "Avaliação de Riscos Psicossociais",
-    description: "Plataforma para identificar e gerenciar riscos psicossociais no trabalho conforme NR-01",
+    description:
+      "Plataforma para identificar e gerenciar riscos psicossociais no trabalho conforme NR-01",
     imageSrc: slide5,
   },
 ];
@@ -311,8 +315,8 @@ function QuemSomos() {
               </p>
               <p>
                 Fundada com o propósito de unir criatividade, estratégia e tecnologia, a Facility
-                Software Brasil atende clientes em diferentes regiões do Brasil e também no exterior,
-                sempre com foco em agilidade, pontualidade, inovação e resultado.
+                Software Brasil atende clientes em diferentes regiões do Brasil e também no
+                exterior, sempre com foco em agilidade, pontualidade, inovação e resultado.
               </p>
               <p>
                 Nossa missão é desenvolver projetos modernos, funcionais e escaláveis, ajudando
@@ -451,6 +455,32 @@ function Diferenciais() {
             </h2>
           </div>
         </ScrollReveal>
+        {/* Featured video highlight */}
+        <div className="mx-auto max-w-6xl mb-8 px-4">
+          <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card p-6 shadow-lg md:p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+              <div className="w-full h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden bg-black">
+                <video
+                  src="https://coconudimudial.b-cdn.net/Luciano/01.mp4"
+                  className="w-full h-full object-cover"
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                />
+              </div>
+              <div>
+                <h3 className="font-heading text-2xl mb-2">Criação de sistemas inteligentes</h3>
+                <p className="text-muted-foreground">
+                  Projetamos e desenvolvemos sistemas inteligentes que automatizam processos, geram
+                  insights e impulsionam a performance do seu negócio com tecnologia de ponta.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {differentials.map((d, i) => (
@@ -579,10 +609,11 @@ function LogoCarousel() {
   );
 }
 
-/* ─────────── VÍDEO ─────────── */
-function VideoSection() {
+/* ─────────── HERO CARD VIDEO ─────────── */
+function HeroCardVideo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -594,33 +625,90 @@ function VideoSection() {
           obs.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.2 },
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const mp4Url = "https://coconudimudial.b-cdn.net/Luciano/03.mp4";
+
+  useEffect(() => {
+    if (inView && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [inView]);
+
+  const handleToggleMute = () => {
+    setIsMuted((m) => {
+      const next = !m;
+      if (videoRef.current) {
+        videoRef.current.muted = next;
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.muted = isMuted;
+  }, [isMuted]);
+
   return (
-    <section className="py-24 lg:py-32 bg-muted/30">
-      <div className="mx-auto max-w-4xl px-6">
-        <ScrollReveal direction="up" delay={0.1}>
-          <div
-            ref={containerRef}
-            className="relative overflow-hidden rounded-2xl border border-border/60 bg-foreground/5 shadow-xl aspect-video"
-          >
-            {inView && (
-              <iframe
-                src="https://iframe.mediadelivery.net/embed/504378/deb891a1-455d-467f-97a1-877411b9febe?autoplay=true&muted=true&preload=true"
-                loading="lazy"
-                className="absolute inset-0 h-full w-full"
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                allowFullScreen
+    <div ref={containerRef} className="relative w-full h-full rounded-xl overflow-hidden">
+      {inView ? (
+        <video
+          ref={videoRef}
+          src={mp4Url}
+          preload="auto"
+          playsInline
+          loop
+          muted={isMuted}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-primary/80" />
+      )}
+
+      <div className="absolute left-4 bottom-4 z-20 flex items-center gap-3 pointer-events-none">
+        <button
+          onClick={handleToggleMute}
+          className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/90 text-foreground shadow"
+          aria-label={isMuted ? "Ativar som" : "Desativar som"}
+        >
+          {isMuted ? (
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M5 9v6h4l5 5V4L9 9H5z" fill="currentColor" />
+              <path
+                d="M19 5l-1.41 1.41L20.17 9l-2.58 2.59L19 13l3-3-3-3z"
+                fill="currentColor"
+                opacity="0.9"
               />
-            )}
-          </div>
-        </ScrollReveal>
+            </svg>
+          ) : (
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M5 9v6h4l5 5V4L9 9H5z" fill="currentColor" />
+              <path
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"
+                fill="currentColor"
+              />
+            </svg>
+          )}
+        </button>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -631,21 +719,24 @@ const testimonials = [
     testimonial:
       "A Facility transformou completamente nossa presença digital. O resultado superou todas as expectativas. Recomendo de olhos fechados.",
     author: "Juliana M. - Diretora de Marketing @ TechBR",
-    avatar: "https://s2.glbimg.com/_Ps5nilp1W4GKW990cqZ9a-ETKo=/940x523/e.glbimg.com/og/ed/f/original/2017/01/10/marissa_mayer_2011_interview.jpg",
+    avatar:
+      "https://s2.glbimg.com/_Ps5nilp1W4GKW990cqZ9a-ETKo=/940x523/e.glbimg.com/og/ed/f/original/2017/01/10/marissa_mayer_2011_interview.jpg",
   },
   {
     id: 2,
     testimonial:
       "Meu chefe acha que eu sei o que estou fazendo. Honestamente, foi a Facility que estruturou tudo pra gente.",
     author: "Carlos R. - Gerente de Produto @ StartupX",
-    avatar: "https://img.freepik.com/fotos-gratis/homem-sorridente-posando-para-cv-vista-frontal_23-2149927616.jpg",
+    avatar:
+      "https://img.freepik.com/fotos-gratis/homem-sorridente-posando-para-cv-vista-frontal_23-2149927616.jpg",
   },
   {
     id: 3,
     testimonial:
       "Não acredito que conseguimos tanto em tão pouco tempo. O sistema que a Facility criou mudou nossa operação por completo.",
     author: "Amanda F. - CEO @ NovaSoluções",
-    avatar: "https://static.stealthelook.com.br/wp-content/uploads/2022/07/mulheres-negras-latino-americanas-e-caribenhas-que-voce-precisa-conhecer-negra-li-20220722201812.jpg",
+    avatar:
+      "https://static.stealthelook.com.br/wp-content/uploads/2022/07/mulheres-negras-latino-americanas-e-caribenhas-que-voce-precisa-conhecer-negra-li-20220722201812.jpg",
   },
 ];
 
@@ -815,15 +906,16 @@ function Contato() {
               <div className="rounded-2xl border border-primary/30 bg-primary/5 p-12 text-center">
                 <CheckCircle className="mx-auto mb-4 text-primary" size={48} />
                 <h3 className="text-xl font-bold text-foreground">Solicitação enviada!</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Entraremos em contato em breve.
-                </p>
+                <p className="mt-2 text-muted-foreground">Entraremos em contato em breve.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contato-nome" className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label
+                      htmlFor="contato-nome"
+                      className="text-sm font-medium text-foreground mb-1.5 block"
+                    >
                       Nome *
                     </label>
                     <input
@@ -834,12 +926,13 @@ function Contato() {
                       className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                       placeholder="Seu nome completo"
                     />
-                    {errors.nome && (
-                      <p className="mt-1 text-xs text-destructive">{errors.nome}</p>
-                    )}
+                    {errors.nome && <p className="mt-1 text-xs text-destructive">{errors.nome}</p>}
                   </div>
                   <div>
-                    <label htmlFor="contato-email" className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label
+                      htmlFor="contato-email"
+                      className="text-sm font-medium text-foreground mb-1.5 block"
+                    >
                       E-mail *
                     </label>
                     <input
@@ -858,7 +951,10 @@ function Contato() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contato-whatsapp" className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label
+                      htmlFor="contato-whatsapp"
+                      className="text-sm font-medium text-foreground mb-1.5 block"
+                    >
                       WhatsApp *
                     </label>
                     <input
@@ -874,7 +970,10 @@ function Contato() {
                     )}
                   </div>
                   <div>
-                    <label htmlFor="contato-empresa" className="text-sm font-medium text-foreground mb-1.5 block">
+                    <label
+                      htmlFor="contato-empresa"
+                      className="text-sm font-medium text-foreground mb-1.5 block"
+                    >
                       Empresa
                     </label>
                     <input
@@ -888,7 +987,10 @@ function Contato() {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="contato-mensagem" className="text-sm font-medium text-foreground mb-1.5 block">
+                  <label
+                    htmlFor="contato-mensagem"
+                    className="text-sm font-medium text-foreground mb-1.5 block"
+                  >
                     Mensagem
                   </label>
                   <textarea
@@ -900,7 +1002,6 @@ function Contato() {
                     className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
                     placeholder="Descreva brevemente o que precisa..."
                   />
-
                 </div>
                 <button
                   type="submit"
@@ -997,10 +1098,7 @@ function EquipeFacility() {
     { name: "Otavio", role: "CEO & Desenvolvedor", img: portraitAsset.url },
     { name: "Marcos", role: "Comercial", img: equipeMarcos },
     { name: "Leandro Alves", role: "Desenvolvedor", img: equipeLeandro },
-    
-    
   ];
-
 
   return (
     <section className="bg-background py-20 lg:py-28">
@@ -1018,8 +1116,7 @@ function EquipeFacility() {
         <div
           className="mt-12 relative overflow-hidden"
           style={{
-            maskImage:
-              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+            maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
             WebkitMaskImage:
               "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           }}
@@ -1027,7 +1124,10 @@ function EquipeFacility() {
           <div className="flex w-max gap-10 animate-[equipe-marquee_28s_linear_infinite] mx-auto">
             {Array.from({ length: 6 }).flatMap((_, r) =>
               team.map((p, i) => (
-                <div key={`${p.name}-${r}-${i}`} className="flex flex-col items-center shrink-0 w-40">
+                <div
+                  key={`${p.name}-${r}-${i}`}
+                  className="flex flex-col items-center shrink-0 w-40"
+                >
                   <div className="h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-lg">
                     <img
                       src={p.img}
@@ -1039,7 +1139,7 @@ function EquipeFacility() {
                   <h3 className="mt-5 text-lg font-bold text-foreground">{p.name}</h3>
                   <p className="text-sm text-muted-foreground">{p.role}</p>
                 </div>
-              ))
+              )),
             )}
           </div>
         </div>
@@ -1053,7 +1153,6 @@ function EquipeFacility() {
     </section>
   );
 }
-
 
 /* ─────────── CTA BAND ─────────── */
 function CtaBand() {
@@ -1079,9 +1178,7 @@ function CtaBand() {
   );
 }
 
-
 function LandingPage() {
-
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Header />
@@ -1091,7 +1188,6 @@ function LandingPage() {
       <Servicos />
       <Diferenciais />
       <LogoCarousel />
-      <VideoSection />
       <Depoimentos />
       <Processo />
       <EquipeFacility />
@@ -1101,7 +1197,6 @@ function LandingPage() {
       <ChatBot />
     </div>
   );
-
 }
 
 const SITE_URL = "https://agenciafacility.lovable.app";
@@ -1116,7 +1211,11 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESC },
-      { name: "keywords", content: "software house, agência digital, desenvolvimento de sistemas, aplicativos, automação, gestão de tráfego, marketing digital, Facility Software Brasil" },
+      {
+        name: "keywords",
+        content:
+          "software house, agência digital, desenvolvimento de sistemas, aplicativos, automação, gestão de tráfego, marketing digital, Facility Software Brasil",
+      },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { property: "og:title", content: SITE_TITLE },
       { property: "og:description", content: SITE_DESC },
@@ -1204,4 +1303,3 @@ export const Route = createFileRoute("/")({
   }),
   component: LandingPage,
 });
-

@@ -121,9 +121,12 @@ export function CardStack<T extends CardStackItem>({
   React.useEffect(() => {
     if (!autoAdvance || reduceMotion || !len) return;
     if (pauseOnHover && hovering) return;
-    const id = window.setInterval(() => {
-      if (loop || active < len - 1) next();
-    }, Math.max(700, intervalMs));
+    const id = window.setInterval(
+      () => {
+        if (loop || active < len - 1) next();
+      },
+      Math.max(700, intervalMs),
+    );
     return () => window.clearInterval(id);
   }, [autoAdvance, intervalMs, hovering, pauseOnHover, reduceMotion, len, loop, active, next]);
 
@@ -207,9 +210,7 @@ export function CardStack<T extends CardStackItem>({
                     transformStyle: "preserve-3d",
                   }}
                   initial={
-                    reduceMotion
-                      ? false
-                      : { opacity: 0, y: y + 40, x, rotateZ, rotateX, scale }
+                    reduceMotion ? false : { opacity: 0, y: y + 40, x, rotateZ, rotateX, scale }
                   }
                   animate={{
                     opacity: 1,

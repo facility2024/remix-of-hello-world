@@ -30,17 +30,35 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Facility Software Brasil — Software House e Agência Digital" },
-      { name: "description", content: "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance." },
+      {
+        name: "description",
+        content:
+          "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance.",
+      },
       { name: "author", content: "Facility Software Brasil" },
       { name: "robots", content: "index, follow, max-image-preview:large" },
       { property: "og:site_name", content: "Facility Software Brasil" },
       { property: "og:locale", content: "pt_BR" },
-      { property: "og:title", content: "Facility Software Brasil — Software House e Agência Digital" },
-      { property: "og:description", content: "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance." },
+      {
+        property: "og:title",
+        content: "Facility Software Brasil — Software House e Agência Digital",
+      },
+      {
+        property: "og:description",
+        content:
+          "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Facility Software Brasil — Software House e Agência Digital" },
-      { name: "twitter:description", content: "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance." },
+      {
+        name: "twitter:title",
+        content: "Facility Software Brasil — Software House e Agência Digital",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Software house e agência digital com 16 anos de experiência em sistemas, aplicativos, automações e marketing de performance.",
+      },
     ],
 
     links: [
@@ -55,7 +73,6 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,

@@ -8,7 +8,6 @@ const chatAvatar = chatAvatarAsset.url;
 const waAvatar = waAvatarAsset.url;
 const suporteAvatar = suporteAvatarAsset.url;
 
-
 type Msg =
   | { id: string; from: "bot"; type: "text"; text: string }
   | { id: string; from: "bot"; type: "wa-button" }
@@ -147,7 +146,11 @@ export function ChatBot() {
               className="relative h-16 w-16 overflow-hidden rounded-full border-4 border-white bg-primary shadow-2xl ring-4 ring-primary/30"
               aria-label="Abrir chat"
             >
-              <img src={chatAvatar} alt="Aluna - Atendente IA" className="h-full w-full object-cover" />
+              <img
+                src={chatAvatar}
+                alt="Aluna - Atendente IA"
+                className="h-full w-full object-cover"
+              />
               <span className="absolute bottom-1 right-1 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
             </motion.button>
           </motion.div>
@@ -165,7 +168,11 @@ export function ChatBot() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 bg-gradient-to-r from-primary to-primary/80 p-3 text-white">
-              <img src={chatAvatar} alt="Aluna, atendente virtual da Facility Software Brasil" className="h-10 w-10 rounded-full border-2 border-white object-cover" />
+              <img
+                src={chatAvatar}
+                alt="Aluna, atendente virtual da Facility Software Brasil"
+                className="h-10 w-10 rounded-full border-2 border-white object-cover"
+              />
               <div className="flex-1">
                 <p className="text-sm font-bold">Aluna</p>
                 <p className="text-xs opacity-90">Atendente IA • online</p>

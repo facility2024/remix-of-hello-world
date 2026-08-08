@@ -7,7 +7,7 @@ const router = getRouter();
 const container = document.getElementById("root");
 
 if (!container) {
-  throw new Error('Missing #root container in index.html');
+  throw new Error("Missing #root container in index.html");
 }
 
 createRoot(container).render(

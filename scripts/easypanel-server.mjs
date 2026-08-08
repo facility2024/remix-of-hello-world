@@ -53,7 +53,11 @@ function serveStaticFile(filePath, req, res) {
   res.setHeader("Content-Type", MIME_TYPES[ext] || "application/octet-stream");
   res.setHeader("Content-Length", stats.size);
 
-  if (filePath.includes(`${join("dist", "client", "assets")}${process.platform === "win32" ? "\\" : "/"}`)) {
+  if (
+    filePath.includes(
+      `${join("dist", "client", "assets")}${process.platform === "win32" ? "\\" : "/"}`,
+    )
+  ) {
     res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   }
 
@@ -78,7 +82,8 @@ function serveClientIndex(req, res) {
 
 const server = createServer(async (req, res) => {
   try {
-    const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
+    const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`)
+      .pathname;
 
     if (pathname === "/health" || pathname === "/healthz") {
       res.statusCode = 200;
@@ -119,7 +124,8 @@ const server = createServer(async (req, res) => {
     res.end("Build estático não encontrado em dist/client/index.html");
   } catch (error) {
     console.error("EasyPanel server error", error);
-    const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`).pathname;
+    const pathname = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${port}`}`)
+      .pathname;
 
     if (!isStaticAsset(pathname) && serveClientIndex(req, res)) {
       return;
@@ -138,5 +144,7 @@ server.listen(port, "0.0.0.0", async () => {
   const hasIndex = existsSync(indexFile);
   const hasFavicon = existsSync(faviconPath) ? (await readFile(faviconPath)).length > 0 : false;
   console.log(`Facility app listening on http://0.0.0.0:${port}`);
-  console.log(`dist/client: ${hasClientBuild} | dist/client/index.html: ${hasIndex} | favicon: ${hasFavicon}`);
+  console.log(
+    `dist/client: ${hasClientBuild} | dist/client/index.html: ${hasIndex} | favicon: ${hasFavicon}`,
+  );
 });

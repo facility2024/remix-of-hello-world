@@ -29,18 +29,8 @@ export function TestimonialCard({
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0",
       }}
       animate={{
-        rotate:
-          position === "front"
-            ? "-6deg"
-            : position === "middle"
-              ? "0deg"
-              : "6deg",
-        x:
-          position === "front"
-            ? "0%"
-            : position === "middle"
-              ? "33%"
-              : "66%",
+        rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
+        x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
       }}
       drag={true}
       dragElastic={0.35}
@@ -70,12 +60,8 @@ export function TestimonialCard({
         alt={`Avatar de ${author}`}
         className="pointer-events-none mx-auto h-32 w-32 rounded-full border-2 border-slate-700 bg-slate-200 object-cover"
       />
-      <span className="text-center text-lg italic text-slate-400">
-        "{testimonial}"
-      </span>
-      <span className="text-center text-sm font-medium text-indigo-400">
-        {author}
-      </span>
+      <span className="text-center text-lg italic text-slate-400">"{testimonial}"</span>
+      <span className="text-center text-sm font-medium text-indigo-400">{author}</span>
     </motion.div>
   );
 }
