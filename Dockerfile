@@ -7,7 +7,7 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 RUN npm run build \
- && test -f dist/client/_shell.html
+ && test -f dist/client/index.html
 
 ## Stage 2 — Runtime
 FROM node:22-alpine AS runner
