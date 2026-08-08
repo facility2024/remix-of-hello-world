@@ -4,7 +4,7 @@ oi
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://agenciafacility.lovable.app
+**Live app**: https://agenciafacility.com.br
 
 ## Build with Lovable
 

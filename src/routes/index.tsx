@@ -1222,7 +1222,7 @@ function LandingPage() {
   );
 }
 
-const SITE_URL = "https://agenciafacility.lovable.app";
+const SITE_URL = "https://agenciafacility.com.br";
 const SITE_TITLE = "Facility Software Brasil — Software House e Agência Digital";
 const SITE_DESC =
   "Há 16 anos criando sistemas, aplicativos, automações e marketing de performance para empresas que querem escalar com tecnologia de alto padrão.";
