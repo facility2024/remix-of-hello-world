@@ -11,18 +11,20 @@ interface ContactFormData {
 
 function buildNotificationHTML(data: ContactFormData): string {
   const now = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  const LOGO_URL = "https://agenciafacility.com.br/assets/logo-facility.png";
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>
 body{font-family:Arial,sans-serif;background:#1a1a1a;color:#fff;margin:0;padding:20px}
 .c{max-width:600px;margin:0 auto;background:#2a2a2a;border-radius:12px;overflow:hidden}
 .h{background:linear-gradient(135deg,#c75b39,#e07050);padding:24px;text-align:center}
-.h h1{margin:0;font-size:20px;color:#fff}
+.h img{max-width:180px;height:auto;margin-bottom:8px}
+.h h1{margin:0;font-size:18px;color:#fff;font-weight:400}
 .b{padding:24px}
 .f{margin-bottom:16px}
 .l{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 .v{font-size:16px;color:#fff;background:#333;padding:10px 14px;border-radius:8px}
 .m{background:#333;padding:16px;border-radius:8px;white-space:pre-wrap;line-height:1.5}
 .ft{padding:16px 24px;text-align:center;font-size:12px;color:#666;border-top:1px solid #333}
-</style></head><body><div class="c"><div class="h"><h1>Facility Software Brasil</h1></div><div class="b">
+</style></head><body><div class="c"><div class="h"><img src="${LOGO_URL}" alt="Facility Software Brasil" /><h1>Nova solicitacao de contato</h1></div><div class="b">
 <div class="f"><div class="l">Nome</div><div class="v">${data.nome}</div></div>
 <div class="f"><div class="l">E-mail</div><div class="v">${data.email}</div></div>
 <div class="f"><div class="l">WhatsApp</div><div class="v">${data.whatsapp}</div></div>
@@ -32,17 +34,21 @@ body{font-family:Arial,sans-serif;background:#1a1a1a;color:#fff;margin:0;padding
 }
 
 function buildConfirmationHTML(name: string): string {
+  const LOGO_URL = "https://agenciafacility.com.br/assets/logo-facility.png";
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>
 body{font-family:Arial,sans-serif;background:#1a1a1a;color:#fff;margin:0;padding:20px}
 .c{max-width:600px;margin:0 auto;background:#2a2a2a;border-radius:12px;overflow:hidden}
 .h{background:linear-gradient(135deg,#c75b39,#e07050);padding:24px;text-align:center}
-.h h1{margin:0;font-size:20px;color:#fff}
-.b{padding:24px;line-height:1.6}
+.h img{max-width:180px;height:auto;margin-bottom:8px}
+.h h1{margin:0;font-size:18px;color:#fff;font-weight:400}
+.b{padding:24px;line-height:1.6;color:#ccc}
+.b p{margin:0 0 12px 0}
+.b strong{color:#fff}
 .ft{padding:16px 24px;text-align:center;font-size:12px;color:#666;border-top:1px solid #333}
-</style></head><body><div class="c"><div class="h"><h1>Facility Software Brasil</h1></div><div class="b">
-<p>Olá ${name},</p>
-<p>Recebemos sua solicitação e nossa equipe entrará em contato em breve.</p>
-<p>Horário de atendimento: Segunda a Sexta, 9h às 18h.</p>
+</style></head><body><div class="c"><div class="h"><img src="${LOGO_URL}" alt="Facility Software Brasil" /><h1>Obrigado pelo contato!</h1></div><div class="b">
+<p>OLA ${name.toUpperCase()},</p>
+<p>Recebemos sua solicitacao e nossa equipe entrara em contato em breve.</p>
+<p>Horario de atendimento: Segunda a Sexta, 9h as 18h.</p>
 <p>Atenciosamente,<br/><strong>Facility Software Brasil</strong></p>
 </div><div class="ft">Facility Software Brasil — Software House e Agencia Digital</div></div></body></html>`;
 }
