@@ -872,6 +872,8 @@ function Contato() {
     return e;
   }
 
+  const [sending, setSending] = useState(false);
+
   function handleSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     const e = validate();
@@ -880,7 +882,27 @@ function Contato() {
       return;
     }
     setErrors({});
-    setSent(true);
+    setSending(true);
+
+    fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setSent(true);
+        } else {
+          alert(data.error || "Erro ao enviar mensagem. Tente novamente.");
+        }
+      })
+      .catch(() => {
+        alert("Erro ao enviar mensagem. Verifique sua conexão e tente novamente.");
+      })
+      .finally(() => {
+        setSending(false);
+      });
   }
 
   return (
@@ -1005,9 +1027,10 @@ function Contato() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto"
+                  disabled={sending}
+                  className="w-full rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enviar Solicitação
+                  {sending ? "Enviando..." : "Enviar Solicitação"}
                 </button>
               </form>
             )}
