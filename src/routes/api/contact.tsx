@@ -11,20 +11,19 @@ interface ContactFormData {
 
 function buildNotificationHTML(data: ContactFormData): string {
   const now = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-  const LOGO_URL = "https://agenciafacility.com.br/assets/logo-facility.png";
+  const HEADER_IMG = "https://coconudimudial.b-cdn.net/AGENCIA%20FACILITY/Agencia.png";
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>
-body{font-family:Arial,sans-serif;background:#1a1a1a;color:#fff;margin:0;padding:20px}
-.c{max-width:600px;margin:0 auto;background:#2a2a2a;border-radius:12px;overflow:hidden}
-.h{background:linear-gradient(135deg,#c75b39,#e07050);padding:24px;text-align:center}
-.h img{max-width:180px;height:auto;margin-bottom:8px}
-.h h1{margin:0;font-size:18px;color:#fff;font-weight:400}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#000;margin:0;padding:20px}
+.c{max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.h{width:100%}
+.h img{width:100%;height:auto;display:block}
 .b{padding:24px}
 .f{margin-bottom:16px}
-.l{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.v{font-size:16px;color:#fff;background:#333;padding:10px 14px;border-radius:8px}
-.m{background:#333;padding:16px;border-radius:8px;white-space:pre-wrap;line-height:1.5}
-.ft{padding:16px 24px;text-align:center;font-size:12px;color:#666;border-top:1px solid #333}
-</style></head><body><div class="c"><div class="h"><img src="${LOGO_URL}" alt="Facility Software Brasil" /><h1>Nova solicitacao de contato</h1></div><div class="b">
+.l{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.v{font-size:16px;color:#000;background:#f5f5f5;padding:10px 14px;border-radius:8px}
+.m{background:#f5f5f5;padding:16px;border-radius:8px;white-space:pre-wrap;line-height:1.5;color:#000}
+.ft{padding:16px 24px;text-align:center;font-size:12px;color:#999;border-top:1px solid #eee}
+</style></head><body><div class="c"><div class="h"><img src="${HEADER_IMG}" alt="Facility Software Brasil" /></div><div class="b">
 <div class="f"><div class="l">Nome</div><div class="v">${data.nome}</div></div>
 <div class="f"><div class="l">E-mail</div><div class="v">${data.email}</div></div>
 <div class="f"><div class="l">WhatsApp</div><div class="v">${data.whatsapp}</div></div>
