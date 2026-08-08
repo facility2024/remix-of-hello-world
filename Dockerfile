@@ -1,13 +1,15 @@
-## Stage 1 — Build (Static SPA for EasyPanel)
+## Stage 1 — Build (Nitro Node SSR)
 FROM node:22-alpine AS builder
 WORKDIR /app
+
+ARG DEPLOY_MARKER=facility-ssr-node-2026-08-08
 
 COPY package.json package-lock.json* bun.lock* ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN npm run build \
- && test -f dist/client/index.html
+RUN npx vite build \
+ && test -f dist/server/index.mjs
 
 ## Stage 2 — Runtime
 FROM node:22-alpine AS runner
@@ -19,7 +21,6 @@ ENV HOST=0.0.0.0
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/scripts/easypanel-server.mjs ./scripts/easypanel-server.mjs
 
 EXPOSE 3000
-CMD ["node", "scripts/easypanel-server.mjs"]
+CMD ["node", "dist/server/index.mjs"]
