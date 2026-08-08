@@ -1,4 +1,4 @@
-import { defineEventHandler, readBody, createError } from "h3";
+import { createFileRoute } from "@tanstack/react-router";
 import nodemailer from "nodemailer";
 
 interface ContactFormData {
@@ -146,31 +146,41 @@ async function sendContactEmail(data: ContactFormData) {
   return info;
 }
 
-export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+export const Route = createFileRoute("/api/contact")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        try {
+          const data: ContactFormData = await request.json();
 
-  if (!body.nome?.trim() || !body.email?.trim() || !body.whatsapp?.trim()) {
-    throw createError({
-      statusCode: 400,
-      message: "Campos obrigatórios não preenchidos",
-    });
-  }
+          if (!data.nome?.trim() || !data.email?.trim() || !data.whatsapp?.trim()) {
+            return new Response(JSON.stringify({ error: "Campos obrigatórios não preenchidos" }), {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
-    throw createError({
-      statusCode: 400,
-      message: "E-mail inválido",
-    });
-  }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            return new Response(JSON.stringify({ error: "E-mail inválido" }), {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
 
-  try {
-    const info = await sendContactEmail(body);
-    return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error("[EMAIL] Erro ao enviar:", error);
-    throw createError({
-      statusCode: 500,
-      message: "Erro ao enviar mensagem",
-    });
-  }
+          const info = await sendContactEmail(data);
+
+          return new Response(JSON.stringify({ success: true, messageId: info.messageId }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          });
+        } catch (error) {
+          console.error("[EMAIL] Erro ao processar envio:", error);
+          return new Response(JSON.stringify({ error: "Erro ao enviar mensagem" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+      },
+    },
+  },
 });
