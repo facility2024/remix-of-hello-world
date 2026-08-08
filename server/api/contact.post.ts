@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { createAPIFileRoute } from "@tanstack/react-start/api";
+import { defineEventHandler, readBody, createError } from "h3";
 import nodemailer from "nodemailer";
 
 interface ContactFormData {
@@ -147,41 +146,31 @@ async function sendContactEmail(data: ContactFormData) {
   return info;
 }
 
-async function handlePOST(request: Request) {
-  try {
-    const data: ContactFormData = await request.json();
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
 
-    if (!data.nome?.trim() || !data.email?.trim() || !data.whatsapp?.trim()) {
-      return new Response(JSON.stringify({ error: "Campos obrigatórios não preenchidos" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      return new Response(JSON.stringify({ error: "E-mail inválido" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    const info = await sendContactEmail(data);
-
-    return new Response(JSON.stringify({ success: true, messageId: info.messageId }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error("[EMAIL] Erro ao processar envio:", error);
-    return new Response(JSON.stringify({ error: "Erro ao enviar mensagem" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
+  if (!body.nome?.trim() || !body.email?.trim() || !body.whatsapp?.trim()) {
+    throw createError({
+      statusCode: 400,
+      message: "Campos obrigatórios não preenchidos",
     });
   }
-}
 
-export const Route = createFileRoute("/api/contact")();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+    throw createError({
+      statusCode: 400,
+      message: "E-mail inválido",
+    });
+  }
 
-export const APIRoute = createAPIFileRoute("/api/contact")({
-  POST: handlePOST,
+  try {
+    const info = await sendContactEmail(body);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error("[EMAIL] Erro ao enviar:", error);
+    throw createError({
+      statusCode: 500,
+      message: "Erro ao enviar mensagem",
+    });
+  }
 });
