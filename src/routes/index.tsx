@@ -36,12 +36,12 @@ const logoClaro = logoClaroAsset.url;
 const logoOi = logoOiAsset.url;
 const logoFacility = logoFacilityAsset.url;
 const logoEhs = logoEhsAsset.url;
-import equipeMarcosAsset from "@/assets/equipe-marcos.png.asset.json";
+
 import equipeLeandroAsset from "@/assets/equipe-leandro.png.asset.json";
 import equipePedroAsset from "@/assets/equipe-pedro.png.asset.json";
 import equipeHiuryAsset from "@/assets/equipe-hiury.png.asset.json";
 import portraitAsset from "@/assets/facility-portrait.png.asset.json";
-const equipeMarcos = equipeMarcosAsset.url;
+
 const equipeLeandro = equipeLeandroAsset.url;
 const equipePedro = equipePedroAsset.url;
 const equipeHiury = equipeHiuryAsset.url;
@@ -995,10 +995,7 @@ function Footer() {
 function EquipeFacility() {
   const team = [
     { name: "Otavio", role: "CEO & Desenvolvedor", img: portraitAsset.url },
-    { name: "Marcos", role: "Comercial", img: equipeMarcos },
     { name: "Leandro Alves", role: "Desenvolvedor", img: equipeLeandro },
-    
-    
   ];
 
 
