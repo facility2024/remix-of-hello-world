@@ -455,8 +455,8 @@ function Diferenciais() {
         </ScrollReveal>
         {/* Featured video highlight */}
         <div className="mx-auto max-w-4xl mb-8 px-4">
-          <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card p-6 shadow-lg md:p-8">
-            <div className="w-full rounded-xl overflow-hidden bg-black mb-6">
+          <div className="relative rounded-2xl border border-border/40 bg-card p-4 shadow-lg sm:p-6 md:p-8">
+            <div className="w-full rounded-xl overflow-hidden bg-black mb-4 sm:mb-6">
               <video
                 src="https://coconudimudial.b-cdn.net/Luciano/01.mp4"
                 className="w-full h-auto"
@@ -468,9 +468,9 @@ function Diferenciais() {
                 preload="auto"
               />
             </div>
-            <div>
-              <h3 className="font-heading text-2xl mb-2">Criação de sistemas inteligentes</h3>
-              <p className="text-muted-foreground">
+            <div className="text-center sm:text-left">
+              <h3 className="font-heading text-xl sm:text-2xl mb-2">Criação de sistemas inteligentes</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Projetamos e desenvolvemos sistemas inteligentes que automatizam processos, geram
                 insights e impulsionam a performance do seu negócio com tecnologia de ponta.
               </p>
