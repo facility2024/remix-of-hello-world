@@ -36,12 +36,10 @@ const logoClaro = logoClaroAsset.url;
 const logoOi = logoOiAsset.url;
 const logoFacility = logoFacilityAsset.url;
 const logoEhs = logoEhsAsset.url;
-import equipeMarcosAsset from "@/assets/equipe-marcos.png.asset.json";
 import equipeLeandroAsset from "@/assets/equipe-leandro.png.asset.json";
 import equipePedroAsset from "@/assets/equipe-pedro.png.asset.json";
 import equipeHiuryAsset from "@/assets/equipe-hiury.png.asset.json";
 import portraitAsset from "@/assets/facility-portrait.png.asset.json";
-const equipeMarcos = equipeMarcosAsset.url;
 const equipeLeandro = equipeLeandroAsset.url;
 const equipePedro = equipePedroAsset.url;
 const equipeHiury = equipeHiuryAsset.url;
@@ -456,28 +454,26 @@ function Diferenciais() {
           </div>
         </ScrollReveal>
         {/* Featured video highlight */}
-        <div className="mx-auto max-w-6xl mb-8 px-4">
+        <div className="mx-auto max-w-4xl mb-8 px-4">
           <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card p-6 shadow-lg md:p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-              <div className="w-full h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden bg-black">
-                <video
-                  src="https://coconudimudial.b-cdn.net/Luciano/01.mp4"
-                  className="w-full h-full object-cover"
-                  controls
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                />
-              </div>
-              <div>
-                <h3 className="font-heading text-2xl mb-2">Criação de sistemas inteligentes</h3>
-                <p className="text-muted-foreground">
-                  Projetamos e desenvolvemos sistemas inteligentes que automatizam processos, geram
-                  insights e impulsionam a performance do seu negócio com tecnologia de ponta.
-                </p>
-              </div>
+            <div className="w-full rounded-xl overflow-hidden bg-black mb-6">
+              <video
+                src="https://coconudimudial.b-cdn.net/Luciano/01.mp4"
+                className="w-full h-auto"
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+            </div>
+            <div>
+              <h3 className="font-heading text-2xl mb-2">Criação de sistemas inteligentes</h3>
+              <p className="text-muted-foreground">
+                Projetamos e desenvolvemos sistemas inteligentes que automatizam processos, geram
+                insights e impulsionam a performance do seu negócio com tecnologia de ponta.
+              </p>
             </div>
           </div>
         </div>
@@ -1119,7 +1115,6 @@ function Footer() {
 function EquipeFacility() {
   const team = [
     { name: "Otavio", role: "CEO & Desenvolvedor", img: portraitAsset.url },
-    { name: "Marcos", role: "Comercial", img: equipeMarcos },
     { name: "Leandro Alves", role: "Desenvolvedor", img: equipeLeandro },
   ];
 
