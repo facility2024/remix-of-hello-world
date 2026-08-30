@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "start": "node scripts/easypanel-server.mjs",
     "easypanel:build": "bun install --frozen-lockfile && bun run build",
-    "easypanel:start": "node scripts/easypanel-server.mjs"
+    "easypanel:start": "node scripts/easypanel-server.mjs",
+    "test:email": "node scripts/test-email.mjs"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

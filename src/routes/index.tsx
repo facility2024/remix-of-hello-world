@@ -318,11 +318,53 @@ function QuemSomos() {
 
         <ScrollReveal direction="up" delay={0.15} className="mt-12">
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 max-w-5xl mx-auto">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="bento aspect-[5/7] w-full min-h-[180px] sm:min-h-[200px]"
-              />
+            {[
+              {
+                title: "SISTEMAS INTELIGENTE COM IA",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMAS%20INTELIGENTE%20COM%20IA.jpg",
+              },
+              {
+                title: "SISTEMA DE CONTROLE DE OBRAS E SEGURANÇA DO TRABALHO",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMA%20DE%20CONTROLE%20DE%20OBRAS%20E%20SEGURANA%20DO%20TRABALHO.jpg",
+              },
+              {
+                title: "PAINEL DE VENDAS INTELIGENTES",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PAINA%20DE%20VENDAS%20INTELIGENTES.jpg",
+              },
+              {
+                title: "PORTAL DE VENDA DE FOTOS",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PORTAL%20DE%20VENDA%20DE%20FOTOS.jpg",
+              },
+              {
+                title: "CRM COM AGENTES DE IA E KANBAN INTELIGENTE",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/CRM%20COM%20AGENTES%20DE%20IA%20E%20%20KANBAN%20INTELIGETENTE.jpg",
+              },
+              {
+                title: "APLICATIVOS INTELIGENTES",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/APLICATIVOS%20ONTELIGENTES.jpg",
+              },
+              {
+                title: "ENVIO DE SMS NA TELA + LOCAÇÃO EM MASSA",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/NVIO%20DE%20SMS%20NA%20TELA%20%2B%20LOGA%C3%87AO%20EM%20MASSA.jpg",
+              },
+              {
+                title: "ENVIO DO WHATSAPP + EXTRATOR GOOGLE MAPS",
+                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/ENVIO%20DO%20WHATSAPP%20%2B%20EXTRECTOR%20GOOGLE%20MAPS.jpg",
+              },
+            ].map((item) => (
+              <div key={item.title} className="flex flex-col gap-2">
+                <div className="bento aspect-[5/7] w-full min-h-[180px] sm:min-h-[200px] overflow-hidden p-0">
+                  <img
+                    src={item.url}
+                    alt={item.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <p className="px-1 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide text-muted-foreground sm:text-xs">
+                  {item.title}
+                </p>
+              </div>
             ))}
           </div>
         </ScrollReveal>
