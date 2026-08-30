@@ -31,9 +31,8 @@ COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
-# Health check usado pelo EasyPanel (também responde em /healthz)
-# Usa node fetch em vez de wget (node:alpine não tem wget/curl garantido)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-  CMD node -e "fetch('http://127.0.0.1:3000/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"
+# Health check - usa PORT dinâmico e aumenta start-period para dar tempo ao Nitro iniciar
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD node -e "const p=process.env.PORT||3000;fetch('http://127.0.0.1:'+p+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", "dist/server/index.mjs"]
