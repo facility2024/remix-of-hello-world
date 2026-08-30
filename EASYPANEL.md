@@ -15,9 +15,11 @@ No serviço já criado:
    - Dockerfile Path: `Dockerfile` (raiz do projeto)
    - Build Context: `.` (raiz)
    - Se aparecer campo "Docker command", deixe padrão (o `Dockerfile` já faz `npx vite build`)
-3. **General → Port**
-   - Port: `3000` (não 80)
+3. **General → Port** ⚠️ CRÍTICO — deve casar com `PORT` do container
+   - Port: `3000` (não 80) — este é o padrão do `Dockerfile` (`ENV PORT=3000`)
    - Health Check Path: `/health` (também atende `/healthz`)
+   - **Se o Port estiver em 80, o container sobe em 3000, o health em 80 falha e o serviço reinicia em loop** (`Listening on: http://localhost:3000` ≠ `Port 80` → amarelo)
+   - Correção: OU mude o Port do EasyPanel para `3000`, OU vá em **Env** e defina `PORT=80` e troque `Dockerfile:26` para `ENV PORT=80` / `EXPOSE 80`
 4. **Env** (opcional, só para e-mail)
    - `SMTP_HOST=smtp.hostinger.com`
    - `SMTP_PORT=465`
@@ -48,10 +50,13 @@ git push origin master
 
 ## 4. Verificação
 
-- Logs do container devem mostrar: `Facility app listening on http://0.0.0.0:3000` ou `Server started...` e `dist/server/index.mjs`
-- Acesse `https://SEU_DOMINIO/health` → deve retornar `ok`
-- Se aparecer **"Service is not reachable"**:
-  - Confirme **Port = 3000** no EasyPanel (não 80)
+- Logs do container devem mostrar: `Listening on: http://0.0.0.0:3000 (all interfaces)` ou `http://localhost:3000` — a **PORTA no log deve ser idêntica ao Port do EasyPanel**
+  - Se o log mostra `...:3000` mas o Port do EasyPanel é `80` → **troque o Port para 3000** e reimplante
+  - Alternativa: mantenha `Port 80` no EasyPanel e defina `PORT=80` em **Env** + `ENV PORT=80`/`EXPOSE 80` no Dockerfile
+- Acesse `https://SEU_DOMINIO/health` → deve retornar `ok` (confirma que o `HEALTHCHECK` dinâmico está passando)
+- Status deve ficar **verde e estável**, sem `Server closed successfully.` repetido
+- Se aparecer **"Service is not reachable"** ou ficar **amarelo em loop**:
+  - Confirme **Port = 3000** no EasyPanel (não 80) — causa #1 do loop
   - Confirme **Branch = master** (não main)
   - Confirme **Build = Dockerfile** (não Nixpacks/Buildpacks)
   - Veja os logs: erro de `vite build` ou `dist/server/index.mjs` não encontrado = falha de build

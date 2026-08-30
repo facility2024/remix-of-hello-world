@@ -7,7 +7,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Bump para invalidar cache quando necessário
-ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30-v4
+ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30-v5-portfix
 
 COPY package.json package-lock.json* bun.lock* ./
 # EasyPanel usa npm; --legacy-peer-deps devido a conflitos de peer deps (mesmo em netlify.toml)
@@ -23,6 +23,8 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+# PORT deve ser igual ao Port configurado no EasyPanel (padrão 3000).
+# Se o EasyPanel estiver em 80, troque para 80 OU mude o Port do EasyPanel para 3000.
 ENV PORT=3000
 ENV HOST=0.0.0.0
 
@@ -31,7 +33,7 @@ COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
-# Health check - usa PORT dinâmico e aumenta start-period para dar tempo ao Nitro iniciar
+# Health check - usa PORT dinâmico para casar com EasyPanel (evita loop quando Port=80)
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD node -e "const p=process.env.PORT||3000;fetch('http://127.0.0.1:'+p+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
