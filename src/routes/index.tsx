@@ -284,8 +284,87 @@ function ShowcaseCarousel() {
   );
 }
 
+const quemSomosItems = [
+  {
+    title: "SISTEMAS INTELIGENTE COM IA",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMAS%20INTELIGENTE%20COM%20IA.jpg",
+  },
+  {
+    title: "SISTEMA DE CONTROLE DE OBRAS E SEGURANÇA DO TRABALHO",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMA%20DE%20CONTROLE%20DE%20OBRAS%20E%20SEGURANA%20DO%20TRABALHO.jpg",
+  },
+  {
+    title: "PAINEL DE VENDAS INTELIGENTES",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PAINA%20DE%20VENDAS%20INTELIGENTES.jpg",
+  },
+  {
+    title: "PORTAL DE VENDA DE FOTOS",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PORTAL%20DE%20VENDA%20DE%20FOTOS.jpg",
+  },
+  {
+    title: "CRM COM AGENTES DE IA E KANBAN INTELIGENTE",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/CRM%20COM%20AGENTES%20DE%20IA%20E%20%20KANBAN%20INTELIGETENTE.jpg",
+  },
+  {
+    title: "APLICATIVOS INTELIGENTES",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/APLICATIVOS%20ONTELIGENTES.jpg",
+  },
+  {
+    title: "ENVIO DE SMS NA TELA + LOCAÇÃO EM MASSA",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/NVIO%20DE%20SMS%20NA%20TELA%20%2B%20LOGA%C3%87AO%20EM%20MASSA.jpg",
+  },
+  {
+    title: "ENVIO DO WHATSAPP + EXTRATOR GOOGLE MAPS",
+    url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/ENVIO%20DO%20WHATSAPP%20%2B%20EXTRECTOR%20GOOGLE%20MAPS.jpg",
+  },
+] as const;
+
 /* ─────────── QUEM SOMOS ─────────── */
 function QuemSomos() {
+  const [active, setActive] = useState<number | null>(null);
+
+  const close = useCallback(() => setActive(null), []);
+  const prev = useCallback(
+    () => setActive((i) => (i === null ? i : (i - 1 + quemSomosItems.length) % quemSomosItems.length)),
+    [],
+  );
+  const next = useCallback(
+    () => setActive((i) => (i === null ? i : (i + 1) % quemSomosItems.length)),
+    [],
+  );
+
+  // teclado + trava scroll quando aberto
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [active, close, prev, next]);
+
+  // swipe mobile
+  const touchStartX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 50) {
+      if (dx > 0) prev();
+      else next();
+    }
+    touchStartX.current = null;
+  };
+
   return (
     <section id="quem-somos" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -318,42 +397,15 @@ function QuemSomos() {
 
         <ScrollReveal direction="up" delay={0.15} className="mt-12">
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 max-w-5xl mx-auto">
-            {[
-              {
-                title: "SISTEMAS INTELIGENTE COM IA",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMAS%20INTELIGENTE%20COM%20IA.jpg",
-              },
-              {
-                title: "SISTEMA DE CONTROLE DE OBRAS E SEGURANÇA DO TRABALHO",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/SISTEMA%20DE%20CONTROLE%20DE%20OBRAS%20E%20SEGURANA%20DO%20TRABALHO.jpg",
-              },
-              {
-                title: "PAINEL DE VENDAS INTELIGENTES",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PAINA%20DE%20VENDAS%20INTELIGENTES.jpg",
-              },
-              {
-                title: "PORTAL DE VENDA DE FOTOS",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/PORTAL%20DE%20VENDA%20DE%20FOTOS.jpg",
-              },
-              {
-                title: "CRM COM AGENTES DE IA E KANBAN INTELIGENTE",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/CRM%20COM%20AGENTES%20DE%20IA%20E%20%20KANBAN%20INTELIGETENTE.jpg",
-              },
-              {
-                title: "APLICATIVOS INTELIGENTES",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/APLICATIVOS%20ONTELIGENTES.jpg",
-              },
-              {
-                title: "ENVIO DE SMS NA TELA + LOCAÇÃO EM MASSA",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/NVIO%20DE%20SMS%20NA%20TELA%20%2B%20LOGA%C3%87AO%20EM%20MASSA.jpg",
-              },
-              {
-                title: "ENVIO DO WHATSAPP + EXTRATOR GOOGLE MAPS",
-                url: "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/ENVIO%20DO%20WHATSAPP%20%2B%20EXTRECTOR%20GOOGLE%20MAPS.jpg",
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex flex-col gap-2">
-                <div className="bento aspect-[5/7] w-full min-h-[180px] sm:min-h-[200px] overflow-hidden p-0">
+            {quemSomosItems.map((item, idx) => (
+              <button
+                key={item.title}
+                type="button"
+                onClick={() => setActive(idx)}
+                className="group flex flex-col gap-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
+                aria-label={`Abrir ${item.title}`}
+              >
+                <div className="bento aspect-[5/7] w-full min-h-[180px] sm:min-h-[200px] overflow-hidden p-0 transition-all group-hover:border-primary/40 group-hover:scale-[1.02] group-active:scale-[0.98]">
                   <img
                     src={item.url}
                     alt={item.title}
@@ -361,14 +413,100 @@ function QuemSomos() {
                     className="h-full w-full object-cover object-top"
                   />
                 </div>
-                <p className="px-1 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide text-muted-foreground sm:text-xs">
+                <p className="px-1 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide text-muted-foreground group-hover:text-foreground sm:text-xs">
                   {item.title}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
         </ScrollReveal>
       </div>
+
+      {/* Lightbox carrossel */}
+      {active !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4"
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Galeria de projetos"
+        >
+          <div
+            className="relative flex w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex-col overflow-hidden rounded-2xl bg-card shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* header */}
+            <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-2 sm:px-4 sm:py-3">
+              <p className="truncate text-xs font-semibold uppercase tracking-wide text-foreground sm:text-sm">
+                {quemSomosItems[active].title}
+              </p>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="hidden text-xs text-muted-foreground sm:inline">
+                  {active + 1} / {quemSomosItems.length}
+                </span>
+                <button
+                  onClick={close}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-muted text-foreground hover:bg-muted/80"
+                  aria-label="Fechar"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+
+            {/* imagem */}
+            <div className="relative flex min-h-0 flex-1 items-center justify-center bg-black p-2 sm:p-4">
+              <img
+                src={quemSomosItems[active].url}
+                alt={quemSomosItems[active].title}
+                className="max-h-[62vh] w-auto max-w-full object-contain sm:max-h-[68vh]"
+                draggable={false}
+              />
+
+              {/* setas */}
+              <button
+                onClick={prev}
+                className="absolute left-1 sm:left-3 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur hover:bg-black/80 sm:bg-card sm:text-foreground sm:border sm:border-border"
+                aria-label="Anterior"
+              >
+                <ChevronRight className="rotate-180" size={20} />
+              </button>
+              <button
+                onClick={next}
+                className="absolute right-1 sm:right-3 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur hover:bg-black/80 sm:bg-card sm:text-foreground sm:border sm:border-border"
+                aria-label="Próximo"
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur sm:hidden">
+                {active + 1} / {quemSomosItems.length}
+              </span>
+            </div>
+
+            {/* thumbs / dots */}
+            <div className="border-t border-border bg-card px-2 py-2 sm:px-3 sm:py-3">
+              <div className="flex items-center justify-center gap-1.5 overflow-x-auto scrollbar-none sm:gap-2">
+                {quemSomosItems.map((it, i) => (
+                  <button
+                    key={it.title}
+                    onClick={() => setActive(i)}
+                    className={`relative h-12 w-16 shrink-0 overflow-hidden rounded-lg border-2 sm:h-14 sm:w-20 ${i === active ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"}`}
+                    aria-label={`Ir para ${it.title}`}
+                  >
+                    <img src={it.url} alt="" className="h-full w-full object-cover object-top" />
+                  </button>
+                ))}
+              </div>
+              <p className="mt-2 hidden text-center text-xs text-muted-foreground sm:block">
+                Arraste para navegar no mobile • Use ← → no teclado • Clique fora para fechar
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
