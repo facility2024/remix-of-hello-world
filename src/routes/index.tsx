@@ -289,45 +289,43 @@ function QuemSomos() {
   return (
     <section id="quem-somos" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12 items-center">
-          <ScrollReveal direction="left" className="self-center">
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
-              Sobre nós
-            </span>
-            <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
-              Quem Somos
-            </h2>
-            <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                A Facility Software Brasil é uma agência e software house com mais de 16 anos de
-                atuação no mercado, entregando soluções em marketing, tecnologia, desenvolvimento de
-                sistemas, automações inteligentes, aplicativos e presença digital para empresas de
-                diversos segmentos.
-              </p>
-              <p>
-                Fundada com o propósito de unir criatividade, estratégia e tecnologia, a Facility
-                Software Brasil atende clientes em diferentes regiões do Brasil e também no
-                exterior, sempre com foco em agilidade, pontualidade, inovação e resultado.
-              </p>
-              <p>
-                Nossa missão é desenvolver projetos modernos, funcionais e escaláveis, ajudando
-                empresas a fortalecerem sua marca, automatizarem processos, venderem mais e criarem
-                uma presença digital sólida e profissional.
-              </p>
-            </div>
-          </ScrollReveal>
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
+          <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+            Sobre nós
+          </span>
+          <h2 className="font-heading text-4xl italic tracking-tight text-foreground sm:text-5xl">
+            Quem Somos
+          </h2>
+          <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
+            <p>
+              A Facility Software Brasil é uma agência e software house com mais de 16 anos de
+              atuação no mercado, entregando soluções em marketing, tecnologia, desenvolvimento de
+              sistemas, automações inteligentes, aplicativos e presença digital para empresas de
+              diversos segmentos.
+            </p>
+            <p>
+              Fundada com o propósito de unir criatividade, estratégia e tecnologia, a Facility
+              Software Brasil atende clientes em diferentes regiões do Brasil e também no exterior,
+              sempre com foco em agilidade, pontualidade, inovação e resultado.
+            </p>
+            <p>
+              Nossa missão é desenvolver projetos modernos, funcionais e escaláveis, ajudando
+              empresas a fortalecerem sua marca, automatizarem processos, venderem mais e criarem
+              uma presença digital sólida e profissional.
+            </p>
+          </div>
+        </ScrollReveal>
 
-          <ScrollReveal direction="right" className="self-center">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  className="bento aspect-[5/7] w-full min-h-[160px] sm:min-h-[180px]"
-                />
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
+        <ScrollReveal direction="up" delay={0.15} className="mt-12">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 max-w-5xl mx-auto">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="bento aspect-[5/7] w-full min-h-[180px] sm:min-h-[200px]"
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
