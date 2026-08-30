@@ -7,7 +7,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Bump para invalidar cache quando necessário
-ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30-v3
+ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30-v4
 
 COPY package.json package-lock.json* bun.lock* ./
 # EasyPanel usa npm; --legacy-peer-deps devido a conflitos de peer deps (mesmo em netlify.toml)
@@ -25,8 +25,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
-ENV NITRO_HOST=0.0.0.0
-ENV NITRO_PORT=3000
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
