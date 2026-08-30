@@ -1,15 +1,22 @@
+# EasyPanel — Branch: master | Tipo de construção: Dockerfile
+# Repositório já conectado na aba Github do EasyPanel
+# Push em master dispara deploy automático; se não, clique em "Implantar"
+
 ## Stage 1 — Build (Nitro Node SSR)
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG DEPLOY_MARKER=facility-ssr-node-2026-08-08
+# Bump para invalidar cache quando necessário
+ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30
 
 COPY package.json package-lock.json* bun.lock* ./
-RUN npm install --legacy-peer-deps
+# EasyPanel usa npm; --legacy-peer-deps devido a conflitos de peer deps (mesmo em netlify.toml)
+RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm install --legacy-peer-deps; fi
 
 COPY . .
 RUN npx vite build \
- && test -f dist/server/index.mjs
+ && test -f dist/server/index.mjs \
+ && echo "Build OK: dist/server/index.mjs existe"
 
 ## Stage 2 — Runtime
 FROM node:22-alpine AS runner
@@ -23,4 +30,9 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
+
+# Health check usado pelo EasyPanel (também responde em /healthz)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:3000/health || wget -qO- http://127.0.0.1:3000/healthz || exit 1
+
 CMD ["node", "dist/server/index.mjs"]

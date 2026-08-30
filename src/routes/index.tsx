@@ -188,7 +188,7 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
-          className="relative flex min-h-[320px] flex-col justify-between gap-10 overflow-hidden rounded-3xl bg-foreground p-6 text-white md:col-span-4 md:p-8"
+          className="relative flex min-h-[400px] sm:min-h-[320px] flex-col justify-between gap-10 overflow-hidden rounded-3xl bg-foreground p-6 text-white md:col-span-4 md:min-h-[320px] md:p-8"
         >
           {/* Video as background */}
           <div className="absolute inset-0 z-0">

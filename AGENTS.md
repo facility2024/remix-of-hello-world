@@ -1,54 +1,35 @@
 # AGENTS.md
 
-## Quick commands
+## Commands
 
 ```sh
-bun install              # prefer bun (packageManager = bun@1.3.3)
-npm run dev              # Vite dev server
-npm run build            # vite build + generate-shell.mjs (produces dist/)
-npm run build:dev        # vite build in development mode + generate-shell.mjs
-npm run lint             # eslint .
-npm run format           # prettier --write .
-# EasyPanel deploy scripts:
+bun install              # packageManager=bun@1.3.3, Node >=22 (see engines)
+npm run dev              # vite dev (TanStack Start dev server)
+npm run build            # vite build && node scripts/generate-shell.mjs -> dist/
+npm run build:dev        # same but --mode development
+npm run lint             # eslint . (flat config, ignores dist/.output/.vinxi)
+npm run format           # prettier --write . (100ch, double quotes, trailing commas, semis)
 bun run easypanel:build  # bun install --frozen-lockfile && bun run build
-bun run easypanel:start  # node scripts/easypanel-server.mjs
+bun run easypanel:start  # node scripts/easypanel-server.mjs (static SPA server for dist/client)
 ```
 
-## Stack
+- No tests or CI in repo (only inside `node_modules`). No `test` script.
+- Always use alias `@/*` -> `src/*` (defined in `tsconfig.json:23` + `components.json:14` + `vite-tsconfig-paths`).
 
-- **Framework**: TanStack Start (React 19) with Vite 7, not a traditional SSR app — uses Nitro `node-server` preset but deployed as a static SPA behind a Node file server.
-- **CSS**: Tailwind v4 (`@tailwindcss/vite`), not v3. Config is CSS-based (`src/styles.css`), not `tailwind.config.js`.
-- **UI**: shadcn/ui (new-york style, slate base, lucide icons). Components live in `src/components/ui/`. Add new ones via `npx shadcn@latest add <component>`.
-- **Routing**: TanStack Router with file-based routes in `src/routes/`. Route tree is auto-generated (`src/routeTree.gen.ts`) — do not edit manually.
-- **3D**: Spline integration via `@splinetool/react-spline`.
+## Architecture
 
-## Build artifacts
+- **TanStack Start (React 19) + Vite 7** via wrapper `@lovable.dev/vite-tanstack-config` in `vite.config.ts:1` — don't replace with vanilla vite/tanstack config. Nitro preset `node-server` outputs to `dist/server` + `dist/client` (`vite.config.ts:8`).
+- **Routing**: TanStack Router file-based in `src/routes/`. Tree `src/routeTree.gen.ts` is auto-generated — never edit; regenerate with `npm run dev` or `npm run build`. Currently tracks `/`, `/sitemap.xml`, `/api/contact`; stale if new files like `src/routes/email-marketing.tsx` exist without rebuild.
+- **SPA shell**: `scripts/generate-shell.mjs:11` reads `dist/client/.vite/manifest.json` and writes `dist/client/index.html`. Required for `easypanel:start` flow; skipped by Dockerfile.
+- **Dual deploy**: Dockerfile (`Dockerfile:11`) runs `npx vite build` only -> entry `dist/server/index.mjs` (Nitro SSR, port 3000). `npm run build` + `easypanel:start` instead serves `dist/client/` statically with SPA fallback (`scripts/easypanel-server.mjs:111` — unknown paths without extension -> `index.html`, assets 404 otherwise). Netlify (`netlify.toml:2`) publishes `dist/client` with `/* -> /index.html`.
+- **Lovabl e sync**: push to `main` syncs back to Lovable editor (`README.md:12`). Repo originated from `lovable.dev/projects/0bf37da5...`.
+- **UI**: shadcn/ui `new-york/slate/lucide` (`components.json:3`), components in `src/components/ui/`, add via `npx shadcn@latest add <component>`. Tailwind v4 via `@tailwindcss/vite` — config is CSS (`src/styles.css:1`), not `tailwind.config.js`; custom utility `.bento` there (`src/styles.css:119`). Spline is `@splinetool/react-spline`.
 
-- `npm run build` runs `vite build` then `scripts/generate-shell.mjs`.
-- `generate-shell.mjs` reads `dist/.vite/manifest.json` and writes `dist/client/index.html` — a static SPA shell for the EasyPanel Docker deploy.
-- Docker deploy serves `dist/server/index.mjs` (Nitro SSR). The `easypanel:start` script serves `dist/client/` as static files with `index.html` SPA fallback.
-- Netlify deploy publishes `dist/client` as a SPA with `/* → /index.html` redirect.
+## Conventions & Gotchas
 
-## Deployment targets
-
-| Target             | Config                       | Notes                                   |
-| ------------------ | ---------------------------- | --------------------------------------- |
-| EasyPanel (Docker) | `Dockerfile`, `EASYPANEL.md` | Port 3000, health check at `/health`    |
-| Netlify            | `netlify.toml`               | SPA fallback, uses `--legacy-peer-deps` |
-| Cloudflare         | `wrangler.jsonc`             | Nitro preset, SSR entry                 |
-
-## Conventions
-
-- **Language**: TypeScript strict mode. `noUnusedLocals` and `noUnusedParameters` are off.
-- **Formatter**: Prettier — 100 char width, double quotes, trailing commas, semicolons.
-- **Imports**: Path alias `@/*` maps to `src/*`. Always use it.
-- **Lint ignore**: `dist`, `.output`, `.vinxi` are ignored by ESLint.
-- **Node**: Requires Node >= 22 and Bun >= 1.3.3.
-
-## Gotchas
-
-- `npm run build` in the Dockerfile uses `npx vite build` directly (not `npm run build`), so the generate-shell step is skipped — the Docker entrypoint is the Nitro SSR server, not the static shell.
-- The `netlify.toml` build command uses `npm install --legacy-peer-deps` due to peer dep conflicts.
-- `routeTree.gen.ts` is auto-generated by the TanStack Router Vite plugin. Regenerate with `npm run dev` or `vite build`.
-- There are no tests or CI workflows configured in this repo.
-- `.env` is required for the contact form email feature (SMTP config via Hostinger). See `.env.example`.
+- TypeScript strict but `noUnusedLocals`/`noUnusedParameters` off, `skipLibCheck` true (`tsconfig.json:19`). ESLint disables `@typescript-eslint/no-unused-vars` (`eslint.config.js:24`).
+- `.prettierignore` excludes `routeTree.gen.ts`; `eslint.config.js:9` and `.gitignore:14` also ignore `dist/.output/.vinxi/.tanstack`.
+- `Dockerfile:8` uses `npm install --legacy-peer-deps` (same in `netlify.toml:2`) due to peer dep conflicts — `bun install` works locally but CI/EasyPanel/Netlify use npm legacy flag.
+- Health check is `/health` or `/healthz` handled in `scripts/easypanel-server.mjs:88` (and Nitro server). EasyPanel must set Port=3000.
+- Contact/email APIs (`src/routes/api/contact.tsx:79`, `src/routes/api/email-marketing.tsx`) require SMTP env — see `.env.example` (`SMTP_HOST/PORT/USER/PASSWORD` via Hostinger). `.env` is gitignored (`.gitignore:18`); without it email returns 500 `Servico de email nao configurado`.
+- `client.tsx:9` throws if `#root` missing; router error boundary in `router.tsx:4`.
