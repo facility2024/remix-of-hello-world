@@ -651,7 +651,7 @@ function HeroCardVideo() {
   }, [isMuted]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full rounded-xl overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-full rounded-xl overflow-hidden bg-black">
       {inView ? (
         <video
           ref={videoRef}
@@ -660,7 +660,7 @@ function HeroCardVideo() {
           playsInline
           loop
           muted={isMuted}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-contain object-center"
         />
       ) : (
         <div className="absolute inset-0 bg-primary/80" />
