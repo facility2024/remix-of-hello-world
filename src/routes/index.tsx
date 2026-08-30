@@ -289,8 +289,8 @@ function QuemSomos() {
   return (
     <section id="quem-somos" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-16 lg:grid-cols-2 items-start">
-          <ScrollReveal direction="left">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12 items-center">
+          <ScrollReveal direction="left" className="self-center">
             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Sobre nós
             </span>
@@ -317,22 +317,12 @@ function QuemSomos() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal direction="right">
-            <div className="grid grid-cols-2 gap-4">
-              {[...Array(4)].map((_, i) => (
+          <ScrollReveal direction="right" className="self-center">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {[...Array(8)].map((_, i) => (
                 <div
-                  key={`top-${i}`}
-                  className="bento flex items-center justify-center"
-                  style={{ width: 250, height: 350 }}
-                />
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={`bottom-${i}`}
-                  className="bento flex items-center justify-center"
-                  style={{ width: 250, height: 350 }}
+                  key={i}
+                  className="bento aspect-[5/7] w-full min-h-[160px] sm:min-h-[180px]"
                 />
               ))}
             </div>
