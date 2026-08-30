@@ -7,7 +7,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Bump para invalidar cache quando necessário
-ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30
+ARG DEPLOY_MARKER=facility-ssr-node-2026-08-30-v2
 
 COPY package.json package-lock.json* bun.lock* ./
 # EasyPanel usa npm; --legacy-peer-deps devido a conflitos de peer deps (mesmo em netlify.toml)
