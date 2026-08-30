@@ -286,13 +286,6 @@ function ShowcaseCarousel() {
 
 /* ─────────── QUEM SOMOS ─────────── */
 function QuemSomos() {
-  const stats = [
-    { icon: Clock, label: "+16 anos", desc: "de mercado" },
-    { icon: Layers, label: "Sob medida", desc: "Projetos personalizados" },
-    { icon: Users, label: "Consultivo", desc: "Atendimento estratégico" },
-    { icon: Rocket, label: "Escalável", desc: "Soluções que crescem" },
-  ];
-
   return (
     <section id="quem-somos" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -326,17 +319,21 @@ function QuemSomos() {
 
           <ScrollReveal direction="right">
             <div className="grid grid-cols-2 gap-4">
-              {stats.map((s, i) => (
+              {[...Array(4)].map((_, i) => (
                 <div
-                  key={i}
-                  className="group rounded-3xl border border-border/40 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
-                >
-                  <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    <s.icon size={22} />
-                  </div>
-                  <p className="font-bold text-foreground">{s.label}</p>
-                  <p className="text-sm text-muted-foreground">{s.desc}</p>
-                </div>
+                  key={`top-${i}`}
+                  className="bento flex items-center justify-center"
+                  style={{ width: 250, height: 350 }}
+                />
+              ))}
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={`bottom-${i}`}
+                  className="bento flex items-center justify-center"
+                  style={{ width: 250, height: 350 }}
+                />
               ))}
             </div>
           </ScrollReveal>
