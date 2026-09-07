@@ -129,7 +129,9 @@ export const Route = createFileRoute("/api/contact")({
           });
         } catch (error) {
           console.error(`${LOG_PREFIX} ERRO COMPLETO:`, error);
-          return new Response(JSON.stringify({ error: "Erro ao enviar mensagem" }), {
+          const msg =
+            error instanceof Error ? error.message : "Erro desconhecido ao enviar mensagem";
+          return new Response(JSON.stringify({ error: msg }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
           });

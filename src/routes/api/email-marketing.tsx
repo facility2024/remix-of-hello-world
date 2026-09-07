@@ -148,7 +148,9 @@ export const Route = createFileRoute("/api/email-marketing")({
           );
         } catch (error) {
           console.error(`${LOG_PREFIX} ERRO:`, error);
-          return new Response(JSON.stringify({ error: "Erro ao enviar emails" }), {
+          const msg =
+            error instanceof Error ? error.message : "Erro desconhecido ao enviar emails";
+          return new Response(JSON.stringify({ error: msg }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
           });

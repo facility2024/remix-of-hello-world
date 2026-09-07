@@ -13,6 +13,7 @@ bun run easypanel:build  # bun install --frozen-lockfile && bun run build
 bun run easypanel:start  # node scripts/easypanel-server.mjs — static SPA server for dist/client
 npm run preview          # vite preview
 npm start                # alias for easypanel:start (package.json:13)
+npm run test:email       # node scripts/test-email.mjs — test SMTP email sending
 ```
 
 - No tests, no CI, no `test` script — only checks are `lint` + `tsc --noEmit`.
@@ -20,7 +21,7 @@ npm start                # alias for easypanel:start (package.json:13)
 
 ## Architecture
 
-- **TanStack Start (React 19) + Vite 7** via `@lovable.dev/vite-tanstack-config` (`vite.config.ts:1`) — do not replace with vanilla vite/tanstack config. Nitro preset `node-server` outputs `dist/server` + `dist/client` (`vite.config.ts:8`).
+- **TanStack Start (React 19) + Vite 7** via `@lovable.dev/vite-tanstack-config@2.9.1` (`vite.config.ts:1`) — do not replace with vanilla vite/tanstack config. Nitro preset `node-server` outputs `dist/server` + `dist/client` (`vite.config.ts:8`).
 - **Routing**: file-based in `src/routes/`. `src/routeTree.gen.ts` is auto-generated — never edit; regenerates on `npm run dev` or `npm run build`. Current routes: `/`, `/email-marketing`, `/health`, `/healthz`, `/sitemap.xml`, `/api/contact`, `/api/email-marketing`.
 - **SPA shell**: `scripts/generate-shell.mjs:11` reads `dist/client/.vite/manifest.json` and writes `dist/client/index.html`. Required for `easypanel:start`; skipped by `Dockerfile:17` which runs only `npx vite build`.
 - **Dual deploy**:
@@ -36,3 +37,4 @@ npm start                # alias for easypanel:start (package.json:13)
 - Health checks `/health` and `/healthz` handled in both Nitro and `scripts/easypanel-server.mjs:88`. EasyPanel **Port must be `3000`** matching `Dockerfile:28` (`ENV PORT=3000`); mismatch causes restart loop — see `EASYPANEL.md:18`.
 - TS strict but `noUnusedLocals`/`noUnusedParameters` off, `skipLibCheck` true (`tsconfig.json:19`); `@typescript-eslint/no-unused-vars` off (`eslint.config.js:24`). `.prettierignore:7` and `eslint.config.js:9` ignore `dist/.output/.vinxi/.tanstack` + `routeTree.gen.ts`.
 - `src/client.tsx:9` throws if `#root` missing; global error boundary in `src/router.tsx:4`.
+- Cloudflare/Wrangler config exists (`wrangler.jsonc`) but is not actively used — ignore for EasyPanel/Netlify deploys.
