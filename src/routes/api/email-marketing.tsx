@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { randomUUID } from "node:crypto";
 
 interface EmailMarketingData {
   recipients: string;
@@ -12,7 +13,7 @@ interface EmailMarketingData {
   includeUnsubscribe?: boolean;
 }
 
-function buildMarketingHTML(data: EmailMarketingData): string {
+function buildMarketingHTML(data: EmailMarketingData, trackId: string, baseUrl: string): string {
   const HEADER_IMG =
     "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/OBRISERVA%C3%87AO_MANTEA_.png";
   const recipientList = data.recipients
@@ -41,6 +42,8 @@ function buildMarketingHTML(data: EmailMarketingData): string {
     ? `<div style="text-align:center;margin:30px 0 10px;padding-top:20px;border-top:1px solid #eee"><p style="font-size:12px;color:#999;margin:0">Se voce nao deseja mais receber nossos emails, <a href="mailto:suporte@coconudi.com?subject=Cancelar%20email%20marketing" style="color:#e85d2a">clique aqui para cancelar</a>.</p></div>`
     : "";
 
+  const trackingPixel = `<img src="${baseUrl}/api/track?id=${trackId}" width="1" height="1" style="display:none" alt="" />`;
+
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>
 body{font-family:Arial,sans-serif;background:#f5f5f5;color:#000;margin:0;padding:20px}
 .c{max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
@@ -56,7 +59,7 @@ ${buttonBlock}
 ${youtubeBlock}
 ${whatsappBlock}
 ${unsubscribeBlock}
-</div><div class="ft">Facility Software Brasil — Software House e Agencia Digital</div></div></body></html>`;
+</div><div class="ft">Facility Software Brasil — Software House e Agencia Digital</div></div>${trackingPixel}</body></html>`;
 }
 
 export const Route = createFileRoute("/api/email-marketing")({
@@ -79,9 +82,9 @@ export const Route = createFileRoute("/api/email-marketing")({
             });
           }
 
-          if (recipients.length > 100) {
+          if (recipients.length > 3000) {
             return new Response(
-              JSON.stringify({ error: "Maximo de 100 destinatarios por envio" }),
+              JSON.stringify({ error: "Maximo de 3.000 destinatarios por envio" }),
               { status: 400, headers: { "Content-Type": "application/json" } },
             );
           }
@@ -116,25 +119,46 @@ export const Route = createFileRoute("/api/email-marketing")({
           await transporter.verify();
           console.log(`${LOG_PREFIX} SMTP conectado`);
 
-          const html = buildMarketingHTML(data);
+          const baseUrl = `https://${request.headers.get("host") || "agenciafacility.com.br"}`;
           let sent = 0;
           let failed = 0;
           const errors: string[] = [];
+          const trackIds: string[] = [];
 
           for (const email of recipients) {
             try {
+              const trackId = randomUUID();
+              const html = buildMarketingHTML(data, trackId, baseUrl);
               await transporter.sendMail({
                 from: `"Facility Software Brasil" <${smtpUser}>`,
                 to: email,
                 subject: data.subject,
                 html,
               });
+              trackIds.push(trackId);
               sent++;
-              console.log(`${LOG_PREFIX} Enviado para ${email}`);
+              console.log(`${LOG_PREFIX} Enviado para ${email} (track: ${trackId})`);
             } catch (err) {
               failed++;
               errors.push(email);
               console.error(`${LOG_PREFIX} Falha ao enviar para ${email}:`, err);
+            }
+          }
+
+          // Register tracking IDs
+          if (trackIds.length > 0) {
+            try {
+              await fetch(`${baseUrl}/api/track`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  campaignId: randomUUID(),
+                  subject: data.subject,
+                  ids: trackIds,
+                }),
+              });
+            } catch {
+              console.warn(`${LOG_PREFIX} Falha ao registrar tracking (nao critico)`);
             }
           }
 
@@ -144,6 +168,7 @@ export const Route = createFileRoute("/api/email-marketing")({
               sent,
               failed,
               errors: errors.length ? errors : undefined,
+              trackUrl: `/email-marketing/stats`,
             }),
             { status: 200, headers: { "Content-Type": "application/json" } },
           );

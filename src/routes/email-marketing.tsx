@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
+  BarChart3,
 } from "lucide-react";
 
 export const Route = createFileRoute("/email-marketing")({
@@ -105,6 +106,18 @@ function EmailMarketingPage() {
             <p className="mt-2" style={{ color: "#8b93a7" }}>
               Envie emails personalizados para sua lista de contatos
             </p>
+            <a
+              href="/email-marketing/stats"
+              className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #6ea8fe, #8b7cf6)",
+                color: "#fff",
+                boxShadow: "0 4px 12px -2px rgba(139, 124, 246, 0.4)",
+              }}
+            >
+              <BarChart3 size={14} />
+              Ver estatisticas
+            </a>
           </div>
 
           {result && (
@@ -177,7 +190,7 @@ function EmailMarketingPage() {
                     color: "#7c6ff0",
                   }}
                 >
-                  {recipientCount} / 100
+                  {recipientCount.toLocaleString("pt-BR")} / 3.000
                 </span>
               </div>
               <textarea
@@ -197,7 +210,7 @@ function EmailMarketingPage() {
                 }
               />
               <p className="mt-2 text-xs" style={{ color: "#8b93a7" }}>
-                Separe por virgula, ponto-e-virgula ou enter. Maximo 100 por envio.
+                Separe por virgula, ponto-e-virgula ou enter. Maximo 3.000 por envio.
               </p>
             </motion.div>
 
