@@ -84,10 +84,20 @@ function EmailMarketingPage() {
 
   return (
     <div
-      className="min-h-screen"
+      className="relative min-h-screen overflow-hidden"
       style={{ background: "linear-gradient(135deg, #eef4ff 0%, #f5eeff 50%, #f8faff 100%)" }}
     >
-      <div className="mx-auto max-w-[760px] px-4 py-14">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "url('https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/DISPAROS.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.5,
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-[760px] px-4 py-14">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-10 text-center">
             <div
