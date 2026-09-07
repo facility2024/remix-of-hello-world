@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { randomUUID } from "node:crypto";
-import { createClient } from "@supabase/supabase-js";
-
-function getServerSupabase() {
-  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
-}
+import { getSupabaseServer } from "@/lib/supabase";
 
 interface EmailMarketingData {
   recipients: string;
@@ -121,7 +117,7 @@ export const Route = createFileRoute("/api/email-marketing")({
           console.log(`${LOG_PREFIX} SMTP conectado`);
 
           const baseUrl = `https://${request.headers.get("host") || "agenciafacility.com.br"}`;
-          const supabase = getServerSupabase();
+          const supabase = getSupabaseServer();
 
           // Create campaign in Supabase
           const campaignId = randomUUID();

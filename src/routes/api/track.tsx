@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createClient } from "@supabase/supabase-js";
-
-function getServerSupabase() {
-  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
-}
+import { getSupabaseServer } from "@/lib/supabase";
 
 export const Route = createFileRoute("/api/track")({
   server: {
@@ -85,7 +81,7 @@ export const Route = createFileRoute("/api/track")({
             });
           }
 
-          const supabase = getServerSupabase();
+          const supabase = getSupabaseServer();
           const now = new Date().toISOString();
 
           const rows = ids.map((trackId) => ({

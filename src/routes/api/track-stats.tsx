@@ -1,15 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createClient } from "@supabase/supabase-js";
-
-function getServerSupabase() {
-  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
-}
+import { getSupabaseServer } from "@/lib/supabase";
 
 export const Route = createFileRoute("/api/track-stats")({
   server: {
     handlers: {
       GET: async () => {
-        const supabase = getServerSupabase();
+        const supabase = getSupabaseServer();
 
         const { data, error } = await supabase
           .from("email_campaigns")
