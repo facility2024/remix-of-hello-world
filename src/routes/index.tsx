@@ -325,7 +325,8 @@ function QuemSomos() {
 
   const close = useCallback(() => setActive(null), []);
   const prev = useCallback(
-    () => setActive((i) => (i === null ? i : (i - 1 + quemSomosItems.length) % quemSomosItems.length)),
+    () =>
+      setActive((i) => (i === null ? i : (i - 1 + quemSomosItems.length) % quemSomosItems.length)),
     [],
   );
   const next = useCallback(
@@ -634,7 +635,9 @@ function Diferenciais() {
               />
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="font-heading text-xl sm:text-2xl mb-2">Criação de sistemas inteligentes</h3>
+              <h3 className="font-heading text-xl sm:text-2xl mb-2">
+                Criação de sistemas inteligentes
+              </h3>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Projetamos e desenvolvemos sistemas inteligentes que automatizam processos, geram
                 insights e impulsionam a performance do seu negócio com tecnologia de ponta.
@@ -816,7 +819,10 @@ function HeroCardVideo() {
   }, [isMuted]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full rounded-xl overflow-hidden bg-foreground">
+    <div
+      ref={containerRef}
+      className="relative w-full h-full rounded-xl overflow-hidden bg-foreground"
+    >
       {inView ? (
         <video
           ref={videoRef}

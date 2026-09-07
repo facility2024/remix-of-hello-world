@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { BarChart3, Mail, MailOpen, Clock, ArrowLeft, Loader2 } from "lucide-react";
+import { BarChart3, Mail, MailOpen, Clock, ArrowLeft, Loader2, LogOut } from "lucide-react";
+import { supabase } from "@/lib/supabase-client";
 
 export const Route = createFileRoute("/email-marketing-stats")({
   component: EmailStatsPage,
@@ -16,69 +17,32 @@ interface CampaignStats {
   pending: number;
 }
 
-const STORAGE_KEY = "facility-email-stats";
-
-function loadLocalStats(): CampaignStats[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveLocalStats(stats: CampaignStats[]) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
-  } catch {
-    // silently fail
-  }
-}
-
-function mergeStats(local: CampaignStats[], server: CampaignStats[]): CampaignStats[] {
-  const map = new Map<string, CampaignStats>();
-
-  for (const s of local) {
-    map.set(s.campaignId, s);
-  }
-
-  for (const s of server) {
-    const existing = map.get(s.campaignId);
-    if (existing) {
-      map.set(s.campaignId, {
-        ...s,
-        opened: Math.max(s.opened, existing.opened),
-      });
-    } else {
-      map.set(s.campaignId, s);
-    }
-  }
-
-  return Array.from(map.values()).sort(
-    (a, b) => new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime(),
-  );
-}
-
 function EmailStatsPage() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState<CampaignStats[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const local = loadLocalStats();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        navigate({ to: "/login" });
+        return;
+      }
 
-    fetch("/api/track-stats")
-      .then((r) => r.json())
-      .then((serverStats: CampaignStats[]) => {
-        const merged = mergeStats(local, serverStats);
-        saveLocalStats(merged);
-        setStats(merged);
-        setLoading(false);
-      })
-      .catch(() => {
-        setStats(local);
-        setLoading(false);
-      });
-  }, []);
+      fetch("/api/track-stats")
+        .then((r) => r.json())
+        .then((data) => {
+          setStats(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    });
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/login" });
+  };
 
   const totalSent = stats.reduce((acc, s) => acc + s.total, 0);
   const totalOpened = stats.reduce((acc, s) => acc + s.opened, 0);
@@ -86,20 +50,44 @@ function EmailStatsPage() {
 
   return (
     <div
-      className="min-h-screen"
+      className="relative min-h-screen overflow-hidden"
       style={{ background: "linear-gradient(135deg, #eef4ff 0%, #f5eeff 50%, #f8faff 100%)" }}
     >
-      <div className="mx-auto max-w-[760px] px-4 py-14">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "url('https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/DISPAROS.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.5,
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-[760px] px-4 py-14">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-8">
-            <a
-              href="/email-marketing"
-              className="mb-4 inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: "#7c6ff0" }}
-            >
-              <ArrowLeft size={16} />
-              Voltar ao disparo
-            </a>
+            <div className="mb-4 flex items-center justify-between">
+              <a
+                href="/email-marketing"
+                className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
+                style={{ color: "#7c6ff0" }}
+              >
+                <ArrowLeft size={16} />
+                Voltar ao disparo
+              </a>
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all hover:scale-105"
+                style={{
+                  background: "#fef2f2",
+                  color: "#dc2626",
+                  border: "1px solid #fca5a5",
+                }}
+              >
+                <LogOut size={14} />
+                Sair
+              </button>
+            </div>
             <div className="text-center">
               <div
                 className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider"

@@ -13,4 +13,5 @@ export default defineConfig({
       manifest: true,
     },
   },
+  envPrefix: ["VITE_", "SUPABASE_"],
 });

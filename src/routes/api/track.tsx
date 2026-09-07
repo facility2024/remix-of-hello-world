@@ -1,41 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { createClient } from "@supabase/supabase-js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = resolve(__dirname, "../../../data");
-const TRACK_FILE = resolve(DATA_DIR, "email-tracks.json");
-
-interface TrackEntry {
-  id: string;
-  campaignId: string;
-  email: string;
-  subject: string;
-  sentAt: string;
-  openedAt: string | null;
-  opened: boolean;
-}
-
-function ensureDataDir() {
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR, { recursive: true });
-  }
-}
-
-function readTracks(): TrackEntry[] {
-  ensureDataDir();
-  if (!existsSync(TRACK_FILE)) return [];
-  try {
-    return JSON.parse(readFileSync(TRACK_FILE, "utf8"));
-  } catch {
-    return [];
-  }
-}
-
-function writeTracks(tracks: TrackEntry[]) {
-  ensureDataDir();
-  writeFileSync(TRACK_FILE, JSON.stringify(tracks, null, 2));
+function getServerSupabase() {
+  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
 }
 
 export const Route = createFileRoute("/api/track")({
@@ -49,17 +16,43 @@ export const Route = createFileRoute("/api/track")({
           return new Response("Missing id", { status: 400 });
         }
 
-        const tracks = readTracks();
-        const entry = tracks.find((t) => t.id === id);
+        const supabase = getServerSupabase();
+
+        const { data: entry } = await supabase
+          .from("email_tracks")
+          .select("id, opened")
+          .eq("track_id", id)
+          .single();
 
         if (entry && !entry.opened) {
-          entry.opened = true;
-          entry.openedAt = new Date().toISOString();
-          writeTracks(tracks);
-          console.log(`[TRACK] Email aberto: ${entry.email} (${entry.campaignId})`);
+          await supabase
+            .from("email_tracks")
+            .update({ opened: true, opened_at: new Date().toISOString() })
+            .eq("track_id", id);
+
+          // Update campaign opened count
+          const { data: track } = await supabase
+            .from("email_tracks")
+            .select("campaign_id")
+            .eq("track_id", id)
+            .single();
+
+          if (track) {
+            const { count } = await supabase
+              .from("email_tracks")
+              .select("id", { count: "exact", head: true })
+              .eq("campaign_id", track.campaign_id)
+              .eq("opened", true);
+
+            await supabase
+              .from("email_campaigns")
+              .update({ opened: count || 0 })
+              .eq("id", track.campaign_id);
+          }
+
+          console.log(`[TRACK] Email aberto: track_id=${id}`);
         }
 
-        // 1x1 transparent GIF pixel
         const pixel = Buffer.from(
           "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
           "base64",
@@ -79,37 +72,44 @@ export const Route = createFileRoute("/api/track")({
       POST: async ({ request }: { request: Request }) => {
         try {
           const body = await request.json();
-          const { campaignId, email, subject, ids } = body as {
+          const { campaignId, subject, ids } = body as {
             campaignId: string;
-            email?: string;
             subject?: string;
             ids?: string[];
           };
 
-          if (ids && Array.isArray(ids)) {
-            // Bulk register sent emails
-            const tracks = readTracks();
-            const now = new Date().toISOString();
-            for (const id of ids) {
-              tracks.push({
-                id,
-                campaignId,
-                email: email || "",
-                subject: subject || "",
-                sentAt: now,
-                openedAt: null,
-                opened: false,
-              });
-            }
-            writeTracks(tracks);
-            return new Response(JSON.stringify({ registered: ids.length }), {
-              status: 200,
+          if (!ids || !Array.isArray(ids)) {
+            return new Response(JSON.stringify({ error: "Missing ids array" }), {
+              status: 400,
               headers: { "Content-Type": "application/json" },
             });
           }
 
-          return new Response(JSON.stringify({ error: "Missing ids array" }), {
-            status: 400,
+          const supabase = getServerSupabase();
+          const now = new Date().toISOString();
+
+          const rows = ids.map((trackId) => ({
+            track_id: trackId,
+            campaign_id: campaignId,
+            email: "",
+            subject: subject || "",
+            sent_at: now,
+            opened_at: null,
+            opened: false,
+          }));
+
+          const { error } = await supabase.from("email_tracks").insert(rows);
+
+          if (error) {
+            console.error("[TRACK] Erro ao registrar:", error);
+            return new Response(JSON.stringify({ error: error.message }), {
+              status: 500,
+              headers: { "Content-Type": "application/json" },
+            });
+          }
+
+          return new Response(JSON.stringify({ registered: ids.length }), {
+            status: 200,
             headers: { "Content-Type": "application/json" },
           });
         } catch {

@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -14,7 +14,9 @@ import {
   AlertCircle,
   Loader2,
   BarChart3,
+  LogOut,
 } from "lucide-react";
+import { supabase } from "@/lib/supabase-client";
 
 export const Route = createFileRoute("/email-marketing")({
   component: EmailMarketingPage,
@@ -27,6 +29,7 @@ interface SendResult {
 }
 
 function EmailMarketingPage() {
+  const navigate = useNavigate();
   const [recipients, setRecipients] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -39,6 +42,17 @@ function EmailMarketingPage() {
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<SendResult | null>(null);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) navigate({ to: "/login" });
+    });
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/login" });
+  };
 
   const recipientCount = recipients
     .split(/[\n,;]+/)
@@ -74,30 +88,6 @@ function EmailMarketingPage() {
         return;
       }
 
-      // Save campaign stats to localStorage for persistence
-      try {
-        const STORAGE_KEY = "facility-email-stats";
-        const existing: Array<{
-          campaignId: string;
-          subject: string;
-          sentAt: string;
-          total: number;
-          opened: number;
-          pending: number;
-        }> = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        existing.push({
-          campaignId: crypto.randomUUID(),
-          subject,
-          sentAt: new Date().toISOString(),
-          total: data.sent,
-          opened: 0,
-          pending: data.sent,
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-      } catch {
-        // localStorage not available — silent fail
-      }
-
       setResult(data);
     } catch {
       setError("Falha na conexao. Tente novamente.");
@@ -124,6 +114,21 @@ function EmailMarketingPage() {
       <div className="relative z-10 mx-auto max-w-[760px] px-4 py-14">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-10 text-center">
+            <div className="mb-4 flex items-center justify-between">
+              <div />
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all hover:scale-105"
+                style={{
+                  background: "#fef2f2",
+                  color: "#dc2626",
+                  border: "1px solid #fca5a5",
+                }}
+              >
+                <LogOut size={14} />
+                Sair
+              </button>
+            </div>
             <div
               className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider"
               style={{ background: "linear-gradient(135deg, #e0e7ff, #ede9fe)", color: "#7c6ff0" }}

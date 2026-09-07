@@ -1,5 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { randomUUID } from "node:crypto";
+import { createClient } from "@supabase/supabase-js";
+
+function getServerSupabase() {
+  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
+}
 
 interface EmailMarketingData {
   recipients: string;
@@ -16,10 +21,6 @@ interface EmailMarketingData {
 function buildMarketingHTML(data: EmailMarketingData, trackId: string, baseUrl: string): string {
   const HEADER_IMG =
     "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/OBRISERVA%C3%87AO_MANTEA_.png";
-  const recipientList = data.recipients
-    .split(/[\n,;]+/)
-    .map((e) => e.trim())
-    .filter(Boolean);
 
   const imageBlock = data.imageUrl
     ? `<div style="margin:20px 0;text-align:center"><img src="${data.imageUrl}" alt="Imagem" style="max-width:100%;border-radius:8px" /></div>`
@@ -120,6 +121,21 @@ export const Route = createFileRoute("/api/email-marketing")({
           console.log(`${LOG_PREFIX} SMTP conectado`);
 
           const baseUrl = `https://${request.headers.get("host") || "agenciafacility.com.br"}`;
+          const supabase = getServerSupabase();
+
+          // Create campaign in Supabase
+          const campaignId = randomUUID();
+          const { error: campaignError } = await supabase.from("email_campaigns").insert({
+            id: campaignId,
+            subject: data.subject,
+            total: recipients.length,
+            opened: 0,
+          });
+
+          if (campaignError) {
+            console.error(`${LOG_PREFIX} Erro ao criar campanha:`, campaignError);
+          }
+
           let sent = 0;
           let failed = 0;
           const errors: string[] = [];
@@ -145,20 +161,22 @@ export const Route = createFileRoute("/api/email-marketing")({
             }
           }
 
-          // Register tracking IDs
+          // Register tracking IDs in Supabase
           if (trackIds.length > 0) {
-            try {
-              await fetch(`${baseUrl}/api/track`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  campaignId: randomUUID(),
-                  subject: data.subject,
-                  ids: trackIds,
-                }),
-              });
-            } catch {
-              console.warn(`${LOG_PREFIX} Falha ao registrar tracking (nao critico)`);
+            const now = new Date().toISOString();
+            const rows = trackIds.map((trackId) => ({
+              track_id: trackId,
+              campaign_id: campaignId,
+              email: "",
+              subject: data.subject,
+              sent_at: now,
+              opened_at: null,
+              opened: false,
+            }));
+
+            const { error: trackError } = await supabase.from("email_tracks").insert(rows);
+            if (trackError) {
+              console.error(`${LOG_PREFIX} Erro ao registrar tracks:`, trackError);
             }
           }
 
