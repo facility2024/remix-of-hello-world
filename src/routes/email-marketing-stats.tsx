@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BarChart3, Mail, MailOpen, Clock, ArrowLeft, Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/email-marketing/stats")({
+export const Route = createFileRoute("/email-marketing-stats")({
   component: EmailStatsPage,
 });
 

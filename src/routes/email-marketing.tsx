@@ -107,7 +107,7 @@ function EmailMarketingPage() {
               Envie emails personalizados para sua lista de contatos
             </p>
             <a
-              href="/email-marketing/stats"
+              href="/email-marketing-stats"
               className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all hover:scale-105"
               style={{
                 background: "linear-gradient(135deg, #6ea8fe, #8b7cf6)",

@@ -168,7 +168,7 @@ export const Route = createFileRoute("/api/email-marketing")({
               sent,
               failed,
               errors: errors.length ? errors : undefined,
-              trackUrl: `/email-marketing/stats`,
+              trackUrl: `/email-marketing-stats`,
             }),
             { status: 200, headers: { "Content-Type": "application/json" } },
           );
