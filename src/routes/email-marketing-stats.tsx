@@ -16,18 +16,68 @@ interface CampaignStats {
   pending: number;
 }
 
+const STORAGE_KEY = "facility-email-stats";
+
+function loadLocalStats(): CampaignStats[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalStats(stats: CampaignStats[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+  } catch {
+    // silently fail
+  }
+}
+
+function mergeStats(local: CampaignStats[], server: CampaignStats[]): CampaignStats[] {
+  const map = new Map<string, CampaignStats>();
+
+  for (const s of local) {
+    map.set(s.campaignId, s);
+  }
+
+  for (const s of server) {
+    const existing = map.get(s.campaignId);
+    if (existing) {
+      map.set(s.campaignId, {
+        ...s,
+        opened: Math.max(s.opened, existing.opened),
+      });
+    } else {
+      map.set(s.campaignId, s);
+    }
+  }
+
+  return Array.from(map.values()).sort(
+    (a, b) => new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime(),
+  );
+}
+
 function EmailStatsPage() {
   const [stats, setStats] = useState<CampaignStats[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const local = loadLocalStats();
+
     fetch("/api/track-stats")
       .then((r) => r.json())
-      .then((data) => {
-        setStats(data);
+      .then((serverStats: CampaignStats[]) => {
+        const merged = mergeStats(local, serverStats);
+        saveLocalStats(merged);
+        setStats(merged);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setStats(local);
+        setLoading(false);
+      });
   }, []);
 
   const totalSent = stats.reduce((acc, s) => acc + s.total, 0);

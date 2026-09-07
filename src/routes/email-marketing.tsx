@@ -74,6 +74,30 @@ function EmailMarketingPage() {
         return;
       }
 
+      // Save campaign stats to localStorage for persistence
+      try {
+        const STORAGE_KEY = "facility-email-stats";
+        const existing: Array<{
+          campaignId: string;
+          subject: string;
+          sentAt: string;
+          total: number;
+          opened: number;
+          pending: number;
+        }> = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        existing.push({
+          campaignId: crypto.randomUUID(),
+          subject,
+          sentAt: new Date().toISOString(),
+          total: data.sent,
+          opened: 0,
+          pending: data.sent,
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      } catch {
+        // localStorage not available — silent fail
+      }
+
       setResult(data);
     } catch {
       setError("Falha na conexao. Tente novamente.");
