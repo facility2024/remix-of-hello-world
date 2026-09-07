@@ -13,7 +13,7 @@ interface EmailMarketingData {
 }
 
 function buildMarketingHTML(data: EmailMarketingData): string {
-  const HEADER_IMG = "https://coconudimudial.b-cdn.net/AGENCIA%20FACILITY/Agencia.png";
+  const HEADER_IMG = "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/OBRISERVA%C3%87AO_MANTEA_.png";
   const recipientList = data.recipients
     .split(/[\n,;]+/)
     .map((e) => e.trim())
