@@ -13,7 +13,8 @@ interface EmailMarketingData {
 }
 
 function buildMarketingHTML(data: EmailMarketingData): string {
-  const HEADER_IMG = "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/OBRISERVA%C3%87AO_MANTEA_.png";
+  const HEADER_IMG =
+    "https://COCONUDIMUDIAL.b-cdn.net/AGENCIA%20FACILITY/OBRISERVA%C3%87AO_MANTEA_.png";
   const recipientList = data.recipients
     .split(/[\n,;]+/)
     .map((e) => e.trim())
@@ -86,10 +87,10 @@ export const Route = createFileRoute("/api/email-marketing")({
           }
 
           if (!data.subject?.trim() || !data.message?.trim()) {
-            return new Response(
-              JSON.stringify({ error: "Assunto e mensagem sao obrigatorios" }),
-              { status: 400, headers: { "Content-Type": "application/json" } },
-            );
+            return new Response(JSON.stringify({ error: "Assunto e mensagem sao obrigatorios" }), {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
+            });
           }
 
           const smtpHost = process.env.SMTP_HOST;
@@ -98,10 +99,10 @@ export const Route = createFileRoute("/api/email-marketing")({
           const smtpPass = process.env.SMTP_PASSWORD;
 
           if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
-            return new Response(
-              JSON.stringify({ error: "Servico de email nao configurado" }),
-              { status: 500, headers: { "Content-Type": "application/json" } },
-            );
+            return new Response(JSON.stringify({ error: "Servico de email nao configurado" }), {
+              status: 500,
+              headers: { "Content-Type": "application/json" },
+            });
           }
 
           const nodemailer = await import("nodemailer");
@@ -148,8 +149,7 @@ export const Route = createFileRoute("/api/email-marketing")({
           );
         } catch (error) {
           console.error(`${LOG_PREFIX} ERRO:`, error);
-          const msg =
-            error instanceof Error ? error.message : "Erro desconhecido ao enviar emails";
+          const msg = error instanceof Error ? error.message : "Erro desconhecido ao enviar emails";
           return new Response(JSON.stringify({ error: msg }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
