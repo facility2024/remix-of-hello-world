@@ -22,7 +22,7 @@ npm run test:email       # node scripts/test-email.mjs — test SMTP email sendi
 ## Architecture
 
 - **TanStack Start (React 19) + Vite 7** via `@lovable.dev/vite-tanstack-config@2.9.1` (`vite.config.ts:1`) — do not replace with vanilla vite/tanstack config. Nitro preset `node-server` outputs `dist/server` + `dist/client` (`vite.config.ts:8`).
-- **Routing**: file-based in `src/routes/`. `src/routeTree.gen.ts` is auto-generated — never edit; regenerates on `npm run dev` or `npm run build`. Current routes: `/`, `/email-marketing`, `/health`, `/healthz`, `/sitemap.xml`, `/api/contact`, `/api/email-marketing`.
+- **Routing**: file-based in `src/routes/`. `src/routeTree.gen.ts` is auto-generated — never edit; regenerates on `npm run dev` or `npm run build`. Current routes: `/`, `/email-marketing`, `/email-marketing-stats`, `/login`, `/health`, `/healthz`, `/sitemap.xml`, `/api/contact`, `/api/email-marketing`, `/api/track`, `/api/track-stats`.
 - **SPA shell**: `scripts/generate-shell.mjs:11` reads `dist/client/.vite/manifest.json` and writes `dist/client/index.html`. Required for `easypanel:start`; skipped by `Dockerfile:17` which runs only `npx vite build`.
 - **Dual deploy**:
   - `Dockerfile:11` — Nitro SSR (`node dist/server/index.mjs`, port 3000). Used by EasyPanel.
@@ -33,7 +33,7 @@ npm run test:email       # node scripts/test-email.mjs — test SMTP email sendi
 ## Gotchas
 
 - `Dockerfile:14` and `netlify.toml:2` use `npm install --legacy-peer-deps` due to peer conflicts; `bun install` works locally but CI/EasyPanel/Netlify need the flag.
-- `.env` gitignored (`.gitignore:18`). Email routes (`src/routes/api/contact.tsx`, `src/routes/api/email-marketing.tsx`) need `SMTP_HOST/PORT/USER/PASSWORD` (Hostinger, see `.env.example:1`) else return 500 `Servico de email nao configurado`.
+- `.env` gitignored (`.gitignore:18`). Email routes (`src/routes/api/contact.tsx`, `src/routes/api/email-marketing.tsx`) need `SMTP_HOST/PORT/USER/PASSWORD` (Hostinger, see `.env.example:1`) else return 500 `Servico de email nao configurado`. Supabase vars (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) also in `.env.example` — server-side only unless prefixed `VITE_`.
 - Health checks `/health` and `/healthz` handled in both Nitro and `scripts/easypanel-server.mjs:88`. EasyPanel **Port must be `3000`** matching `Dockerfile:28` (`ENV PORT=3000`); mismatch causes restart loop — see `EASYPANEL.md:18`.
 - TS strict but `noUnusedLocals`/`noUnusedParameters` off, `skipLibCheck` true (`tsconfig.json:19`); `@typescript-eslint/no-unused-vars` off (`eslint.config.js:24`). `.prettierignore:7` and `eslint.config.js:9` ignore `dist/.output/.vinxi/.tanstack` + `routeTree.gen.ts`.
 - `src/client.tsx:9` throws if `#root` missing; global error boundary in `src/router.tsx:4`.

@@ -10,16 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HealthzRouteImport } from './routes/healthz'
 import { Route as HealthRouteImport } from './routes/health'
+import { Route as EmailMarketingStatsRouteImport } from './routes/email-marketing-stats'
 import { Route as EmailMarketingRouteImport } from './routes/email-marketing'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTrackStatsRouteImport } from './routes/api/track-stats'
+import { Route as ApiTrackRouteImport } from './routes/api/track'
 import { Route as ApiEmailMarketingRouteImport } from './routes/api/email-marketing'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HealthzRoute = HealthzRouteImport.update({
@@ -32,6 +41,11 @@ const HealthRoute = HealthRouteImport.update({
   path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmailMarketingStatsRoute = EmailMarketingStatsRouteImport.update({
+  id: '/email-marketing-stats',
+  path: '/email-marketing-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmailMarketingRoute = EmailMarketingRouteImport.update({
   id: '/email-marketing',
   path: '/email-marketing',
@@ -40,6 +54,16 @@ const EmailMarketingRoute = EmailMarketingRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrackStatsRoute = ApiTrackStatsRouteImport.update({
+  id: '/api/track-stats',
+  path: '/api/track-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrackRoute = ApiTrackRouteImport.update({
+  id: '/api/track',
+  path: '/api/track',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiEmailMarketingRoute = ApiEmailMarketingRouteImport.update({
@@ -56,69 +80,97 @@ const ApiContactRoute = ApiContactRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/email-marketing': typeof EmailMarketingRoute
+  '/email-marketing-stats': typeof EmailMarketingStatsRoute
   '/health': typeof HealthRoute
   '/healthz': typeof HealthzRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/email-marketing': typeof ApiEmailMarketingRoute
+  '/api/track': typeof ApiTrackRoute
+  '/api/track-stats': typeof ApiTrackStatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/email-marketing': typeof EmailMarketingRoute
+  '/email-marketing-stats': typeof EmailMarketingStatsRoute
   '/health': typeof HealthRoute
   '/healthz': typeof HealthzRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/email-marketing': typeof ApiEmailMarketingRoute
+  '/api/track': typeof ApiTrackRoute
+  '/api/track-stats': typeof ApiTrackStatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/email-marketing': typeof EmailMarketingRoute
+  '/email-marketing-stats': typeof EmailMarketingStatsRoute
   '/health': typeof HealthRoute
   '/healthz': typeof HealthzRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/email-marketing': typeof ApiEmailMarketingRoute
+  '/api/track': typeof ApiTrackRoute
+  '/api/track-stats': typeof ApiTrackStatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/email-marketing'
+    | '/email-marketing-stats'
     | '/health'
     | '/healthz'
+    | '/login'
     | '/sitemap.xml'
     | '/api/contact'
     | '/api/email-marketing'
+    | '/api/track'
+    | '/api/track-stats'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/email-marketing'
+    | '/email-marketing-stats'
     | '/health'
     | '/healthz'
+    | '/login'
     | '/sitemap.xml'
     | '/api/contact'
     | '/api/email-marketing'
+    | '/api/track'
+    | '/api/track-stats'
   id:
     | '__root__'
     | '/'
     | '/email-marketing'
+    | '/email-marketing-stats'
     | '/health'
     | '/healthz'
+    | '/login'
     | '/sitemap.xml'
     | '/api/contact'
     | '/api/email-marketing'
+    | '/api/track'
+    | '/api/track-stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EmailMarketingRoute: typeof EmailMarketingRoute
+  EmailMarketingStatsRoute: typeof EmailMarketingStatsRoute
   HealthRoute: typeof HealthRoute
   HealthzRoute: typeof HealthzRoute
+  LoginRoute: typeof LoginRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiContactRoute: typeof ApiContactRoute
   ApiEmailMarketingRoute: typeof ApiEmailMarketingRoute
+  ApiTrackRoute: typeof ApiTrackRoute
+  ApiTrackStatsRoute: typeof ApiTrackStatsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -128,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/healthz': {
@@ -144,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/email-marketing-stats': {
+      id: '/email-marketing-stats'
+      path: '/email-marketing-stats'
+      fullPath: '/email-marketing-stats'
+      preLoaderRoute: typeof EmailMarketingStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/email-marketing': {
       id: '/email-marketing'
       path: '/email-marketing'
@@ -156,6 +222,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/track-stats': {
+      id: '/api/track-stats'
+      path: '/api/track-stats'
+      fullPath: '/api/track-stats'
+      preLoaderRoute: typeof ApiTrackStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/track': {
+      id: '/api/track'
+      path: '/api/track'
+      fullPath: '/api/track'
+      preLoaderRoute: typeof ApiTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/email-marketing': {
@@ -178,11 +258,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EmailMarketingRoute: EmailMarketingRoute,
+  EmailMarketingStatsRoute: EmailMarketingStatsRoute,
   HealthRoute: HealthRoute,
   HealthzRoute: HealthzRoute,
+  LoginRoute: LoginRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiContactRoute: ApiContactRoute,
   ApiEmailMarketingRoute: ApiEmailMarketingRoute,
+  ApiTrackRoute: ApiTrackRoute,
+  ApiTrackStatsRoute: ApiTrackStatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
